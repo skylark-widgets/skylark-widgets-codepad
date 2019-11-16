@@ -1,0 +1,33 @@
+{
+  "name": "skylark-widgets-coder",
+  "description": "The skylark code editor widget for showcasing html/css/js.",
+  "version": "0.9.0",
+  "keywords": [
+    "jotted",
+    "playground"
+  ],
+  "homepage": "https://github.com/skylark-widgets/skylark-widgets-coder/",
+  "author": "Hudaokeji, Inc.",
+  "scripts": {
+    "build": "sbundle build ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skylark-widgets/skylark-widgets-coder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/skylark-widgets/skylark-widgets-coder/issues"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "skylark-ace": "git+https://github.com/skylark-integration/skylark-ace.git#master",
+    "skylark-codemirror": "git+https://github.com/skylark-integration/skylark-codemirror.git#master",
+    "skylark-langx": "git+https://github.com/skylarklangx/skylark-langx.git#master",
+    "skylark-net-http": "git+https://github.com/skylark-net/skylark-net-http.git#master",
+    "skylark-widgets-base": "git+https://github.com/skylark-widgets/skylark-widgets-base.git#master",
+    "skylark-widgets-swt": "git+https://github.com/skylark-widgets/skylark-widgets-swt.git#master"
+  },
+  "engines": {
+    "node": ">=0.10.1"
+  }
+}

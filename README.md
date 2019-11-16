@@ -1,2 +1,2 @@
-# skylark-widgets-coder
-The skylark code editor widget for showcasing html/css/javascript.
+# skylark-jotted
+A version of jotted( html/css/js playground) that ported to running on skylarkjs.
