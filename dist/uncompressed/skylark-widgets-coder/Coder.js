@@ -3,8 +3,7 @@ define([
     './util',
     './template',
     './plugin',
-    './pubsoup',
-    './bundle-plugins'
+    './pubsoup'
 ], function (skylark, util, template, plugin, PubSoup, BundlePlugins) {
     'use strict';
     class Coder {
@@ -221,6 +220,6 @@ define([
     Coder.plugin = function () {
         return plugin.register.apply(this, arguments);
     };
-    BundlePlugins(Coder);
+
     return skylark.attach("widgets.Coder",Coder);
 });

@@ -1,13 +1,13 @@
 define([
     'skylark-langx/skylark',
+    'skylark-widgets-base/Widget',
     './util',
     './template',
     './plugin',
-    './pubsoup',
-    './bundle-plugins'
-], function (skylark, util, template, plugin, PubSoup, BundlePlugins) {
+    './pubsoup'
+], function (skylark,Widget, util, template, plugin, PubSoup, BundlePlugins) {
     'use strict';
-    class Coder {
+    class Coder extend Widget{
         constructor($coderContainer, opts) {
             if (!$coderContainer) {
                 throw new Error("Can't find Coder container.");
@@ -221,6 +221,6 @@ define([
     Coder.plugin = function () {
         return plugin.register.apply(this, arguments);
     };
-    BundlePlugins(Coder);
+
     return skylark.attach("widgets.Coder",Coder);
 });

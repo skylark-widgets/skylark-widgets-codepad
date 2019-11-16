@@ -193,7 +193,7 @@ require.config({
 var form = {};
 
 require([
-  "../dist/uncompressed/skylark-widgets-coder-all.js"
+//  "../dist/uncompressed/skylark-widgets-coder-all.js"
 ], function() {
   require([
     "skylark-widgets-coder"
