@@ -56,17 +56,18 @@ define([
       </html>
     `;
         }
-        change(params, callback) {
+        change(e) {
+            var params = e.data;
             this.content[params.type] = params.content;
             var oldFrameContent = this.frameContent;
             this.frameContent = this.template(this.content['css'], this.content['html'], this.content['js']);
             this.lastCallback = () => {
                 this.lastCallback = () => {
                 };
-                callback(null, params);
+                //callback(null, params);
             };
             if (params.forceRender !== true && this.frameContent === oldFrameContent) {
-                callback(null, params);
+                //callback(null, params);
                 return;
             }
             if (this.supportSrcdoc) {

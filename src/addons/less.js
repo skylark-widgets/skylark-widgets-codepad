@@ -20,7 +20,8 @@ define([
             }
             return params.file.indexOf('.less') !== -1 || params.file === '';
         }
-        change(params, callback) {
+        change(e) {
+            var params = e.data;
             if (this.isLess(params)) {
                 window.less.render(params.content, this.options, (err, res) => {
                     if (err) {
@@ -28,10 +29,10 @@ define([
                     } else {
                         params.content = res.css;
                     }
-                    callback(null, params);
+                    //callback(null, params);
                 });
             } else {
-                callback(null, params);
+                //callback(null, params);
             }
         }
     };

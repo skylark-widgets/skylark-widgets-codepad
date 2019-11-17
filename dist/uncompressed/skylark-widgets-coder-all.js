@@ -11968,7 +11968,8 @@ define('skylark-widgets-coder/plugin',[
         plugins.push(plugin);
     }
     function init() {
-        this._get('options').plugins.forEach(plugin => {
+        //this._get('options').plugins.forEach(plugin => {
+        this.options.plugins.forEach(plugin => {
             let Plugin;
             let pluginName;
             let pluginOptions = {};
@@ -11980,73 +11981,13 @@ define('skylark-widgets-coder/plugin',[
             }
             Plugin = find(pluginName);
             this._get('plugins')[plugin] = new Plugin(this, pluginOptions);
-            styler.addClass(this._get('$container'), template.pluginClass(pluginName));
+//            styler.addClass(this._get('$container'), template.pluginClass(pluginName));
+            styler.addClass(this.$container, template.pluginClass(pluginName));
         });
     }
     return {
         register,
         init
-    };
-});
-define('skylark-widgets-coder/pubsoup',['./util'], function (util) {
-    'use strict';
-    return class PubSoup {
-        constructor() {
-            this.topics = {};
-            this.callbacks = {};
-        }
-        find(query) {
-            this.topics[query] = this.topics[query] || [];
-            return this.topics[query];
-        }
-        subscribe(topic, subscriber, priority = 90) {
-            var foundTopic = this.find(topic);
-            subscriber._priority = priority;
-            foundTopic.push(subscriber);
-            foundTopic.sort(function (a, b) {
-                return a._priority > b._priority ? 1 : b._priority > a._priority ? -1 : 0;
-            });
-        }
-        remover(arr, fn) {
-            arr.forEach(function () {
-                if (!fn) {
-                    arr.length = 0;
-                    return;
-                }
-                var index = [].indexOf.call(arr, fn);
-                if (index === -1) {
-                    return;
-                }
-                arr.splice(index, 1);
-            });
-        }
-        unsubscribe(topic, subscriber) {
-            var foundTopic = this.find(topic);
-            this.remover(foundTopic, subscriber);
-            this.callbacks[topic] = this.callbacks[topic] || [];
-            this.remover(this.callbacks[topic], subscriber);
-        }
-        publish(topic, params = {}) {
-            var foundTopic = this.find(topic);
-            var runList = [];
-            foundTopic.forEach(function (subscriber) {
-                runList.push(subscriber);
-            });
-            util.seq(runList, params, this.runCallbacks(topic));
-        }
-        runCallbacks(topic) {
-            return (err, params) => {
-                this.callbacks[topic] = this.callbacks[topic] || [];
-                this.callbacks[topic].forEach(c => {
-                    c(err, params);
-                });
-            };
-        }
-        done(topic, callback = function () {
-        }) {
-            this.callbacks[topic] = this.callbacks[topic] || [];
-            this.callbacks[topic].push(callback);
-        }
     };
 });
 define('skylark-widgets-coder/Coder',[
@@ -12058,8 +11999,7 @@ define('skylark-widgets-coder/Coder',[
     './util',
     './template',
     './plugin',
-    './pubsoup'
-], function (skylark,langx,Widget, styler,datax,util, template, plugin, PubSoup, BundlePlugins) {
+], function (skylark,langx,Widget, styler,datax,util, template, plugin) {
     'use strict';
     class Coder extends Widget{
         get klassName() {
@@ -12070,11 +12010,22 @@ define('skylark-widgets-coder/Coder',[
           return "lark.coder";
         } 
 
-        constructor($coderContainer, opts) {
-            super($coderContainer, opts);
-            if (!$coderContainer) {
-                throw new Error("Can't find Coder container.");
+        //default options
+        get options () {
+            return {
+                files: [],
+                showBlank: false,
+                runScripts: true,
+                pane: 'result',
+                debounce: 250,
+                plugins: []
             }
+        }
+
+        _init ($coderContainer, opts) {
+            //if (!$coderContainer) {
+            //    throw new Error("Can't find Coder container.");
+            // }
             var _private = {};
             this._get = function (key) {
                 return _private[key];
@@ -12083,6 +12034,8 @@ define('skylark-widgets-coder/Coder',[
                 _private[key] = value;
                 return _private[key];
             };
+
+            /*
             var options = this._set('options', langx.extend({
                 files: [],
                 showBlank: false,
@@ -12091,6 +12044,8 @@ define('skylark-widgets-coder/Coder',[
                 debounce: 250,
                 plugins: []
             },opts));
+            */
+            var options = this.options;
             options.plugins.push('render');
             if (options.runScripts === false) {
                 options.plugins.push('scriptless');
@@ -12100,6 +12055,8 @@ define('skylark-widgets-coder/Coder',[
                 css: null,
                 js: null
             });
+
+            /*
             var pubsoup = this._set('pubsoup', new PubSoup());
             this._set('trigger', this.trigger());
             this._set('on', function () {
@@ -12113,6 +12070,8 @@ define('skylark-widgets-coder/Coder',[
             });
             done('change', this.errors.bind(this));
             var $container = this._set('$container', $coderContainer);
+            */
+            var $container = this.$container = this._elm;
             $container.innerHTML = template.container();
             styler.addClass($container, template.containerClass());
             var paneActive = this._set('paneActive', options.pane);
@@ -12128,11 +12087,12 @@ define('skylark-widgets-coder/Coder',[
             $container.addEventListener('keyup', langx.debounce(this.change.bind(this), options.debounce));
             $container.addEventListener('change', langx.debounce(this.change.bind(this), options.debounce));
             $container.addEventListener('click', this.pane.bind(this));
-            this.$container = this._get('$container');
-            this.on = this._get('on');
-            this.off = this._get('off');
-            this.done = this._get('done');
-            this.trigger = this._get('trigger');
+            //this.$container = this._get('$container');
+
+            //this.on = this._get('on');
+            //this.off = this._get('off');
+            //this.done = this._get('done');
+            //this.trigger = this._get('trigger');
             this.paneActive = this._get('paneActive');
             this._set('plugins', {});
             plugin.init.call(this);
@@ -12156,7 +12116,8 @@ define('skylark-widgets-coder/Coder',[
 
         findFile(type) {
             var file = {};
-            var options = this._get('options');
+            //var options = this._get('options');
+            var options = this.options;
             for (let fileIndex in options.files) {
                 let file = options.files[fileIndex];
                 if (file.type === type) {
@@ -12166,7 +12127,8 @@ define('skylark-widgets-coder/Coder',[
             return file;
         }
         markup(type) {
-            var $container = this._get('$container');
+            //var $container = this._get('$container');
+            var $container = this._elm;
             var $parent = $container.querySelector(`.coder-pane-${ type }`);
             var file = this.findFile(type);
             var $editor = document.createElement('div');
@@ -12180,7 +12142,8 @@ define('skylark-widgets-coder/Coder',[
         }
         load(type) {
             var file = this.findFile(type);
-            var $textarea = this._get('$container').querySelector(`.coder-pane-${ type } textarea`);
+            //var $textarea = this._get('$container').querySelector(`.coder-pane-${ type } textarea`);
+            var $textarea = this._elm.querySelector(`.coder-pane-${ type } textarea`);
             if (typeof file.content !== 'undefined') {
                 this.setValue($textarea, file.content);
             } else if (typeof file.url !== 'undefined') {
@@ -12214,11 +12177,11 @@ define('skylark-widgets-coder/Coder',[
                 return;
             }
             cachedContent[type] = e.target.value;
-            this.trigger('change', {
+            this.emit('change', { data : {
                 type: type,
                 file: datax.data(e.target, 'coder-file'),
                 content: cachedContent[type]
-            });
+            }});
         }
         errors(errs, params) {
             this.status('error', errs, params);
@@ -12227,7 +12190,8 @@ define('skylark-widgets-coder/Coder',[
             if (!datax.data(e.target, 'coder-type')) {
                 return;
             }
-            var $container = this._get('$container');
+            //var $container = this._get('$container');
+            var $container = this._elm;
             var paneActive = this._get('paneActive');
             styler.removeClass($container, template.paneActiveClass(paneActive));
             paneActive = this._set('paneActive', datax.data(e.target, 'coder-type'));
@@ -12240,7 +12204,8 @@ define('skylark-widgets-coder/Coder',[
             }
             var $status = this._get('$status');
             styler.addClass($status[params.type], template.statusClass(statusType));
-            styler.addClass(this._get('$container'), template.statusActiveClass(params.type));
+            //styler.addClass(this._get('$container'), template.statusActiveClass(params.type));
+            styler.addClass(this._elm, template.statusActiveClass(params.type));
             var markup = '';
             messages.forEach(function (err) {
                 markup += template.statusMessage(err);
@@ -12250,36 +12215,9 @@ define('skylark-widgets-coder/Coder',[
         clearStatus(statusType, params) {
             var $status = this._get('$status');
             styler.removeClass($status[params.type], template.statusClass(statusType));
-            styler.removeClass(this._get('$container'), template.statusActiveClass(params.type));
+            //styler.removeClass(this._get('$container'), template.statusActiveClass(params.type));
+            styler.removeClass(this._elm, template.statusActiveClass(params.type));
             $status[params.type].innerHTML = '';
-        }
-        trigger() {
-            var options = this._get('options');
-            var pubsoup = this._get('pubsoup');
-            if (options.debounce === false) {
-                return function () {
-                    pubsoup.publish.apply(pubsoup, arguments);
-                };
-            }
-            var cooldown = {};
-            var multiple = {};
-            return function (topic, {
-                type = 'default'
-            } = {}) {
-                if (cooldown[type]) {
-                    multiple[type] = true;
-                } else {
-                    pubsoup.publish.apply(pubsoup, arguments);
-                }
-                clearTimeout(cooldown[type]);
-                cooldown[type] = setTimeout(() => {
-                    if (multiple[type]) {
-                        pubsoup.publish.apply(pubsoup, arguments);
-                    }
-                    multiple[type] = null;
-                    cooldown[type] = null;
-                }, options.debounce);
-            };
         }
     }
     Coder.plugin = function () {
@@ -22864,18 +22802,19 @@ define('skylark-widgets-coder/addons/codemirror',[
         }
         editorChange(params) {
             return () => {
-                this.coder.trigger('change', params);
+                this.coder.emit('change', {data:params});
             };
         }
-        change(params, callback) {
-            var editor = this.editor[params.type];
+        change(e, callback) {
+            var params = e.data,
+                editor = this.editor[params.type];
             if (!params.cmEditor) {
                 editor.setValue(params.content);
                 params.cmEditor = editor;
                 editor.on('change', this.editorChange(params));
             }
             params.content = editor.getValue();
-            callback(null, params);
+            //callback(null, params);
         }
     };
 
@@ -22968,16 +22907,17 @@ define('skylark-widgets-coder/addons/console',[
                 this.clear();
             }
             this.contentCache[params.type] = snippetlessContent;
-            callback(null, params);
+            //callback(null, params);
         }
-        change(params, callback) {
+        change(e) {
+            var params = e.data;
             if (params.type !== 'js') {
-                return callback(null, params);
+                return //callback(null, params);
             }
             if (params.content.indexOf(this.logCaptureSnippet) === -1) {
                 params.content = `${ this.logCaptureSnippet }${ params.content }`;
             }
-            callback(null, params);
+            //callback(null, params);
         }
         capture() {
             if (typeof window.console === 'undefined' || typeof window.console.log === 'undefined') {
@@ -23091,20 +23031,21 @@ define('skylark-widgets-coder/addons/play',[
             this.code = code;
             this.coder = coder;
         }
-        change(params, callback) {
+        change(e) {
+            var params = e.data;
             this.code[params.type] = langx.clone(params);
             if (typeof this.cache[params.type] !== 'undefined') {
                 callback(null, this.cache[params.type]);
                 this.cache[params.type].forceRender = null;
             } else {
                 this.cache[params.type] = langx.clone(params);
-                callback(null, params);
+                //callback(null, params);
             }
         }
         run() {
             for (let type in this.code) {
                 this.cache[type] = langx.mixin({ forceRender: true },this.code[type]);
-                this.coder.trigger('change', this.cache[type]);
+                this.coder.emit('change', this.cache[type]);
             }
         }
     };
@@ -23171,17 +23112,18 @@ define('skylark-widgets-coder/addons/render',[
       </html>
     `;
         }
-        change(params, callback) {
+        change(e) {
+            var params = e.data;
             this.content[params.type] = params.content;
             var oldFrameContent = this.frameContent;
             this.frameContent = this.template(this.content['css'], this.content['html'], this.content['js']);
             this.lastCallback = () => {
                 this.lastCallback = () => {
                 };
-                callback(null, params);
+                //callback(null, params);
             };
             if (params.forceRender !== true && this.frameContent === oldFrameContent) {
-                callback(null, params);
+                //callback(null, params);
                 return;
             }
             if (this.supportSrcdoc) {

@@ -28,9 +28,10 @@ define([
             coder.on('change', this.change.bind(this));
             this.runScriptTypes = runScriptTypes;
         }
-        change(params, callback) {
+        change(e) {
+            var params = e.data;
             if (params.type !== 'html') {
-                return callback(null, params);
+                return //callback(null, params);
             }
             var fragment = document.createElement('div');
             fragment.innerHTML = params.content;
@@ -43,7 +44,7 @@ define([
                 }
             }
             params.content = fragment.innerHTML;
-            callback(null, params);
+            //callback(null, params);
         }
     };
 

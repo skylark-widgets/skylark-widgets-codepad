@@ -7,8 +7,7 @@ define([
     './util',
     './template',
     './plugin',
-    './pubsoup'
-], function (skylark,langx,Widget, styler,datax,util, template, plugin, PubSoup, BundlePlugins) {
+], function (skylark,langx,Widget, styler,datax,util, template, plugin) {
     'use strict';
     class Coder extends Widget{
         get klassName() {
@@ -19,11 +18,22 @@ define([
           return "lark.coder";
         } 
 
-        constructor($coderContainer, opts) {
-            super($coderContainer, opts);
-            if (!$coderContainer) {
-                throw new Error("Can't find Coder container.");
+        //default options
+        get options () {
+            return {
+                files: [],
+                showBlank: false,
+                runScripts: true,
+                pane: 'result',
+                debounce: 250,
+                plugins: []
             }
+        }
+
+        _init ($coderContainer, opts) {
+            //if (!$coderContainer) {
+            //    throw new Error("Can't find Coder container.");
+            // }
             var _private = {};
             this._get = function (key) {
                 return _private[key];
@@ -32,6 +42,8 @@ define([
                 _private[key] = value;
                 return _private[key];
             };
+
+            /*
             var options = this._set('options', langx.extend({
                 files: [],
                 showBlank: false,
@@ -40,6 +52,8 @@ define([
                 debounce: 250,
                 plugins: []
             },opts));
+            */
+            var options = this.options;
             options.plugins.push('render');
             if (options.runScripts === false) {
                 options.plugins.push('scriptless');
@@ -49,6 +63,8 @@ define([
                 css: null,
                 js: null
             });
+
+            /*
             var pubsoup = this._set('pubsoup', new PubSoup());
             this._set('trigger', this.trigger());
             this._set('on', function () {
@@ -62,6 +78,8 @@ define([
             });
             done('change', this.errors.bind(this));
             var $container = this._set('$container', $coderContainer);
+            */
+            var $container = this.$container = this._elm;
             $container.innerHTML = template.container();
             styler.addClass($container, template.containerClass());
             var paneActive = this._set('paneActive', options.pane);
@@ -77,11 +95,12 @@ define([
             $container.addEventListener('keyup', langx.debounce(this.change.bind(this), options.debounce));
             $container.addEventListener('change', langx.debounce(this.change.bind(this), options.debounce));
             $container.addEventListener('click', this.pane.bind(this));
-            this.$container = this._get('$container');
-            this.on = this._get('on');
-            this.off = this._get('off');
-            this.done = this._get('done');
-            this.trigger = this._get('trigger');
+            //this.$container = this._get('$container');
+
+            //this.on = this._get('on');
+            //this.off = this._get('off');
+            //this.done = this._get('done');
+            //this.trigger = this._get('trigger');
             this.paneActive = this._get('paneActive');
             this._set('plugins', {});
             plugin.init.call(this);
@@ -105,7 +124,8 @@ define([
 
         findFile(type) {
             var file = {};
-            var options = this._get('options');
+            //var options = this._get('options');
+            var options = this.options;
             for (let fileIndex in options.files) {
                 let file = options.files[fileIndex];
                 if (file.type === type) {
@@ -115,7 +135,8 @@ define([
             return file;
         }
         markup(type) {
-            var $container = this._get('$container');
+            //var $container = this._get('$container');
+            var $container = this._elm;
             var $parent = $container.querySelector(`.coder-pane-${ type }`);
             var file = this.findFile(type);
             var $editor = document.createElement('div');
@@ -129,7 +150,8 @@ define([
         }
         load(type) {
             var file = this.findFile(type);
-            var $textarea = this._get('$container').querySelector(`.coder-pane-${ type } textarea`);
+            //var $textarea = this._get('$container').querySelector(`.coder-pane-${ type } textarea`);
+            var $textarea = this._elm.querySelector(`.coder-pane-${ type } textarea`);
             if (typeof file.content !== 'undefined') {
                 this.setValue($textarea, file.content);
             } else if (typeof file.url !== 'undefined') {
@@ -163,11 +185,11 @@ define([
                 return;
             }
             cachedContent[type] = e.target.value;
-            this.trigger('change', {
+            this.emit('change', { data : {
                 type: type,
                 file: datax.data(e.target, 'coder-file'),
                 content: cachedContent[type]
-            });
+            }});
         }
         errors(errs, params) {
             this.status('error', errs, params);
@@ -176,7 +198,8 @@ define([
             if (!datax.data(e.target, 'coder-type')) {
                 return;
             }
-            var $container = this._get('$container');
+            //var $container = this._get('$container');
+            var $container = this._elm;
             var paneActive = this._get('paneActive');
             styler.removeClass($container, template.paneActiveClass(paneActive));
             paneActive = this._set('paneActive', datax.data(e.target, 'coder-type'));
@@ -189,7 +212,8 @@ define([
             }
             var $status = this._get('$status');
             styler.addClass($status[params.type], template.statusClass(statusType));
-            styler.addClass(this._get('$container'), template.statusActiveClass(params.type));
+            //styler.addClass(this._get('$container'), template.statusActiveClass(params.type));
+            styler.addClass(this._elm, template.statusActiveClass(params.type));
             var markup = '';
             messages.forEach(function (err) {
                 markup += template.statusMessage(err);
@@ -199,36 +223,9 @@ define([
         clearStatus(statusType, params) {
             var $status = this._get('$status');
             styler.removeClass($status[params.type], template.statusClass(statusType));
-            styler.removeClass(this._get('$container'), template.statusActiveClass(params.type));
+            //styler.removeClass(this._get('$container'), template.statusActiveClass(params.type));
+            styler.removeClass(this._elm, template.statusActiveClass(params.type));
             $status[params.type].innerHTML = '';
-        }
-        trigger() {
-            var options = this._get('options');
-            var pubsoup = this._get('pubsoup');
-            if (options.debounce === false) {
-                return function () {
-                    pubsoup.publish.apply(pubsoup, arguments);
-                };
-            }
-            var cooldown = {};
-            var multiple = {};
-            return function (topic, {
-                type = 'default'
-            } = {}) {
-                if (cooldown[type]) {
-                    multiple[type] = true;
-                } else {
-                    pubsoup.publish.apply(pubsoup, arguments);
-                }
-                clearTimeout(cooldown[type]);
-                cooldown[type] = setTimeout(() => {
-                    if (multiple[type]) {
-                        pubsoup.publish.apply(pubsoup, arguments);
-                    }
-                    multiple[type] = null;
-                    cooldown[type] = null;
-                }, options.debounce);
-            };
         }
     }
     Coder.plugin = function () {

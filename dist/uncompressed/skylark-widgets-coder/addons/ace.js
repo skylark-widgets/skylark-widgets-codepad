@@ -34,18 +34,19 @@ define([
         }
         editorChange(params) {
             return () => {
-                this.coder.trigger('change', params);
+                this.coder.emit('change', {data : params});
             };
         }
-        change(params, callback) {
-            var editor = this.editor[params.type];
+        change(e, callback) {
+            var params = e.data,
+                editor = this.editor[params.type];
             if (!params.aceEditor) {
                 editor.getSession().setValue(params.content);
                 params.aceEditor = editor;
                 editor.on('change', this.editorChange(params));
             }
             params.content = editor.getValue();
-            callback(null, params);
+            //callback(null, params);
         }
     };
 

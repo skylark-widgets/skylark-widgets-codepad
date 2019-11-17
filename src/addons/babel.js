@@ -19,16 +19,17 @@ define([
             coder.$container.querySelector('a[data-coder-type="js"]').innerHTML = 'ES2015';
             coder.on('change', this.change.bind(this), priority);
         }
-        change(params, callback) {
+        change(e) {
+            var params = e.data;
             if (params.type === 'js') {
                 try {
                     params.content = this.babel.transform(params.content, this.options).code;
                 } catch (err) {
                     return callback(err, params);
                 }
-                callback(null, params);
+                //callback(null, params);
             } else {
-                callback(null, params);
+                //callback(null, params);
             }
         }
     };

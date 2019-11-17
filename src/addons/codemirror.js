@@ -29,18 +29,19 @@ define([
         }
         editorChange(params) {
             return () => {
-                this.coder.trigger('change', params);
+                this.coder.emit('change', {data:params});
             };
         }
-        change(params, callback) {
-            var editor = this.editor[params.type];
+        change(e, callback) {
+            var params = e.data,
+                editor = this.editor[params.type];
             if (!params.cmEditor) {
                 editor.setValue(params.content);
                 params.cmEditor = editor;
                 editor.on('change', this.editorChange(params));
             }
             params.content = editor.getValue();
-            callback(null, params);
+            //callback(null, params);
         }
     };
 

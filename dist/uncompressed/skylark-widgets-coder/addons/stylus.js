@@ -21,7 +21,8 @@ define([
             }
             return params.file.indexOf('.styl') !== -1 || params.file === '';
         }
-        change(params, callback) {
+        change(e) {
+            var params = e.data;
             if (this.isStylus(params)) {
                 window.stylus(params.content, this.options).render((err, res) => {
                     if (err) {
@@ -29,10 +30,10 @@ define([
                     } else {
                         params.content = res;
                     }
-                    callback(null, params);
+                    //callback(null, params);
                 });
             } else {
-                callback(null, params);
+                //callback(null, params);
             }
         }
     };

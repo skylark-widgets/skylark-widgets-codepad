@@ -5,5 +5,5 @@
  * @link https://github.com/skylark-widgets/skylark-widgets-coder/
  * @license MIT
  */
-define(["skylark-langx/langx","../util","../Coder"],function(e,n,t){"use strict";class i{constructor(n,t){t=e.clone(t),void 0!==window.CoffeeScript&&(n.$container.querySelector('a[data-coder-type="js"]').innerHTML="CoffeeScript",n.on("change",this.change.bind(this),20))}isCoffee(e){return"js"===e.type&&(-1!==e.file.indexOf(".coffee")||""===e.file)}change(e,n){if(this.isCoffee(e))try{e.content=window.CoffeeScript.compile(e.content)}catch(t){return n(t,e)}n(null,e)}}return t.plugin("coffeescript",i),i});
+define(["skylark-langx/langx","../util","../Coder"],function(e,t,n){"use strict";class c{constructor(t,n){n=e.clone(n),void 0!==window.CoffeeScript&&(t.$container.querySelector('a[data-coder-type="js"]').innerHTML="CoffeeScript",t.on("change",this.change.bind(this),20))}isCoffee(e){return"js"===e.type&&(-1!==e.file.indexOf(".coffee")||""===e.file)}change(e){var t=e.data;if(this.isCoffee(t))try{t.content=window.CoffeeScript.compile(t.content)}catch(e){return callback(e,t)}}}return n.plugin("coffeescript",c),c});
 //# sourceMappingURL=../sourcemaps/addons/coffeescript.js.map

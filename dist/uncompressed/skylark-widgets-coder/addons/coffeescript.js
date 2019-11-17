@@ -20,7 +20,8 @@ define([
             }
             return params.file.indexOf('.coffee') !== -1 || params.file === '';
         }
-        change(params, callback) {
+        change(e) {
+            var params = e.data;
             if (this.isCoffee(params)) {
                 try {
                     params.content = window.CoffeeScript.compile(params.content);
@@ -28,7 +29,7 @@ define([
                     return callback(err, params);
                 }
             }
-            callback(null, params);
+            //callback(null, params);
         }
     };
 

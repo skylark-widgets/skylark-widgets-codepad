@@ -16,16 +16,17 @@ define([
             coder.$container.querySelector('a[data-coder-type="html"]').innerHTML = 'Markdown';
             coder.on('change', this.change.bind(this), priority);
         }
-        change(params, callback) {
+        change(e) {
+            var params = e.data;
             if (params.type === 'html') {
                 try {
                     params.content = window.marked(params.content);
                 } catch (err) {
                     return callback(err, params);
                 }
-                callback(null, params);
+                //callback(null, params);
             } else {
-                callback(null, params);
+                //callback(null, params);
             }
         }
     };

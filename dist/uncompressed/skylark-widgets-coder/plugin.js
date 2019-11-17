@@ -19,7 +19,8 @@ define([
         plugins.push(plugin);
     }
     function init() {
-        this._get('options').plugins.forEach(plugin => {
+        //this._get('options').plugins.forEach(plugin => {
+        this.options.plugins.forEach(plugin => {
             let Plugin;
             let pluginName;
             let pluginOptions = {};
@@ -31,7 +32,8 @@ define([
             }
             Plugin = find(pluginName);
             this._get('plugins')[plugin] = new Plugin(this, pluginOptions);
-            styler.addClass(this._get('$container'), template.pluginClass(pluginName));
+//            styler.addClass(this._get('$container'), template.pluginClass(pluginName));
+            styler.addClass(this.$container, template.pluginClass(pluginName));
         });
     }
     return {

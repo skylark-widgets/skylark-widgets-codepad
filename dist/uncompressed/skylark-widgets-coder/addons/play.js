@@ -36,20 +36,21 @@ define([
             this.code = code;
             this.coder = coder;
         }
-        change(params, callback) {
+        change(e) {
+            var params = e.data;
             this.code[params.type] = langx.clone(params);
             if (typeof this.cache[params.type] !== 'undefined') {
                 callback(null, this.cache[params.type]);
                 this.cache[params.type].forceRender = null;
             } else {
                 this.cache[params.type] = langx.clone(params);
-                callback(null, params);
+                //callback(null, params);
             }
         }
         run() {
             for (let type in this.code) {
                 this.cache[type] = langx.mixin({ forceRender: true },this.code[type]);
-                this.coder.trigger('change', this.cache[type]);
+                this.coder.emit('change', this.cache[type]);
             }
         }
     };

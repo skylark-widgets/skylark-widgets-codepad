@@ -83,16 +83,17 @@ define([
                 this.clear();
             }
             this.contentCache[params.type] = snippetlessContent;
-            callback(null, params);
+            //callback(null, params);
         }
-        change(params, callback) {
+        change(e) {
+            var params = e.data;
             if (params.type !== 'js') {
-                return callback(null, params);
+                return //callback(null, params);
             }
             if (params.content.indexOf(this.logCaptureSnippet) === -1) {
                 params.content = `${ this.logCaptureSnippet }${ params.content }`;
             }
-            callback(null, params);
+            //callback(null, params);
         }
         capture() {
             if (typeof window.console === 'undefined' || typeof window.console.log === 'undefined') {
