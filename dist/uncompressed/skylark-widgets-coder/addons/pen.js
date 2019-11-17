@@ -1,7 +1,8 @@
 define([
+    'skylark-langx/langx',
     '../util',
     "../Coder"
-], function (util,Coder) {
+], function (langx,util,Coder) {
     'use strict';
     class PluginPen {
         constructor(coder, options) {

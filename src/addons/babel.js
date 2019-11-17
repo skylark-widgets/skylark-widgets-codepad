@@ -1,13 +1,14 @@
 define([
+    'skylark-langx/langx',
     '../util',
     "../Coder"
-], function (util,Coder) {
+], function (langx,util,Coder) {
     'use strict';
     
     class PluginBabel {
         constructor(coder, options) {
             var priority = 20;
-            this.options = util.extend(options, {});
+            this.options = langx.clone(options);
             if (typeof window.Babel !== 'undefined') {
                 this.babel = window.Babel;
             } else if (typeof window.babel !== 'undefined') {

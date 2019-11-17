@@ -1,11 +1,12 @@
 define([
+    'skylark-langx/langx',
     '../util',
     "../Coder"
-], function (util,Coder) {
+], function (langx,util,Coder) {
     'use strict';
     class PluginRender {
         constructor(coder, options) {
-            options = util.extend(options, {});
+            options = langx.clone(options);
             var supportSrcdoc = !!('srcdoc' in document.createElement('iframe'));
             var $resultFrame = coder.$container.querySelector('.coder-pane-result iframe');
             var frameContent = '';

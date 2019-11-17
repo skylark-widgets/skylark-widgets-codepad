@@ -1,13 +1,26 @@
 define([
     'skylark-langx/skylark',
+    'skylark-langx/langx',
+    'skylark-widgets-base/Widget',
+    "skylark-domx-styler",
+    "skylark-domx-data",
     './util',
     './template',
     './plugin',
     './pubsoup'
-], function (skylark, util, template, plugin, PubSoup, BundlePlugins) {
+], function (skylark,langx,Widget, styler,datax,util, template, plugin, PubSoup, BundlePlugins) {
     'use strict';
-    class Coder {
+    class Coder extends Widget{
+        get klassName() {
+          return "Coder";
+        } 
+
+        get pluginName(){
+          return "lark.coder";
+        } 
+
         constructor($coderContainer, opts) {
+            super($coderContainer, opts);
             if (!$coderContainer) {
                 throw new Error("Can't find Coder container.");
             }
@@ -19,14 +32,14 @@ define([
                 _private[key] = value;
                 return _private[key];
             };
-            var options = this._set('options', util.extend(opts, {
+            var options = this._set('options', langx.extend({
                 files: [],
                 showBlank: false,
                 runScripts: true,
                 pane: 'result',
                 debounce: 250,
                 plugins: []
-            }));
+            },opts));
             options.plugins.push('render');
             if (options.runScripts === false) {
                 options.plugins.push('scriptless');
@@ -50,9 +63,9 @@ define([
             done('change', this.errors.bind(this));
             var $container = this._set('$container', $coderContainer);
             $container.innerHTML = template.container();
-            util.addClass($container, template.containerClass());
+            styler.addClass($container, template.containerClass());
             var paneActive = this._set('paneActive', options.pane);
-            util.addClass($container, template.paneActiveClass(paneActive));
+            styler.addClass($container, template.paneActiveClass(paneActive));
             this._set('$status', {});
             for (let type of [
                     'html',
@@ -61,8 +74,8 @@ define([
                 ]) {
                 this.markup(type);
             }
-            $container.addEventListener('keyup', util.debounce(this.change.bind(this), options.debounce));
-            $container.addEventListener('change', util.debounce(this.change.bind(this), options.debounce));
+            $container.addEventListener('keyup', langx.debounce(this.change.bind(this), options.debounce));
+            $container.addEventListener('change', langx.debounce(this.change.bind(this), options.debounce));
             $container.addEventListener('click', this.pane.bind(this));
             this.$container = this._get('$container');
             this.on = this._get('on');
@@ -85,10 +98,11 @@ define([
                         'css',
                         'js'
                     ]) {
-                    util.addClass($container, template.hasFileClass(type));
+                    styler.addClass($container, template.hasFileClass(type));
                 }
             }
         }
+
         findFile(type) {
             var file = {};
             var options = this._get('options');
@@ -110,7 +124,7 @@ define([
             $parent.appendChild($editor);
             this._get('$status')[type] = $parent.querySelector('.coder-status');
             if (typeof file.url !== 'undefined' || typeof file.content !== 'undefined') {
-                util.addClass($container, template.hasFileClass(type));
+                styler.addClass($container, template.hasFileClass(type));
             }
         }
         load(type) {
@@ -140,7 +154,7 @@ define([
             this.change({ target: $textarea });
         }
         change(e) {
-            var type = util.data(e.target, 'coder-type');
+            var type = datax.data(e.target, 'coder-type');
             if (!type) {
                 return;
             }
@@ -151,7 +165,7 @@ define([
             cachedContent[type] = e.target.value;
             this.trigger('change', {
                 type: type,
-                file: util.data(e.target, 'coder-file'),
+                file: datax.data(e.target, 'coder-file'),
                 content: cachedContent[type]
             });
         }
@@ -159,14 +173,14 @@ define([
             this.status('error', errs, params);
         }
         pane(e) {
-            if (!util.data(e.target, 'coder-type')) {
+            if (!datax.data(e.target, 'coder-type')) {
                 return;
             }
             var $container = this._get('$container');
             var paneActive = this._get('paneActive');
-            util.removeClass($container, template.paneActiveClass(paneActive));
-            paneActive = this._set('paneActive', util.data(e.target, 'coder-type'));
-            util.addClass($container, template.paneActiveClass(paneActive));
+            styler.removeClass($container, template.paneActiveClass(paneActive));
+            paneActive = this._set('paneActive', datax.data(e.target, 'coder-type'));
+            styler.addClass($container, template.paneActiveClass(paneActive));
             e.preventDefault();
         }
         status(statusType = 'error', messages = [], params = {}) {
@@ -174,8 +188,8 @@ define([
                 return this.clearStatus(statusType, params);
             }
             var $status = this._get('$status');
-            util.addClass($status[params.type], template.statusClass(statusType));
-            util.addClass(this._get('$container'), template.statusActiveClass(params.type));
+            styler.addClass($status[params.type], template.statusClass(statusType));
+            styler.addClass(this._get('$container'), template.statusActiveClass(params.type));
             var markup = '';
             messages.forEach(function (err) {
                 markup += template.statusMessage(err);
@@ -184,8 +198,8 @@ define([
         }
         clearStatus(statusType, params) {
             var $status = this._get('$status');
-            util.removeClass($status[params.type], template.statusClass(statusType));
-            util.removeClass(this._get('$container'), template.statusActiveClass(params.type));
+            styler.removeClass($status[params.type], template.statusClass(statusType));
+            styler.removeClass(this._get('$container'), template.statusActiveClass(params.type));
             $status[params.type].innerHTML = '';
         }
         trigger() {

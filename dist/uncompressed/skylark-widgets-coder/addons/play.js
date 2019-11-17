@@ -1,11 +1,12 @@
 define([
+    'skylark-langx/langx',
     '../util',
     "../Coder"
-], function (util,Coder) {
+], function (langx,util,Coder) {
     'use strict';
     class PluginPlay {
         constructor(coder, options) {
-            options = util.extend(options, { firstRun: true });
+            options = langx.mixin({ firstRun: true },options);
             var priority = 10;
             var cache = {};
             var code = {};
@@ -36,18 +37,18 @@ define([
             this.coder = coder;
         }
         change(params, callback) {
-            this.code[params.type] = util.extend(params);
+            this.code[params.type] = langx.clone(params);
             if (typeof this.cache[params.type] !== 'undefined') {
                 callback(null, this.cache[params.type]);
                 this.cache[params.type].forceRender = null;
             } else {
-                this.cache[params.type] = util.extend(params);
+                this.cache[params.type] = langx.clone(params);
                 callback(null, params);
             }
         }
         run() {
             for (let type in this.code) {
-                this.cache[type] = util.extend(this.code[type], { forceRender: true });
+                this.cache[type] = langx.mixin({ forceRender: true },this.code[type]);
                 this.coder.trigger('change', this.cache[type]);
             }
         }

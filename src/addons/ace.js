@@ -1,8 +1,10 @@
 define([
+    'skylark-langx/langx',
+    'skylark-domx-data',
     'skylark-ace',
     '../util',
     "../Coder"
-], function (ace,util,Coder) {
+], function (langx,datax,ace,util,Coder) {
     'use strict';
     class PluginAce {
         constructor(coder, options) {
@@ -10,20 +12,20 @@ define([
             var i;
             this.editor = {};
             this.coder = coder;
-            options = util.extend(options, {});
+            options = langx.clone(options);
             //if (typeof window.ace === 'undefined') {
             //    return;
             // }
             var $editors = coder.$container.querySelectorAll('.coder-editor');
             for (i = 0; i < $editors.length; i++) {
                 let $textarea = $editors[i].querySelector('textarea');
-                let type = util.data($textarea, 'coder-type');
-                let file = util.data($textarea, 'coder-file');
+                let type = datax.data($textarea, 'coder-type');
+                let file = datax.data($textarea, 'coder-file');
                 let $aceContainer = document.createElement('div');
                 $editors[i].appendChild($aceContainer);
                 this.editor[type] = ace.edit($aceContainer);
                 let editor = this.editor[type];
-                let editorOptions = util.extend(options);
+                let editorOptions = langx.clone(options);
                 editor.getSession().setMode('ace/mode/' + util.getMode(type, file));
                 editor.getSession().setOptions(editorOptions);
                 editor.$blockScrolling = Infinity;

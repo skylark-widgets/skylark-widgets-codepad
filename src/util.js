@@ -1,21 +1,9 @@
 define([
+    "skylark-langx/langx",
     "skylark-net-http/Xhr"
-],function (Xhr) {
+],function (langx,Xhr) {
     'use strict';
-    function extend(obj = {}, defaults = {}) {
-        var extended = {};
-        Object.keys(obj).forEach(function (key) {
-            extended[key] = obj[key];
-        });
-        Object.keys(defaults).forEach(function (key) {
-            if (typeof extended[key] !== 'undefined') {
-                extended[key] = obj[key];
-            } else {
-                extended[key] = defaults[key];
-            }
-        });
-        return extended;
-    }
+
     function fetch(url, callback) {
         /*
         var xhr = new window.XMLHttpRequest();
@@ -66,64 +54,11 @@ define([
         }
         seqRunner(0, params, arr, errors, callback);
     }
-    function debounce(fn, delay) {
-        var cooldown = null;
-        var multiple = null;
-        return function () {
-            if (cooldown) {
-                multiple = true;
-            } else {
-                fn.apply(this, arguments);
-            }
-            clearTimeout(cooldown);
-            cooldown = setTimeout(() => {
-                if (multiple) {
-                    fn.apply(this, arguments);
-                }
-                cooldown = null;
-                multiple = null;
-            }, delay);
-        };
-    }
     function log() {
         console.log(arguments);
     }
-    function hasClass(node, className) {
-        if (!node.className) {
-            return false;
-        }
-        var tempClass = ' ' + node.className + ' ';
-        className = ' ' + className + ' ';
-        if (tempClass.indexOf(className) !== -1) {
-            return true;
-        }
-        return false;
-    }
-    function addClass(node, className) {
-        if (hasClass(node, className)) {
-            return node.className;
-        }
-        if (node.className) {
-            className = ' ' + className;
-        }
-        node.className += className;
-        return node.className;
-    }
-    function removeClass(node, className) {
-        var spaceBefore = ' ' + className;
-        var spaceAfter = className + ' ';
-        if (node.className.indexOf(spaceBefore) !== -1) {
-            node.className = node.className.replace(spaceBefore, '');
-        } else if (node.className.indexOf(spaceAfter) !== -1) {
-            node.className = node.className.replace(spaceAfter, '');
-        } else {
-            node.className = node.className.replace(className, '');
-        }
-        return node.className;
-    }
-    function data(node, attr) {
-        return node.getAttribute('data-' + attr);
-    }
+
+
     var defaultModemap = {
         'html': 'html',
         'css': 'css',
@@ -133,7 +68,7 @@ define([
         'coffee': 'coffeescript'
     };
     function getMode(type = '', file = '', customModemap = {}) {
-        var modemap = extend(customModemap, defaultModemap);
+        var modemap = langx.mixin({}, defaultModemap,customModemap);
         for (let key in modemap) {
             let keyLength = key.length;
             if (file.slice(-keyLength++) === '.' + key) {
@@ -148,15 +83,9 @@ define([
         return type;
     }
     return {
-        extend,
         fetch,
         seq,
-        debounce,
         log,
-        getMode,
-        data,
-        hasClass,
-        addClass,
-        removeClass
+        getMode
     };
 });

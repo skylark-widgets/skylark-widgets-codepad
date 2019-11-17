@@ -1,7 +1,8 @@
 define([
+    "skylark-domx-styler",
     './util',
     './template'
-], function (util, template) {
+], function (styler, util, template) {
     'use strict';
     var plugins = [];
     function find(id) {
@@ -30,7 +31,7 @@ define([
             }
             Plugin = find(pluginName);
             this._get('plugins')[plugin] = new Plugin(this, pluginOptions);
-            util.addClass(this._get('$container'), template.pluginClass(pluginName));
+            styler.addClass(this._get('$container'), template.pluginClass(pluginName));
         });
     }
     return {

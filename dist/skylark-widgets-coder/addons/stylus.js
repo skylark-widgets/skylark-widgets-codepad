@@ -5,5 +5,5 @@
  * @link https://github.com/skylark-widgets/skylark-widgets-coder/
  * @license MIT
  */
-define(["../util","../Coder"],function(t,n){"use strict";class e{constructor(n,e){e=t.extend(e,{}),void 0!==window.stylus&&(n.$container.querySelector('a[data-coder-type="css"]').innerHTML="Stylus",n.on("change",this.change.bind(this),20))}isStylus(t){return"css"===t.type&&(-1!==t.file.indexOf(".styl")||""===t.file)}change(t,n){this.isStylus(t)?window.stylus(t.content,this.options).render((e,s)=>{if(e)return n(e,t);t.content=s,n(null,t)}):n(null,t)}}return n.plugin("stylus",e),e});
+define(["skylark-langx/langx","../util","../Coder"],function(n,t,s){"use strict";class e{constructor(t,s){s=n.clone(s),void 0!==window.stylus&&(t.$container.querySelector('a[data-coder-type="css"]').innerHTML="Stylus",t.on("change",this.change.bind(this),20))}isStylus(n){return"css"===n.type&&(-1!==n.file.indexOf(".styl")||""===n.file)}change(n,t){this.isStylus(n)?window.stylus(n.content,this.options).render((s,e)=>{if(s)return t(s,n);n.content=e,t(null,n)}):t(null,n)}}return s.plugin("stylus",e),e});
 //# sourceMappingURL=../sourcemaps/addons/stylus.js.map

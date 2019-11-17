@@ -1,8 +1,10 @@
 define([
+    'skylark-langx/langx',
+    'skylark-domx-data',
     'skylark-codemirror/CodeMirror',
     '../util',
     "../Coder"    
-], function (CodeMirror,util,Coder) {
+], function (langx,datax,CodeMirror,util,Coder) {
     'use strict';
     class PluginCodeMirror {
         constructor(coder, options) {
@@ -11,15 +13,15 @@ define([
             this.editor = {};
             this.coder = coder;
             var modemap = { 'html': 'htmlmixed' };
-            options = util.extend(options, { lineNumbers: true });
+            options = langx.extend({},options, { lineNumbers: true });
             //if (typeof window.CodeMirror === 'undefined') {
             //    return;
             //}
             var $editors = coder.$container.querySelectorAll('.coder-editor');
             for (i = 0; i < $editors.length; i++) {
                 let $textarea = $editors[i].querySelector('textarea');
-                let type = util.data($textarea, 'coder-type');
-                let file = util.data($textarea, 'coder-file');
+                let type = datax.data($textarea, 'coder-type');
+                let file = datax.data($textarea, 'coder-file');
                 this.editor[type] = CodeMirror.fromTextArea($textarea, options);
                 this.editor[type].setOption('mode', util.getMode(type, file, modemap));
             }

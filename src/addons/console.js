@@ -1,12 +1,14 @@
 define([
+    'skylark-langx/langx',
+    "skylark-domx-styler",
     '../util',
     "../Coder"
-], function (util,Coder) {
+], function (langx,styler,util,Coder) {
     'use strict';
     
     class PluginConsole {
         constructor(coder, options) {
-            options = util.extend(options, { autoClear: false });
+            options = langx.mixin({ autoClear: false },options);
             var priority = 30;
             var history = [];
             var historyIndex = 0;
@@ -17,10 +19,10 @@ define([
                 js: ''
             };
             var $nav = document.createElement('li');
-            util.addClass($nav, 'coder-nav-item coder-nav-item-console');
+            styler.addClass($nav, 'coder-nav-item coder-nav-item-console');
             $nav.innerHTML = '<a href="#" data-coder-type="console">JS Console</a>';
             var $pane = document.createElement('div');
-            util.addClass($pane, 'coder-pane coder-pane-console');
+            styler.addClass($pane, 'coder-pane coder-pane-console');
             $pane.innerHTML = `
               <div class="coder-console-container">
                 <ul class="coder-console-output"></ul>
@@ -112,9 +114,9 @@ define([
         }
         log(message = '', type) {
             var $log = document.createElement('li');
-            util.addClass($log, 'coder-console-log');
+            styler.addClass($log, 'coder-console-log');
             if (typeof type !== 'undefined') {
-                util.addClass($log, `coder-console-log-${ type }`);
+                styler.addClass($log, `coder-console-log-${ type }`);
             }
             $log.innerHTML = message;
             this.$output.appendChild($log);

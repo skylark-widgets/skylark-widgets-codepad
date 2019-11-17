@@ -1,11 +1,12 @@
 define([
+    'skylark-langx/langx',
     '../util',
     "../Coder"
-], function (util,Coder) {
+], function (langx,util,Coder) {
     'use strict';
     return class PluginScriptless {
         constructor(coder, options) {
-            options = util.extend(options, {});
+            options = langx.extend(options);
             var runScriptTypes = [
                 'application/javascript',
                 'application/ecmascript',

@@ -124,6 +124,7 @@ require.config({
            location : "../node_modules/skylark-domx-geom/dist/uncompressed/skylark-domx-geom",
             main: 'main'
          },
+
          {
            name : "skylark-domx-images",
            location : "../node_modules/skylark-domx-images/dist/uncompressed/skylark-domx-images",
@@ -150,6 +151,13 @@ require.config({
            location : "../node_modules/skylark-domx-scripter/dist/uncompressed/skylark-domx-scripter",
             main: 'main'
          },
+
+         {
+           name : "skylark-domx-files",
+           location : "../node_modules/skylark-domx-files/dist/uncompressed/skylark-domx-files",
+            main: 'main'
+         },
+
          {
            name : "skylark-domx-styler",
            location : "../node_modules/skylark-domx-styler/dist/uncompressed/skylark-domx-styler",
@@ -181,7 +189,11 @@ require.config({
            location : "../node_modules/skylark-storages-diskfs/dist/uncompressed/skylark-storages-diskfs",
             main: 'main'
          },
-
+         {
+           name : "skylark-widgets-base" ,
+           location : "../node_modules/skylark-widgets-base/dist/uncompressed/skylark-widgets-base",
+            main: 'main'
+         },
      { name: "skylark-langx", location: "../node_modules/skylark-langx/dist/uncompressed/skylark-langx" },
      { name: "skylark-utils-dom", location: "../node_modules/skylark-utils-dom/dist/uncompressed/skylark-utils-dom"},
      { name: "skylark-ace", location: "../node_modules/skylark-/dist/uncompressed/skylark-ace"},

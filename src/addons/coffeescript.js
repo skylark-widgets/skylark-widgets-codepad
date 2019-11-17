@@ -1,12 +1,13 @@
 define([
+    'skylark-langx/langx',
     '../util',
     "../Coder"
-], function (util,Coder) {
+], function (langx,util,Coder) {
     'use strict';
     class PluginCoffeeScript {
         constructor(coder, options) {
             var priority = 20;
-            options = util.extend(options, {});
+            options = langx.clone(options);
             if (typeof window.CoffeeScript === 'undefined') {
                 return;
             }
