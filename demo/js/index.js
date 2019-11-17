@@ -1,9 +1,6 @@
 require.config({
   baseUrl: "./"
   ,map: {
-    '*': {
-      'jquery': 'skylark-jquery/core'
-    }
   }
   , shim: {
   }
@@ -75,10 +72,15 @@ require([
           type: 'js',
           url: 'snippets/ripple/ripple.js'
         }],
-        plugins: [
-          'codemirror',
-          'console'
-        ]
+        addons: {
+          general : [
+            'console',
+            'render'
+          ],
+          edit : [
+            'codemirror'
+          ]
+        }
       })
     }
 

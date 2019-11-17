@@ -5,5 +5,5 @@
  * @link https://github.com/skylark-widgets/skylark-widgets-coder/
  * @license MIT
  */
-define(["./Coder","./addons/codemirror","./addons/console","./addons/play","./addons/render"],function(d){return d});
+define(["./Coder","./addons/edit/codemirror","./addons/general/console","./addons/general/play","./addons/general/render"],function(e){return e});
 //# sourceMappingURL=sourcemaps/main.js.map

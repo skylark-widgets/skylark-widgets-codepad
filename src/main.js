@@ -1,9 +1,9 @@
 define([
 	"./Coder",
-	"./addons/codemirror",
-	"./addons/console",
-	"./addons/play",
-	"./addons/render"
+	"./addons/edit/codemirror",
+	"./addons/general/console",
+	"./addons/general/play",
+	"./addons/general/render"
 ],function(Coder){
 
 	return Coder;

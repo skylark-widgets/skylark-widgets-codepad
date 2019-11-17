@@ -6,8 +6,8 @@ define([
     "skylark-domx-data",
     './util',
     './template',
-    './plugin',
-], function (skylark,langx,Widget, styler,datax,util, template, plugin) {
+    "./addons"
+], function (skylark,langx,Widget, styler,datax,util, template,addons) {
     'use strict';
     class Coder extends Widget{
         get klassName() {
@@ -26,7 +26,9 @@ define([
                 runScripts: true,
                 pane: 'result',
                 debounce: 250,
-                plugins: []
+                addons: {
+                    "general" : ["render"]
+                }
             }
         }
 
@@ -34,6 +36,15 @@ define([
             //if (!$coderContainer) {
             //    throw new Error("Can't find Coder container.");
             // }
+
+            var options = this.options;
+            if (options.runScripts === false) {
+                options.addons.gerneral.push('scriptless');
+            }
+
+            super._init();
+            //Widget.prototype._init.call(this);
+
             var _private = {};
             this._get = function (key) {
                 return _private[key];
@@ -53,11 +64,6 @@ define([
                 plugins: []
             },opts));
             */
-            var options = this.options;
-            options.plugins.push('render');
-            if (options.runScripts === false) {
-                options.plugins.push('scriptless');
-            }
             this._set('cachedContent', {
                 html: null,
                 css: null,
@@ -101,9 +107,11 @@ define([
             //this.off = this._get('off');
             //this.done = this._get('done');
             //this.trigger = this._get('trigger');
+        }
+
+        _startup() {
+            var options = this.options;
             this.paneActive = this._get('paneActive');
-            this._set('plugins', {});
-            plugin.init.call(this);
             for (let type of [
                     'html',
                     'css',
@@ -120,6 +128,7 @@ define([
                     styler.addClass($container, template.hasFileClass(type));
                 }
             }
+
         }
 
         findFile(type) {
@@ -228,9 +237,7 @@ define([
             $status[params.type].innerHTML = '';
         }
     }
-    Coder.plugin = function () {
-        return plugin.register.apply(this, arguments);
-    };
+    Coder.addons = addons;
 
     return skylark.attach("widgets.Coder",Coder);
 });

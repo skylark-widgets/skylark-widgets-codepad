@@ -1,0 +1,74 @@
+define([
+    'skylark-langx/langx',
+    'skylark-domx-data',
+    'skylark-codemirror/CodeMirror',
+    "../../Addon",
+    '../../util',
+    "../../addons"    
+], function (langx,datax,CodeMirror,Addon,util,addons) {
+    'use strict';
+    class PluginCodeMirror  extends Addon{
+        //constructor(coder, options) 
+
+        get options() {
+            return {
+               lineNumbers: true,
+               pluginCssClass : "coder-plugin-codemirror"
+            }
+        }
+
+        _init() {
+            super._init();
+            var coder = this.coder,
+                options = this.options;
+
+            var priority = 1;
+            var i;
+            this.editor = {};
+            //this.coder = coder;
+            var modemap = { 'html': 'htmlmixed' };
+            var options = this.options;
+            //if (typeof window.CodeMirror === 'undefined') {
+            //    return;
+            //}
+            var $editors = coder.$container.querySelectorAll('.coder-editor');
+            for (i = 0; i < $editors.length; i++) {
+                let $textarea = $editors[i].querySelector('textarea');
+                let type = datax.data($textarea, 'coder-type');
+                let file = datax.data($textarea, 'coder-file');
+                this.editor[type] = CodeMirror.fromTextArea($textarea, options);
+                this.editor[type].setOption('mode', util.getMode(type, file, modemap));
+            }
+            coder.on('change', this.change.bind(this), priority);
+        }
+        editorChange(params) {
+            return () => {
+                this.coder.emit('change', {data:params});
+            };
+        }
+        change(e, callback) {
+            var params = e.data,
+                editor = this.editor[params.type];
+            if (!params.cmEditor) {
+                editor.setValue(params.content);
+                params.cmEditor = editor;
+                editor.on('change', this.editorChange(params));
+            }
+            params.content = editor.getValue();
+            //callback(null, params);
+        }
+
+
+        static get categoryName() {
+            return "edit";
+        }
+
+        static get addonName(){
+            return "codemirror";
+        }        
+    };
+
+    addons.edit.codemirror = PluginCodeMirror;
+
+    return PluginCodeMirror;
+});
