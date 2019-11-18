@@ -2,10 +2,10 @@ define([
     'skylark-langx/langx',
     "../../Addon",
     '../../util',
-    "../../addons"
-], function (langx,Addon,util,addons) {
+    "../../Coder"
+], function (langx,Addon,util,Coder) {
     'use strict';
-    class PluginCoffeeScript  extends Addon{
+    class AddonCoffeeScript  extends Addon{
         //constructor(coder, options) 
 
         _init() {
@@ -48,7 +48,7 @@ define([
 
     };
 
-    addons.js.coffeescript = PluginCoffeeScript;
+    AddonCoffeeScript.register(Coder);
 
-    return PluginCoffeeScript;
+    return AddonCoffeeScript;
 });

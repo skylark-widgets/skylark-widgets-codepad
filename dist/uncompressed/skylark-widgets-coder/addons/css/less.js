@@ -2,10 +2,10 @@ define([
     'skylark-langx/langx',
     "../../Addon",
     '../../util',
-    "../../addons"
-], function (langx,Addon,util,addons) {
+    "../../Coder"
+], function (langx,Addon,util,Coder) {
     'use strict';
-    class PluginLess extends Addon{
+    class AddonLess extends Addon{
         //constructor(coder, options) 
 
         _init() {
@@ -53,7 +53,7 @@ define([
         }
     };
 
-    addons.css.less = PluginLess;
+    AddonLess.register(Coder);
 
-    return PluginLess;
+    return AddonLess;
 });

@@ -4,10 +4,10 @@ define([
     'skylark-codemirror/CodeMirror',
     "../../Addon",
     '../../util',
-    "../../addons"    
-], function (langx,datax,CodeMirror,Addon,util,addons) {
+    "../../Coder"    
+], function (langx,datax,CodeMirror,Addon,util,Coder) {
     'use strict';
-    class PluginCodeMirror  extends Addon{
+    class AddonCodeMirror  extends Addon{
         //constructor(coder, options) 
 
         get options() {
@@ -68,7 +68,7 @@ define([
         }        
     };
 
-    addons.edit.codemirror = PluginCodeMirror;
+    AddonCodeMirror.register(Coder);
 
-    return PluginCodeMirror;
+    return AddonCodeMirror;
 });

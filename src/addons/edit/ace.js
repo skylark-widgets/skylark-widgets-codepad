@@ -4,10 +4,10 @@ define([
     'skylark-ace',
     "../../Addon",
     '../../util',
-    "../../addons"
-], function (langx,datax,Addon,ace,util,addons) {
+    "../../Coder"
+], function (langx,datax,Addon,ace,util,Coder) {
     'use strict';
-    class PluginAce extends Addon {
+    class AddonAce extends Addon {
         //constructor(coder, options) 
 
         _init() {
@@ -67,7 +67,7 @@ define([
         }        
     };
 
-    addons.edit.ace = PluginAce;
+    AddonAce.register(Coder);
     
-    return PluginAce;
+    return AddonAce;
 });

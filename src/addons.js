@@ -18,10 +18,6 @@ define([],function(){
 
 	    edit : {
       
-	    },
-
-	    panes : {
-	    	
 	    }	
 	};
 })

@@ -54,42 +54,25 @@ define([
                 return _private[key];
             };
 
-            /*
-            var options = this._set('options', langx.extend({
-                files: [],
-                showBlank: false,
-                runScripts: true,
-                pane: 'result',
-                debounce: 250,
-                plugins: []
-            },opts));
-            */
+
             this._set('cachedContent', {
                 html: null,
                 css: null,
                 js: null
             });
 
-            /*
-            var pubsoup = this._set('pubsoup', new PubSoup());
-            this._set('trigger', this.trigger());
-            this._set('on', function () {
-                pubsoup.subscribe.apply(pubsoup, arguments);
-            });
-            this._set('off', function () {
-                pubsoup.unsubscribe.apply(pubsoup, arguments);
-            });
-            var done = this._set('done', function () {
-                pubsoup.done.apply(pubsoup, arguments);
-            });
-            done('change', this.errors.bind(this));
-            var $container = this._set('$container', $coderContainer);
-            */
             var $container = this.$container = this._elm;
-            $container.innerHTML = template.container();
-            styler.addClass($container, template.containerClass());
+
             var paneActive = this._set('paneActive', options.pane);
-            styler.addClass($container, template.paneActiveClass(paneActive));
+
+            var velm = this._velm;
+            velm.html(template.container())
+                .addClass(template.containerClass())
+                .addClass(template.paneActiveClass(paneActive))
+                .on('keyup', langx.debounce(this.change.bind(this), options.debounce))
+                .on('change', langx.debounce(this.change.bind(this), options.debounce))
+                .on('click', this.pane.bind(this));
+
             this._set('$status', {});
             for (let type of [
                     'html',
@@ -98,15 +81,6 @@ define([
                 ]) {
                 this.markup(type);
             }
-            $container.addEventListener('keyup', langx.debounce(this.change.bind(this), options.debounce));
-            $container.addEventListener('change', langx.debounce(this.change.bind(this), options.debounce));
-            $container.addEventListener('click', this.pane.bind(this));
-            //this.$container = this._get('$container');
-
-            //this.on = this._get('on');
-            //this.off = this._get('off');
-            //this.done = this._get('done');
-            //this.trigger = this._get('trigger');
         }
 
         _startup() {
@@ -125,7 +99,7 @@ define([
                         'css',
                         'js'
                     ]) {
-                    styler.addClass($container, template.hasFileClass(type));
+                    this._velm.addClass(template.hasFileClass(type));
                 }
             }
 

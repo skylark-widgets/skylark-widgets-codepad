@@ -4094,7 +4094,7 @@ define('skylark-domx-noder/noder',[
                 node.appendChild(html);
             }
 
-
+            return this;
         }
     }
 
@@ -11971,10 +11971,6 @@ define('skylark-widgets-coder/addons',[],function(){
 
 	    edit : {
       
-	    },
-
-	    panes : {
-	    	
 	    }	
 	};
 });
@@ -12034,42 +12030,25 @@ define('skylark-widgets-coder/Coder',[
                 return _private[key];
             };
 
-            /*
-            var options = this._set('options', langx.extend({
-                files: [],
-                showBlank: false,
-                runScripts: true,
-                pane: 'result',
-                debounce: 250,
-                plugins: []
-            },opts));
-            */
+
             this._set('cachedContent', {
                 html: null,
                 css: null,
                 js: null
             });
 
-            /*
-            var pubsoup = this._set('pubsoup', new PubSoup());
-            this._set('trigger', this.trigger());
-            this._set('on', function () {
-                pubsoup.subscribe.apply(pubsoup, arguments);
-            });
-            this._set('off', function () {
-                pubsoup.unsubscribe.apply(pubsoup, arguments);
-            });
-            var done = this._set('done', function () {
-                pubsoup.done.apply(pubsoup, arguments);
-            });
-            done('change', this.errors.bind(this));
-            var $container = this._set('$container', $coderContainer);
-            */
             var $container = this.$container = this._elm;
-            $container.innerHTML = template.container();
-            styler.addClass($container, template.containerClass());
+
             var paneActive = this._set('paneActive', options.pane);
-            styler.addClass($container, template.paneActiveClass(paneActive));
+
+            var velm = this._velm;
+            velm.html(template.container())
+                .addClass(template.containerClass())
+                .addClass(template.paneActiveClass(paneActive))
+                .on('keyup', langx.debounce(this.change.bind(this), options.debounce))
+                .on('change', langx.debounce(this.change.bind(this), options.debounce))
+                .on('click', this.pane.bind(this));
+
             this._set('$status', {});
             for (let type of [
                     'html',
@@ -12078,15 +12057,6 @@ define('skylark-widgets-coder/Coder',[
                 ]) {
                 this.markup(type);
             }
-            $container.addEventListener('keyup', langx.debounce(this.change.bind(this), options.debounce));
-            $container.addEventListener('change', langx.debounce(this.change.bind(this), options.debounce));
-            $container.addEventListener('click', this.pane.bind(this));
-            //this.$container = this._get('$container');
-
-            //this.on = this._get('on');
-            //this.off = this._get('off');
-            //this.done = this._get('done');
-            //this.trigger = this._get('trigger');
         }
 
         _startup() {
@@ -12105,7 +12075,7 @@ define('skylark-widgets-coder/Coder',[
                         'css',
                         'js'
                     ]) {
-                    styler.addClass($container, template.hasFileClass(type));
+                    this._velm.addClass(template.hasFileClass(type));
                 }
             }
 
@@ -22786,6 +22756,17 @@ define('skylark-widgets-base/Addon',[
 
 	});
 
+	Addon.register = function(Widget) {
+		var categoryName = this.categoryName,
+			addonName = this.addonName;
+
+		if (categoryName && addonName) {
+			Widget.addons = Widget.addons || {};
+			Widget.addons[categoryName] = Widget.addons[categoryName] || {};
+			Widget.addons[categoryName][addonName] = this;
+		}
+	};
+
 	return base.Addon = Addon;
 
 });
@@ -22813,10 +22794,10 @@ define('skylark-widgets-coder/addons/edit/codemirror',[
     'skylark-codemirror/CodeMirror',
     "../../Addon",
     '../../util',
-    "../../addons"    
-], function (langx,datax,CodeMirror,Addon,util,addons) {
+    "../../Coder"    
+], function (langx,datax,CodeMirror,Addon,util,Coder) {
     'use strict';
-    class PluginCodeMirror  extends Addon{
+    class AddonCodeMirror  extends Addon{
         //constructor(coder, options) 
 
         get options() {
@@ -22877,20 +22858,20 @@ define('skylark-widgets-coder/addons/edit/codemirror',[
         }        
     };
 
-    addons.edit.codemirror = PluginCodeMirror;
+    AddonCodeMirror.register(Coder);
 
-    return PluginCodeMirror;
+    return AddonCodeMirror;
 });
 define('skylark-widgets-coder/addons/general/console',[
     'skylark-langx/langx',
     "skylark-domx-styler",
     "../../Addon",
     '../../util',
-    "../../addons"
-], function (langx,styler,Addon,util,addons) {
+    "../../Coder"
+], function (langx,styler,Addon,util,Coder) {
     'use strict';
     
-    class PluginConsole  extends Addon{
+    class AddonConsole  extends Addon{
         //constructor(coder, options) 
 
         get options() {
@@ -22928,8 +22909,8 @@ define('skylark-widgets-coder/addons/general/console',[
               <button class="coder-button coder-console-clear">Clear</button>
             `;
 
-            coder.$container.appendChild($pane);
-            coder.$container.querySelector('.coder-nav').appendChild($nav);
+            coder._velm.append($pane);
+            coder._velm.find('.coder-nav').append($nav);
             var $container = coder.$container.querySelector('.coder-console-container');
             var $output = coder.$container.querySelector('.coder-console-output');
             var $input = coder.$container.querySelector('.coder-console-input input');
@@ -23069,17 +23050,17 @@ define('skylark-widgets-coder/addons/general/console',[
         
     };
 
-    addons.general.console = PluginConsole;
+    AddonConsole.register(Coder);
 
-    return PluginConsole;
+    return AddonConsole;
 });
 define('skylark-widgets-coder/addons/general/play',[
     'skylark-langx/langx',
     "../../Addon",
     '../../util',
-    "../../addons"
-], function (langx,Addon,util,addons) {
-    class PluginPlay  extends Addon{
+    "../../Coder"
+], function (langx,Addon,util,Coder) {
+    class AddonPlay  extends Addon{
         //constructor(coder, options) 
 
         get options() {
@@ -23151,18 +23132,18 @@ define('skylark-widgets-coder/addons/general/play',[
 
     };
 
-    addons.general.play = PluginPlay;
+    AddonPlay.register(Coder);
 
-    return PluginPlay;
+    return AddonPlay;
 });
 define('skylark-widgets-coder/addons/general/render',[
     'skylark-langx/langx',
     "../../Addon",
     '../../util',
-    "../../addons"
-], function (langx,Addon,util,addons) {
+    "../../Coder"
+], function (langx,Addon,util,Coder) {
     'use strict';
-    class PluginRender  extends Addon{
+    class AddonRender  extends Addon{
         //constructor(coder, options) 
 
         _init() {
@@ -23275,9 +23256,9 @@ define('skylark-widgets-coder/addons/general/render',[
 
     };
 
-    addons.general.render = PluginRender;
+    AddonRender.register(Coder);
 
-    return PluginRender;
+    return AddonRender;
 });
 define('skylark-widgets-coder/main',[
 	"./Coder",

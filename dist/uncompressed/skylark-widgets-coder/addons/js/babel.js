@@ -2,11 +2,11 @@ define([
     'skylark-langx/langx',
     "../../Addon",
     '../../util',
-    "../../addons"
-], function (langx,Addon,util,addons) {
+    "../../Coder"
+], function (langx,Addon,util,Coder) {
     'use strict';
     
-    class PluginBabel  extends Addon{
+    class AddonBabel  extends Addon{
         //constructor(coder, options) 
 
         _init() {
@@ -51,7 +51,7 @@ define([
 
     };
 
-    addons.js.babel = PluginBabel;
+    AddonBabel.register(Coder);
 
-    return PluginBabel;
+    return AddonBabel;
 });

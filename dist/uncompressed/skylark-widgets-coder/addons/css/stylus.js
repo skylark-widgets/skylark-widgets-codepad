@@ -2,12 +2,12 @@ define([
     'skylark-langx/langx',
     "../../Addon",
     '../../util',
-    "../../addons"
-], function (langx,Addon,util,addons) {
+    "../../Coder"
+], function (langx,Addon,util,Coder) {
 
     'use strict';
     
-    class PluginStylus  extends Addon{
+    class AddonStylus  extends Addon{
         //constructor(coder, options) 
 
         _init() {
@@ -54,7 +54,7 @@ define([
         
     };
 
-    addons.css.stylus = PluginStylus;
+    AddonStylus.register(Coder);
 
-    return PluginStylus;
+    return AddonStylus;
 });

@@ -2,11 +2,11 @@ define([
     'skylark-langx/langx',
     "../../Addon",
     '../../util',
-    "../../addons"
-], function (langx,Addon,util,addons) {
+    "../../Coder"
+], function (langx,Addon,util,Coder) {
     'use strict';
     
-    class PluginMarkdown  extends Addon{
+    class AddonMarkdown  extends Addon{
         //constructor(coder, options) 
 
         _init() {
@@ -47,7 +47,7 @@ define([
 
     };
 
-    addons.html.markdown = PluginMarkdown;
+    AddonMarkdown.register(Coder);
 
-    return PluginMarkdown;
+    return AddonMarkdown;
 });

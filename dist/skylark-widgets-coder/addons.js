@@ -5,5 +5,5 @@
  * @link https://github.com/skylark-widgets/skylark-widgets-coder/
  * @license MIT
  */
-define([],function(){return{general:{},html:{},css:{},js:{},edit:{},panes:{}}});
+define([],function(){return{general:{},html:{},css:{},js:{},edit:{}}});
 //# sourceMappingURL=sourcemaps/addons.js.map

@@ -2,10 +2,10 @@ define([
     'skylark-langx/langx',
     "../../Addon",
     '../../util',
-    "../../addons"
-], function (langx,Addon,util,addons) {
+    "../../Coder"
+], function (langx,Addon,util,Coder) {
     'use strict';
-    class PluginPen  extends Addon{
+    class AddonPen  extends Addon{
         //constructor(coder, options) 
 
         _init() {
@@ -107,7 +107,7 @@ define([
 
     };
 
-    addons.general.pen = PluginPen;
+    AddonPen.register(Coder);
 
-    return PluginPen;
+    return AddonPen;
 });

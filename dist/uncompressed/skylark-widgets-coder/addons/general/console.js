@@ -3,11 +3,11 @@ define([
     "skylark-domx-styler",
     "../../Addon",
     '../../util',
-    "../../addons"
-], function (langx,styler,Addon,util,addons) {
+    "../../Coder"
+], function (langx,styler,Addon,util,Coder) {
     'use strict';
     
-    class PluginConsole  extends Addon{
+    class AddonConsole  extends Addon{
         //constructor(coder, options) 
 
         get options() {
@@ -45,8 +45,8 @@ define([
               <button class="coder-button coder-console-clear">Clear</button>
             `;
 
-            coder.$container.appendChild($pane);
-            coder.$container.querySelector('.coder-nav').appendChild($nav);
+            coder._velm.append($pane);
+            coder._velm.find('.coder-nav').append($nav);
             var $container = coder.$container.querySelector('.coder-console-container');
             var $output = coder.$container.querySelector('.coder-console-output');
             var $input = coder.$container.querySelector('.coder-console-input input');
@@ -186,7 +186,7 @@ define([
         
     };
 
-    addons.general.console = PluginConsole;
+    AddonConsole.register(Coder);
 
-    return PluginConsole;
+    return AddonConsole;
 });

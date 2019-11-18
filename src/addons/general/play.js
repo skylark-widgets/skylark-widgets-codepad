@@ -2,9 +2,9 @@ define([
     'skylark-langx/langx',
     "../../Addon",
     '../../util',
-    "../../addons"
-], function (langx,Addon,util,addons) {
-    class PluginPlay  extends Addon{
+    "../../Coder"
+], function (langx,Addon,util,Coder) {
+    class AddonPlay  extends Addon{
         //constructor(coder, options) 
 
         get options() {
@@ -76,7 +76,7 @@ define([
 
     };
 
-    addons.general.play = PluginPlay;
+    AddonPlay.register(Coder);
 
-    return PluginPlay;
+    return AddonPlay;
 });
