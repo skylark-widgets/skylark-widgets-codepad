@@ -168,11 +168,11 @@ define([
                 return;
             }
             cachedContent[type] = e.target.value;
-            this.emit('change', { data : {
+            this.emit('change', {
                 type: type,
                 file: datax.data(e.target, 'coder-file'),
                 content: cachedContent[type]
-            }});
+            });
         }
         errors(errs, params) {
             this.status('error', errs, params);

@@ -42,7 +42,7 @@ define([
         }
         editorChange(params) {
             return () => {
-                this.coder.emit('change', {data : params});
+                this.coder.emit('change', params);
             };
         }
         change(e, callback) {

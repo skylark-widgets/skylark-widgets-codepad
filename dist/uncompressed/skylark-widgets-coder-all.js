@@ -11324,8 +11324,10 @@ define('skylark-widgets-base/Widget',[
     },
 
     emit : function(type,params) {
-      var e = langx.Emitter.createEvent(type,params);
-      return langx.Emitter.prototype.emit.call(this,e);
+      var e = langx.Emitter.createEvent(type,{
+        data : params
+      });
+      return langx.Emitter.prototype.emit.call(this,e,params);
     },
 
     /**
@@ -12144,11 +12146,11 @@ define('skylark-widgets-coder/Coder',[
                 return;
             }
             cachedContent[type] = e.target.value;
-            this.emit('change', { data : {
+            this.emit('change', {
                 type: type,
                 file: datax.data(e.target, 'coder-file'),
                 content: cachedContent[type]
-            }});
+            });
         }
         errors(errs, params) {
             this.status('error', errs, params);
@@ -22833,7 +22835,7 @@ define('skylark-widgets-coder/addons/edit/codemirror',[
         }
         editorChange(params) {
             return () => {
-                this.coder.emit('change', {data:params});
+                this.coder.emit('change', params);
             };
         }
         change(e, callback) {
