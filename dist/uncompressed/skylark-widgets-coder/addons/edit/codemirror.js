@@ -43,6 +43,8 @@ define([
         }
         editorChange(params) {
             return () => {
+                var editor = this.editor[params.type];
+                params.content = editor.getValue();
                 this.coder.emit('change', params);
             };
         }
@@ -54,7 +56,7 @@ define([
                 params.cmEditor = editor;
                 editor.on('change', this.editorChange(params));
             }
-            params.content = editor.getValue();
+            //params.content = editor.getValue();
             //callback(null, params);
         }
 
