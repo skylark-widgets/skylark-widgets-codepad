@@ -630,6 +630,81 @@ define('skylark-widgets-coder/addons/edit/codemirror',[
 
     return AddonCodeMirror;
 });
+define('skylark-widgets-coder/addons/edit/ace',[
+    'skylark-langx/langx',
+    'skylark-domx-data',
+    'skylark-ace',
+    "../../Addon",
+    '../../util',
+    "../../Coder"
+], function (langx,datax,ace,Addon,util,Coder) {
+    'use strict';
+    class AddonAce extends Addon {
+        //constructor(coder, options) 
+
+        _init() {
+            super._init();
+            var coder = this.coder,
+                options = this.options;
+
+            var priority = 1;
+            var i;
+            this.editor = {};
+            //this.coder = coder;
+            //options = langx.clone(options);
+            //if (typeof //window.ace === 'undefined') {
+            //    retur//n;
+            // }
+            var options = this.options;
+            var $editors = coder.$container.querySelectorAll('.coder-editor');
+            for (i = 0; i < $editors.length; i++) {
+                let $textarea = $editors[i].querySelector('textarea');
+                let type = datax.data($textarea, 'coder-type');
+                let file = datax.data($textarea, 'coder-file');
+                let $aceContainer = document.createElement('div');
+                $editors[i].appendChild($aceContainer);
+                this.editor[type] = ace.edit($aceContainer);
+                let editor = this.editor[type];
+                let editorOptions = langx.clone(options);
+                editor.getSession().setMode('ace/mode/' + util.getMode(type, file));
+                editor.getSession().setOptions(editorOptions);
+                editor.$blockScrolling = Infinity;
+            }
+            coder.on('change', this.change.bind(this), priority);
+        }
+        editorChange(params) {
+            return () => {
+                var editor = this.editor[params.type];
+                params.content = editor.getValue();
+                this.coder.emit('change', params);
+            };
+        }
+        change(e, callback) {
+            var params = e.data,
+                editor = this.editor[params.type];
+            if (!params.aceEditor) {
+                editor.getSession().setValue(params.content);
+                params.aceEditor = editor;
+                editor.on('change', this.editorChange(params));
+            }
+            //params.content = editor.getValue();
+            //callback(null, params);
+        }
+
+
+        static get categoryName() {
+            return "edit";
+        }
+
+        static get addonName(){
+            return "ace";
+        }        
+    };
+
+    AddonAce.register(Coder);
+    
+    return AddonAce;
+});
 define('skylark-widgets-coder/addons/general/console',[
     'skylark-langx/langx',
     "skylark-domx-styler",
@@ -876,7 +951,7 @@ define('skylark-widgets-coder/addons/general/play',[
             var params = e.data;
             this.code[params.type] = langx.clone(params);
             if (typeof this.cache[params.type] !== 'undefined') {
-                callback(null, this.cache[params.type]);
+                //callback(null, this.cache[params.type]);
                 this.cache[params.type].forceRender = null;
             } else {
                 this.cache[params.type] = langx.clone(params);
@@ -1031,6 +1106,7 @@ define('skylark-widgets-coder/addons/general/render',[
 define('skylark-widgets-coder/main',[
 	"./Coder",
 	"./addons/edit/codemirror",
+	"./addons/edit/ace",
 	"./addons/general/console",
 	"./addons/general/play",
 	"./addons/general/render"

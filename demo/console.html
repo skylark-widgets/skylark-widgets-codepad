@@ -136,7 +136,7 @@
   You can get it from &lt;a href=&quot;https://github.com/ajaxorg/ace-builds/&quot; target=&quot;_blank&quot;&gt;ace-builds&lt;/a&gt;.
 &lt;/p&gt;
 
-&lt;div id=&quot;coder-demo-ace&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;coder-demo-console&quot;&gt;&lt;/div&gt;
 
 &lt;link rel=&quot;stylesheet&quot; href=&quot;../node_modules/skylark-ace/skins/default/ace.css&quot;&gt;
 
@@ -148,18 +148,16 @@
 
 function initPage(langx,$,Coder) {
 
-  new Coder(document.querySelector(&#39;#coder-demo-ace&#39;), {
+  new Coder(document.querySelector(&#39;#coder-demo-console&#39;), {
     files: [
       {
-        type: &#39;html&#39;,
-        content: &#39;&lt;html&gt;\n&lt;body&gt;\n&lt;h1&gt;Using CodeMirror&lt;/h1&gt;\n&lt;/body&gt;\n&lt;/html&gt;&#39;
+        type: &#39;js&#39;,
+        content: &#39;var someVar = Date.now();\nconsole.log(&quot;log someVar&quot;, someVar);&#39;
       }
     ],
-    pane: &#39;html&#39;,
+    pane: &#39;console&#39;,
     addons: {
-      general : [
-        &#39;render&#39;
-      ],
+      general : [&#39;console&#39;],
       edit : [
         &#39;ace&#39;
       ]      

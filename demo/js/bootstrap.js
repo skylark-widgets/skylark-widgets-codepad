@@ -1,8 +1,12 @@
 require.config({
   baseUrl: "./"
   ,map: {
-  }
-  , shim: {
+        '*': {
+          'ace': 'skylark-ace'
+        }
+      }
+  , 
+  shim: {
   }
   ,packages : [
     {name : "skylark-langx-arrays", location : "../node_modules/skylark-langx-arrays/dist/uncompressed/skylark-langx-arrays"},
@@ -49,7 +53,7 @@ require.config({
     { name: "skylark-langx", location: "../node_modules/skylark-langx/dist/uncompressed/skylark-langx" },
     { name: "skylark-domx", location: "../node_modules/skylark-domx/dist/uncompressed/skylark-domx"},
     {name : "skylark-widgets-base" ,location : "../node_modules/skylark-widgets-base/dist/uncompressed/skylark-widgets-base"},
-    { name: "skylark-ace", location: "../node_modules/skylark-/dist/uncompressed/skylark-ace"},
+    { name: "skylark-ace", location: "../node_modules/skylark-ace/dist/uncompressed/skylark-ace"},
     { name: "skylark-codemirror", location: "../node_modules/skylark-codemirror/dist/uncompressed/skylark-codemirror"},
     { name: "skylark-widgets-coder", location: "../src" }
   ],
