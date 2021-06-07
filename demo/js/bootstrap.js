@@ -54,6 +54,7 @@ require.config({
     { name: "skylark-domx", location: "../node_modules/skylark-domx/dist/uncompressed/skylark-domx"},
     {name : "skylark-widgets-base" ,location : "../node_modules/skylark-widgets-base/dist/uncompressed/skylark-widgets-base"},
     { name: "skylark-ace", location: "../node_modules/skylark-ace/dist/uncompressed/skylark-ace"},
+    { name: "skylark-codemirror-base", location: "../node_modules/skylark-codemirror-base/dist/uncompressed/skylark-codemirror-base"},
     { name: "skylark-codemirror", location: "../node_modules/skylark-codemirror/dist/uncompressed/skylark-codemirror"},
     { name: "skylark-widgets-coder", location: "../src" }
   ],
