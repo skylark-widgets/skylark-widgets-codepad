@@ -1,5 +1,5 @@
 {
-  "_from": "git+https://github.com/skylark-integration/skylark-codemirror.git#master",
+  "_from": "git+https://github.com/skylark-integration/skylark-codemirror.git",
   "_id": "skylark-codemirror@0.9.0",
   "_inBundle": false,
   "_integrity": "",
@@ -7,9 +7,9 @@
   "_phantomChildren": {},
   "_requested": {
     "type": "git",
-    "raw": "git+https://github.com/skylark-integration/skylark-codemirror.git#master",
-    "rawSpec": "git+https://github.com/skylark-integration/skylark-codemirror.git#master",
-    "saveSpec": "git+https://github.com/skylark-integration/skylark-codemirror.git#master",
+    "raw": "git+https://github.com/skylark-integration/skylark-codemirror.git",
+    "rawSpec": "git+https://github.com/skylark-integration/skylark-codemirror.git",
+    "saveSpec": "git+https://github.com/skylark-integration/skylark-codemirror.git",
     "fetchSpec": "https://github.com/skylark-integration/skylark-codemirror.git",
     "gitCommittish": "master"
   },
@@ -18,7 +18,7 @@
     "/"
   ],
   "_resolved": "git+https://github.com/skylark-integration/skylark-codemirror.git#2313888a7819cc2045ae758867853e77bae245ff",
-  "_spec": "git+https://github.com/skylark-integration/skylark-codemirror.git#master",
+  "_spec": "git+https://github.com/skylark-integration/skylark-codemirror.git",
   "_where": "C:\\Studio\\studio2\\21_SKY\\skylarkjs\\widgets\\skylark-widgets-coder",
   "author": {
     "name": "Hudaokeji, Inc."
@@ -28,7 +28,7 @@
   },
   "bundleDependencies": false,
   "dependencies": {
-    "skylark-langx": "git+https://github.com/skylark-langx/skylark-langx.git#master"
+    "skylark-langx": "git+https://github.com/skylark-langx/skylark-langx.git"
   },
   "deprecated": false,
   "description": "A version of codemirror 5.45  that ported to running on skylarkjs",
