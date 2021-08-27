@@ -28,11 +28,12 @@ require.config({
     {name : "skylark-langx-strings",location : "../node_modules/skylark-langx-strings/dist/uncompressed/skylark-langx-strings"},
     {name : "skylark-langx-topic",location : "../node_modules/skylark-langx-topic/dist/uncompressed/skylark-langx-topic"},
     {name : "skylark-langx-types",location : "../node_modules/skylark-langx-types/dist/uncompressed/skylark-langx-types"},
+    {name : "skylark-langx-scripter",location : "../node_modules/skylark-langx-scripter/dist/uncompressed/skylark-langx-scripter"},
     {name : "skylark-langx-urls",location : "../node_modules/skylark-langx-urls/dist/uncompressed/skylark-langx-urls"},
     {name : "skylark-net-http",location : "../node_modules/skylark-net-http/dist/uncompressed/skylark-net-http"},
+    {name : "skylark-domx-animates",location : "../node_modules/skylark-domx-animates/dist/uncompressed/skylark-domx-animates"},
     {name : "skylark-domx-browser",location : "../node_modules/skylark-domx-browser/dist/uncompressed/skylark-domx-browser"},
     {name : "skylark-domx-css",location : "../node_modules/skylark-domx-css/dist/uncompressed/skylark-domx-css"},
-    {name : "skylark-domx-browser",location : "../node_modules/skylark-domx-browser/dist/uncompressed/skylark-domx-browser"},
     {name : "skylark-domx-data",location : "../node_modules/skylark-domx-data/dist/uncompressed/skylark-domx-data"},
     {name : "skylark-domx-eventer",location : "../node_modules/skylark-domx-eventer/dist/uncompressed/skylark-domx-eventer"},
     {name : "skylark-domx-finder",location : "../node_modules/skylark-domx-finder/dist/uncompressed/skylark-domx-finder"},
@@ -42,11 +43,11 @@ require.config({
     {name : "skylark-domx-noder",location : "../node_modules/skylark-domx-noder/dist/uncompressed/skylark-domx-noder"},
     {name : "skylark-domx-plugins-base",location : "../node_modules/skylark-domx-plugins-base/dist/uncompressed/skylark-domx-plugins-base"},
     {name : "skylark-domx-query",location : "../node_modules/skylark-domx-query/dist/uncompressed/skylark-domx-query"},
-    {name : "skylark-domx-scripter",location : "../node_modules/skylark-domx-scripter/dist/uncompressed/skylark-domx-scripter"},
     {name : "skylark-domx-files",location : "../node_modules/skylark-domx-files/dist/uncompressed/skylark-domx-files"},
     {name : "skylark-domx-styler",location : "../node_modules/skylark-domx-styler/dist/uncompressed/skylark-domx-styler"},
     {name : "skylark-domx-tables",location : "../node_modules/skylark-domx-tables/dist/uncompressed/skylark-domx-tables"},
     {name : "skylark-domx-transforms",location : "../node_modules/skylark-domx-transforms/dist/uncompressed/skylark-domx-transforms"},
+    {name : "skylark-domx-transits",location : "../node_modules/skylark-domx-transits/dist/uncompressed/skylark-domx-transits"},
     {name : "skylark-domx-velm",location : "../node_modules/skylark-domx-velm/dist/uncompressed/skylark-domx-velm"},
     {name : "skylark-data-collection" ,location : "../node_modules/skylark-data-collection/dist/uncompressed/skylark-data-collection"},
     {name : "skylark-io-diskfs" ,location : "../node_modules/skylark-io-diskfs/dist/uncompressed/skylark-io-diskfs"},
@@ -56,16 +57,16 @@ require.config({
     { name: "skylark-ace", location: "../node_modules/skylark-ace/dist/uncompressed/skylark-ace"},
     { name: "skylark-codemirror-base", location: "../node_modules/skylark-codemirror-base/dist/uncompressed/skylark-codemirror-base"},
     { name: "skylark-codemirror", location: "../node_modules/skylark-codemirror/dist/uncompressed/skylark-codemirror"},
-    { name: "skylark-widgets-coder", location: "../src" }
+    { name: "skylark-widgets-codeground", location: "../src" }
   ],
 
 });
  
 
  require(["skylark-langx","skylark-domx/query"], function (langx,$) {
-    require(["skylark-widgets-coder"], function (Coder) {
+    require(["skylark-widgets-codeground"], function (CodeGround) {
         if (window.initPage) {
-            window.initPage(langx,$,Coder);
+            window.initPage(langx,$,CodeGround);
         }
     });
 });

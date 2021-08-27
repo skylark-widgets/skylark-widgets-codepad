@@ -5,14 +5,14 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>
-      CodeMirror &#8212; Coder
+      CodeMirror &#8212; CoderGround
   </title>
   <meta name="description" content="Environment for showcasing HTML, CSS and JavaScript, with editable source. Like JSFiddle or JS Bin for self-hosted demos.">
-  <meta name="keywords" content="jot,coder,html,css,javascript,editor,client-side,self-hosted,demo,jsfiddle,jsbin,codepen,cssdeck,fiddle">
+  <meta name="keywords" content="jot,codeg,html,css,javascript,editor,client-side,self-hosted,demo,jsfiddle,jsbin,codepen,cssdeck,fiddle">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link href="https://fonts.googleapis.com/css?family=Oxygen:400,300,700" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="../skins/default/coder.css">
+  <link rel="stylesheet" href="../skins/default/codeg.css">
 
   <link rel="stylesheet" href="./css/site.css">
   <link rel="stylesheet" href="./css/gridlayout.css">
@@ -34,7 +34,7 @@
         </a>
 
         <h1>
-          Coder
+          CoderGround
         </h1>
 
       </div>
@@ -120,12 +120,12 @@
 
   <div class="gl-cell gl-fill">
 
-    <div class="coder-demo"></div>
+    <div class="codeg-demo"></div>
 
     <div class="demo-content">
 <pre><code>
 &lt;h2&gt;
-  Coder demo using Coder
+  CoderGround demo using CoderGround
 &lt;/h2&gt;
 
 &lt;p&gt;
@@ -136,19 +136,19 @@
   You can get it from &lt;a href=&quot;https://github.com/ajaxorg/ace-builds/&quot; target=&quot;_blank&quot;&gt;ace-builds&lt;/a&gt;.
 &lt;/p&gt;
 
-&lt;div id=&quot;coder-demo-ace&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;codeg-demo-ace&quot;&gt;&lt;/div&gt;
 
-&lt;link rel=&quot;stylesheet&quot; href=&quot;../node_modules/skylark-ace/skins/default/ace.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;../node_modules/skylark-codemirror/skins/default/codemirror.css&quot;&gt;
 
 
-&lt;link href=&quot;../skins/default/coder.css&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;link href=&quot;../skins/default/codeg.css&quot; rel=&quot;stylesheet&quot;&gt;
 &lt;script data-main=&quot;./js/bootstrap.js&quot;  src=&quot;./js/require.js&quot;&gt;&lt;/script&gt;
 
 &lt;script&gt;
 
-function initPage(langx,$,Coder) {
+function initPage(langx,$,CoderGround) {
 
-  new Coder(document.querySelector(&#39;#coder-demo-ace&#39;), {
+  new CoderGround(document.querySelector(&#39;#codeg-demo-ace&#39;), {
     files: [
       {
         type: &#39;html&#39;,
@@ -166,7 +166,7 @@ function initPage(langx,$,Coder) {
         &#39;play&#39;
       ],
       edit : [
-        &#39;ace&#39;
+        &#39;codemirror&#39;
       ]      
     }
   });

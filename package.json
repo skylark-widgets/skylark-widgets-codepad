@@ -1,22 +1,22 @@
 {
-  "name": "skylark-widgets-coder",
-  "description": "The skylark code editor widget for showcasing html/css/js.",
+  "name": "skylark-widgets-codeground",
+  "description": "The skylark code playground widget for showcasing html/css/js.",
   "version": "0.9.0",
   "keywords": [
     "jotted",
     "playground"
   ],
-  "homepage": "https://github.com/skylark-widgets/skylark-widgets-coder/",
+  "homepage": "https://github.com/skylark-widgets/skylark-widgets-codeground/",
   "author": "Hudaokeji, Inc.",
   "scripts": {
     "build": "slib build ."
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/skylark-widgets/skylark-widgets-coder.git"
+    "url": "https://github.com/skylark-widgets/skylark-widgets-codeground.git"
   },
   "bugs": {
-    "url": "https://github.com/skylark-widgets/skylark-widgets-coder/issues"
+    "url": "https://github.com/skylark-widgets/skylark-widgets-codeground/issues"
   },
   "license": "MIT",
   "dependencies": {

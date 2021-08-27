@@ -1,6 +1,6 @@
-/* coder
+/* codeg
  */
-.coder {
+.codeg {
   position: relative;
   height: 12em;
   overflow: hidden;
@@ -11,7 +11,7 @@
 }
 /* nav
  */
-.coder-nav {
+.codeg-nav {
   position: absolute;
   z-index: 2;
   display: block;
@@ -24,7 +24,7 @@
   background: rgba(51,51,51,0.08);
   border-bottom: 1px solid rgba(51,51,51,0.2);
 }
-.coder-nav-item {
+.codeg-nav-item {
   display: none;
   float: left;
   border-width: 0 1px;
@@ -32,47 +32,47 @@
   border-color: transparent;
   color: #555;
 }
-.coder-nav-item:first-child {
+.codeg-nav-item:first-child {
   border-width: 0 1px 0 0;
 }
-.coder-nav-item:hover,
-.coder-nav-item:focus {
+.codeg-nav-item:hover,
+.codeg-nav-item:focus {
   background: rgba(51,51,51,0.04);
 }
-.coder-nav-item:active {
+.codeg-nav-item:active {
   background: rgba(51,51,51,0.12);
 }
-.coder-nav-item a {
+.codeg-nav-item a {
   display: block;
   padding: 0 0.8em;
   color: inherit;
   line-height: 2.4em;
   text-decoration: none;
 }
-.coder-pane-active-result .coder-nav-item-result,
-.coder-pane-active-html .coder-nav-item-html,
-.coder-pane-active-css .coder-nav-item-css,
-.coder-pane-active-js .coder-nav-item-js {
+.codeg-pane-active-result .codeg-nav-item-result,
+.codeg-pane-active-html .codeg-nav-item-html,
+.codeg-pane-active-css .codeg-nav-item-css,
+.codeg-pane-active-js .codeg-nav-item-js {
   background: #fff;
   border-color: rgba(51,51,51,0.3);
   color: #222;
 }
 /* always show the result tab nav
  */
-coder-nav-item,
-.coder-nav-item-result {
+codeg-nav-item,
+.codeg-nav-item-result {
   display: block;
 }
 /* show tabs if we have content for them
  */
-.coder-has-html .coder-nav-item-html,
-.coder-has-css .coder-nav-item-css,
-.coder-has-js .coder-nav-item-js {
+.codeg-has-html .codeg-nav-item-html,
+.codeg-has-css .codeg-nav-item-css,
+.codeg-has-js .codeg-nav-item-js {
   display: block;
 }
 /* pane
  */
-.coder-pane {
+.codeg-pane {
   position: absolute;
   z-index: 1;
   visibility: hidden;
@@ -82,20 +82,20 @@ coder-nav-item,
   box-sizing: border-box;
   background: #fff;
 }
-.coder-pane-active-result .coder-pane-result,
-.coder-pane-active-html .coder-pane-html,
-.coder-pane-active-css .coder-pane-css,
-.coder-pane-active-js .coder-pane-js {
+.codeg-pane-active-result .codeg-pane-result,
+.codeg-pane-active-html .codeg-pane-html,
+.codeg-pane-active-css .codeg-pane-css,
+.codeg-pane-active-js .codeg-pane-js {
   position: relative;
   visibility: visible;
 }
 /* editor
  */
-.coder-editor {
+.codeg-editor {
   height: 100%;
 }
-.coder-pane-result iframe,
-.coder-editor textarea {
+.codeg-pane-result iframe,
+.codeg-editor textarea {
   display: block;
   width: 100%;
   height: 100%;
@@ -103,18 +103,18 @@ coder-nav-item,
   border: 0;
   box-sizing: border-box;
 }
-.coder-editor textarea {
+.codeg-editor textarea {
   padding: 1em;
   background: #fff;
 }
 /* status
  */
-.coder-status-active-html .coder-pane-html,
-.coder-status-active-css .coder-pane-css,
-.coder-status-active-js .coder-pane-js {
+.codeg-status-active-html .codeg-pane-html,
+.codeg-status-active-css .codeg-pane-css,
+.codeg-status-active-js .codeg-pane-js {
   padding-bottom: 1.5em;
 }
-.coder-status {
+.codeg-status {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -122,13 +122,13 @@ coder-nav-item,
   width: 100%;
   padding: 0 0.6em;
 }
-.coder-status p {
+.codeg-status p {
   margin: 0;
   color: #333;
   font-size: 0.8em;
   line-height: 1.8em;
 }
-.coder-status p:before {
+.codeg-status p:before {
   content: '';
   position: relative;
   display: inline-block;
@@ -145,22 +145,22 @@ coder-nav-item,
   text-align: center;
   vertical-align: middle;
 }
-.coder-status-loading {
+.codeg-status-loading {
   background: #fff6d5;
 }
-.coder-status-loading p:before {
+.codeg-status-loading p:before {
   background: #fd5;
 }
-.coder-status-error {
+.codeg-status-error {
   background: #ffccbc;
 }
-.coder-status-error p:before {
+.codeg-status-error p:before {
   background: #c0392b;
 }
 /* buttons
  * used by plugins
  */
-.coder-button {
+.codeg-button {
   padding: 0 1em;
   border: 1px solid #ccc;
   background: rgba(236,236,236,0.92);
@@ -169,65 +169,65 @@ coder-nav-item,
   cursor: pointer;
   line-height: 1.6em;
 }
-.coder-button:hover {
+.codeg-button:hover {
   background: #f9f9f9;
 }
 /* plugins
  */
-.coder-plugin-ace .coder-editor > textarea {
+.codeg-plugin-ace .codeg-editor > textarea {
   display: none;
 }
-.coder-plugin-ace .ace_editor {
+.codeg-plugin-ace .ace_editor {
   width: 100%;
   height: 100%;
 }
-.coder-plugin-codemirror .CodeMirror {
+.codeg-plugin-codemirror .CodeMirror {
   height: 100%;
 }
-.coder-nav-item-console {
+.codeg-nav-item-console {
   display: block;
 }
-.coder-pane-console {
+.codeg-pane-console {
   background: #fff;
 }
-.coder-pane-active-console .coder-pane-console {
+.codeg-pane-active-console .codeg-pane-console {
   position: relative;
   visibility: visible;
 }
-.coder-pane-active-console .coder-nav-item-console {
+.codeg-pane-active-console .codeg-nav-item-console {
   background: #fff;
   border-color: rgba(51,51,51,0.3);
   color: #222;
 }
-.coder-console-container {
+.codeg-console-container {
   height: 100%;
   overflow: auto;
   font-family: monospace;
 }
-.coder-console-output {
+.codeg-console-output {
   margin: 0;
   padding: 0;
   list-style-type: none;
   line-height: 2.8em;
 }
-.coder-console-log {
+.codeg-console-log {
   padding: 0 1em;
 }
-.coder-console-log-history {
+.codeg-console-log-history {
   border-width: 1px 0;
   border-style: solid;
   border-color: rgba(51,51,51,0.08);
   background: rgba(51,51,51,0.04);
 }
-.coder-console-log-error {
+.codeg-console-log-error {
   background: #ffccbc;
   color: #500;
 }
-.coder-console-input {
+.codeg-console-input {
   position: relative;
   background: rgba(51,51,51,0.12);
 }
-.coder-console-input:before {
+.codeg-console-input:before {
   content: '>';
   position: absolute;
   left: 0;
@@ -239,7 +239,7 @@ coder-nav-item,
   font-weight: bold;
   line-height: 2.4em;
 }
-.coder-console-input input {
+.codeg-console-input input {
   box-sizing: border-box;
   display: block;
   width: 100%;
@@ -250,30 +250,30 @@ coder-nav-item,
   line-height: 2.4em;
   font-family: inherit;
 }
-.coder-console-clear {
+.codeg-console-clear {
   position: absolute;
   top: 3.3em;
   right: 1.4em;
 }
-.coder-plugin-pen {
+.codeg-plugin-pen {
   display: flex;
   flex-flow: row wrap;
   user-select: none;
 }
-.coder-plugin-pen .coder-pane-result {
+.codeg-plugin-pen .codeg-pane-result {
   flex: 1 100%;
 }
-.coder-plugin-pen .coder-editor .CodeMirror {
+.codeg-plugin-pen .codeg-editor .CodeMirror {
   height: calc(100% - 39px);
 }
-.coder-plugin-pen .coder-nav {
+.codeg-plugin-pen .codeg-nav {
   display: none;
 }
-.coder-plugin-pen .coder-pane {
+.codeg-plugin-pen .codeg-pane {
   padding-top: 0;
   height: 50%;
 }
-.coder-plugin-pen .coder-pane-title {
+.codeg-plugin-pen .codeg-pane-title {
   display: block;
   background: rgba(51,51,51,0.08);
   border-bottom: 1px solid rgba(51,51,51,0.2);
@@ -281,55 +281,55 @@ coder-nav-item,
   line-height: 2.4em;
   font-family: sans-serif;
 }
-.coder-plugin-pen .coder-pane-title-result {
+.codeg-plugin-pen .codeg-pane-title-result {
   display: none;
 }
-.coder-plugin-pen .coder-pane-result,
-.coder-plugin-pen.coder-has-html .coder-pane-html,
-.coder-plugin-pen.coder-has-css .coder-pane-css,
-.coder-plugin-pen.coder-has-js .coder-pane-js,
-.coder-plugin-pen.coder-plugin-console .coder-pane-console {
+.codeg-plugin-pen .codeg-pane-result,
+.codeg-plugin-pen.codeg-has-html .codeg-pane-html,
+.codeg-plugin-pen.codeg-has-css .codeg-pane-css,
+.codeg-plugin-pen.codeg-has-js .codeg-pane-js,
+.codeg-plugin-pen.codeg-plugin-console .codeg-pane-console {
   position: relative;
   visibility: visible;
 }
-.coder-plugin-pen.coder-has-html .coder-pane,
-.coder-plugin-pen.coder-has-css .coder-pane,
-.coder-plugin-pen.coder-has-js .coder-pane {
+.codeg-plugin-pen.codeg-has-html .codeg-pane,
+.codeg-plugin-pen.codeg-has-css .codeg-pane,
+.codeg-plugin-pen.codeg-has-js .codeg-pane {
   max-width: 100%;
   width: 100%;
 }
-.coder-plugin-pen.coder-has-html.coder-has-css .coder-pane-html,
-.coder-plugin-pen.coder-has-html.coder-has-css .coder-pane-css,
-.coder-plugin-pen.coder-has-html.coder-has-js .coder-pane-html,
-.coder-plugin-pen.coder-has-html.coder-has-js .coder-pane-js,
-.coder-plugin-pen.coder-has-css.coder-has-js .coder-pane-css,
-.coder-plugin-pen.coder-has-css.coder-has-js .coder-pane-js {
+.codeg-plugin-pen.codeg-has-html.codeg-has-css .codeg-pane-html,
+.codeg-plugin-pen.codeg-has-html.codeg-has-css .codeg-pane-css,
+.codeg-plugin-pen.codeg-has-html.codeg-has-js .codeg-pane-html,
+.codeg-plugin-pen.codeg-has-html.codeg-has-js .codeg-pane-js,
+.codeg-plugin-pen.codeg-has-css.codeg-has-js .codeg-pane-css,
+.codeg-plugin-pen.codeg-has-css.codeg-has-js .codeg-pane-js {
   max-width: 50%;
   width: 50%;
 }
-.coder-plugin-pen.coder-has-html.coder-has-css.coder-has-js .coder-pane-html,
-.coder-plugin-pen.coder-has-html.coder-has-css.coder-has-js .coder-pane-js,
-.coder-plugin-pen.coder-has-html.coder-has-css.coder-has-js .coder-pane-css {
+.codeg-plugin-pen.codeg-has-html.codeg-has-css.codeg-has-js .codeg-pane-html,
+.codeg-plugin-pen.codeg-has-html.codeg-has-css.codeg-has-js .codeg-pane-js,
+.codeg-plugin-pen.codeg-has-html.codeg-has-css.codeg-has-js .codeg-pane-css {
   max-width: 33.3333%;
   width: 33.3333%;
 }
-.coder-plugin-pen.coder-plugin-console .coder-console-clear {
+.codeg-plugin-pen.codeg-plugin-console .codeg-console-clear {
   top: 4.3em;
 }
-.coder-plugin-console.coder-plugin-pen.coder-has-html .coder-pane,
-.coder-plugin-console.coder-plugin-pen.coder-has-css .coder-pane,
-.coder-plugin-console.coder-plugin-pen.coder-has-js .coder-pane {
+.codeg-plugin-console.codeg-plugin-pen.codeg-has-html .codeg-pane,
+.codeg-plugin-console.codeg-plugin-pen.codeg-has-css .codeg-pane,
+.codeg-plugin-console.codeg-plugin-pen.codeg-has-js .codeg-pane {
   width: 50%;
 }
-.coder-plugin-console.coder-plugin-pen.coder-has-html.coder-has-css .coder-pane,
-.coder-plugin-console.coder-plugin-pen.coder-has-html.coder-has-js .coder-pane,
-.coder-plugin-console.coder-plugin-pen.coder-has-css.coder-has-js .coder-pane {
+.codeg-plugin-console.codeg-plugin-pen.codeg-has-html.codeg-has-css .codeg-pane,
+.codeg-plugin-console.codeg-plugin-pen.codeg-has-html.codeg-has-js .codeg-pane,
+.codeg-plugin-console.codeg-plugin-pen.codeg-has-css.codeg-has-js .codeg-pane {
   width: 33.33%;
 }
-.coder-plugin-console.coder-plugin-pen.coder-has-html.coder-has-css.coder-has-js .coder-pane {
+.codeg-plugin-console.codeg-plugin-pen.codeg-has-html.codeg-has-css.codeg-has-js .codeg-pane {
   width: 25%;
 }
-.coder-plugin-pen-expander {
+.codeg-plugin-pen-expander {
   position: absolute;
   height: 100%;
   width: 3px;
@@ -337,7 +337,7 @@ coder-nav-item,
   cursor: col-resize;
   border-left: 1px solid #ddd;
 }
-.coder-button-play {
+.codeg-button-play {
   position: absolute;
   top: 0.52em;
   right: 0.52em;
@@ -345,84 +345,84 @@ coder-nav-item,
 }
 /* themes
  */
-.coder-nav-item,
-.coder-pane {
+.codeg-nav-item,
+.codeg-pane {
   box-sizing: border-box;
 }
-.coder-theme-bin {
+.codeg-theme-bin {
   overflow: hidden;
 }
-.coder-theme-bin .coder-nav {
+.codeg-theme-bin .codeg-nav {
   clear: both;
 }
-.coder-theme-bin .coder-nav-item {
+.codeg-theme-bin .codeg-nav-item {
   background: transparent;
   pointer-events: none;
   text-align: center;
 }
-.coder-theme-bin .coder-nav-item,
-.coder-theme-bin .coder-pane {
+.codeg-theme-bin .codeg-nav-item,
+.codeg-theme-bin .codeg-pane {
   border-width: 0 1px 0 0;
   border-style: solid;
   border-color: #ddd;
 }
-.coder-theme-bin .coder-pane:last-child {
+.codeg-theme-bin .codeg-pane:last-child {
   border: 0;
 }
-.coder-theme-bin .coder-pane-result,
-.coder-theme-bin.coder-has-html .coder-pane-html,
-.coder-theme-bin.coder-has-css .coder-pane-css,
-.coder-theme-bin.coder-has-js .coder-pane-js {
+.codeg-theme-bin .codeg-pane-result,
+.codeg-theme-bin.codeg-has-html .codeg-pane-html,
+.codeg-theme-bin.codeg-has-css .codeg-pane-css,
+.codeg-theme-bin.codeg-has-js .codeg-pane-js {
   position: relative;
   float: left;
   visibility: visible;
 }
-.coder-theme-bin .coder-pane-result,
-.coder-theme-bin .coder-nav-item {
+.codeg-theme-bin .codeg-pane-result,
+.codeg-theme-bin .codeg-nav-item {
   width: 100%;
 }
-.coder-theme-bin.coder-has-html .coder-nav-item,
-.coder-theme-bin.coder-has-css .coder-nav-item,
-.coder-theme-bin.coder-has-js .coder-nav-item,
-.coder-theme-bin.coder-has-html .coder-pane,
-.coder-theme-bin.coder-has-css .coder-pane,
-.coder-theme-bin.coder-has-js .coder-pane {
+.codeg-theme-bin.codeg-has-html .codeg-nav-item,
+.codeg-theme-bin.codeg-has-css .codeg-nav-item,
+.codeg-theme-bin.codeg-has-js .codeg-nav-item,
+.codeg-theme-bin.codeg-has-html .codeg-pane,
+.codeg-theme-bin.codeg-has-css .codeg-pane,
+.codeg-theme-bin.codeg-has-js .codeg-pane {
   width: 50%;
 }
-.coder-theme-bin.coder-has-html.coder-has-css .coder-nav-item,
-.coder-theme-bin.coder-has-html.coder-has-js .coder-nav-item,
-.coder-theme-bin.coder-has-css.coder-has-js .coder-nav-item,
-.coder-theme-bin.coder-has-html.coder-has-css .coder-pane,
-.coder-theme-bin.coder-has-html.coder-has-js .coder-pane,
-.coder-theme-bin.coder-has-css.coder-has-js .coder-pane {
+.codeg-theme-bin.codeg-has-html.codeg-has-css .codeg-nav-item,
+.codeg-theme-bin.codeg-has-html.codeg-has-js .codeg-nav-item,
+.codeg-theme-bin.codeg-has-css.codeg-has-js .codeg-nav-item,
+.codeg-theme-bin.codeg-has-html.codeg-has-css .codeg-pane,
+.codeg-theme-bin.codeg-has-html.codeg-has-js .codeg-pane,
+.codeg-theme-bin.codeg-has-css.codeg-has-js .codeg-pane {
   width: 33.33%;
 }
-.coder-theme-bin.coder-has-html.coder-has-css.coder-has-js .coder-nav-item,
-.coder-theme-bin.coder-has-html.coder-has-css.coder-has-js .coder-pane {
+.codeg-theme-bin.codeg-has-html.codeg-has-css.codeg-has-js .codeg-nav-item,
+.codeg-theme-bin.codeg-has-html.codeg-has-css.codeg-has-js .codeg-pane {
   width: 25%;
 }
-.coder-theme-bin .coder-pane-console {
+.codeg-theme-bin .codeg-pane-console {
   position: relative;
   float: left;
   visibility: visible;
 }
-.coder-plugin-console.coder-theme-bin.coder-has-html .coder-nav-item,
-.coder-plugin-console.coder-theme-bin.coder-has-css .coder-nav-item,
-.coder-plugin-console.coder-theme-bin.coder-has-js .coder-nav-item,
-.coder-plugin-console.coder-theme-bin.coder-has-html .coder-pane,
-.coder-plugin-console.coder-theme-bin.coder-has-css .coder-pane,
-.coder-plugin-console.coder-theme-bin.coder-has-js .coder-pane {
+.codeg-plugin-console.codeg-theme-bin.codeg-has-html .codeg-nav-item,
+.codeg-plugin-console.codeg-theme-bin.codeg-has-css .codeg-nav-item,
+.codeg-plugin-console.codeg-theme-bin.codeg-has-js .codeg-nav-item,
+.codeg-plugin-console.codeg-theme-bin.codeg-has-html .codeg-pane,
+.codeg-plugin-console.codeg-theme-bin.codeg-has-css .codeg-pane,
+.codeg-plugin-console.codeg-theme-bin.codeg-has-js .codeg-pane {
   width: 33.33%;
 }
-.coder-plugin-console.coder-theme-bin.coder-has-html.coder-has-css .coder-nav-item,
-.coder-plugin-console.coder-theme-bin.coder-has-html.coder-has-js .coder-nav-item,
-.coder-plugin-console.coder-theme-bin.coder-has-css.coder-has-js .coder-nav-item,
-.coder-plugin-console.coder-theme-bin.coder-has-html.coder-has-css .coder-pane,
-.coder-plugin-console.coder-theme-bin.coder-has-html.coder-has-js .coder-pane,
-.coder-plugin-console.coder-theme-bin.coder-has-css.coder-has-js .coder-pane {
+.codeg-plugin-console.codeg-theme-bin.codeg-has-html.codeg-has-css .codeg-nav-item,
+.codeg-plugin-console.codeg-theme-bin.codeg-has-html.codeg-has-js .codeg-nav-item,
+.codeg-plugin-console.codeg-theme-bin.codeg-has-css.codeg-has-js .codeg-nav-item,
+.codeg-plugin-console.codeg-theme-bin.codeg-has-html.codeg-has-css .codeg-pane,
+.codeg-plugin-console.codeg-theme-bin.codeg-has-html.codeg-has-js .codeg-pane,
+.codeg-plugin-console.codeg-theme-bin.codeg-has-css.codeg-has-js .codeg-pane {
   width: 25%;
 }
-.coder-plugin-console.coder-theme-bin.coder-has-html.coder-has-css.coder-has-js .coder-nav-item,
-.coder-plugin-console.coder-theme-bin.coder-has-html.coder-has-css.coder-has-js .coder-pane {
+.codeg-plugin-console.codeg-theme-bin.codeg-has-html.codeg-has-css.codeg-has-js .codeg-nav-item,
+.codeg-plugin-console.codeg-theme-bin.codeg-has-html.codeg-has-css.codeg-has-js .codeg-pane {
   width: 20%;
 }

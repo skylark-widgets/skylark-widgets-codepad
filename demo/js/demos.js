@@ -1,6 +1,6 @@
 var form = {};
 
-function initPage(langx,$,Coder) {
+function initPage(langx,$,CoderGround) {
 
   var addEventListener = (function() {
 
@@ -62,10 +62,10 @@ function initPage(langx,$,Coder) {
   var init = function() {
     addEventListener.call(document.body, 'click', toggleDropdown);
 
-    var $jdemo = document.querySelector('.coder-demo')
+    var $jdemo = document.querySelector('.codeg-demo')
     if ($jdemo) {
       // ace demo
-      new Coder($jdemo, {
+      new CoderGround($jdemo, {
         files: [
           {
             type: 'html',
