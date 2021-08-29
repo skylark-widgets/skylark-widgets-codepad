@@ -149,6 +149,11 @@
 function initPage(langx,$,CoderGround) {
 
   new CoderGround(document.querySelector(&#39;#codeg-demo-ace&#39;), {
+    codes : {
+      html : &#39;&lt;h1&gt;\n  Pen Plugin\n&lt;/h1&gt;&#39,
+      js :   &#39;console.log(&quot;Hello World&quot;)&#39,
+      css :  &#39;body {\n  background: yellow;\n}&#39
+    },
     files: [
       {
         type: &#39;html&#39;,

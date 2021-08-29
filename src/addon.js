@@ -1,6 +1,6 @@
 define([
 	"skylark-domx-styler",
-	"skylark-widgets-base/Addon"
+	"skylark-widgets-base/addon"
 ],function(styler,_Addon){
 	return class Addon extends _Addon {
 		_init() {

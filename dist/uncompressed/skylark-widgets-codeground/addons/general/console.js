@@ -1,9 +1,9 @@
 define([
     'skylark-langx/langx',
     "skylark-domx-styler",
-    "../../_addon",
+    "../../addon",
     '../../util',
-    "../../code_ground"
+    "../../codeground"
 ], function (langx,styler,Addon,util,CodeGround) {
     'use strict';
     

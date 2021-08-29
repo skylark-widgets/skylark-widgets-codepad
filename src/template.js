@@ -34,7 +34,7 @@ define(function () {
         return `codeg-pane-active-${ type }`;
     }
     function containerClass() {
-        return 'coder';
+        return 'codeg';
     }
     function hasFileClass(type) {
         return `codeg-has-${ type }`;
@@ -42,9 +42,9 @@ define(function () {
     function editorClass(type) {
         return `codeg-editor codeg-editor-${ type }`;
     }
-    function editorContent(type, fileUrl = '') {
+    function editorContent(type) {
         return `
-    <textarea data-codeg-type="${ type }" data-codeg-file="${ fileUrl }"></textarea>
+    <textarea data-codeg-type="${ type }" ></textarea>
     <div class="codeg-status"></div>
   `;
     }

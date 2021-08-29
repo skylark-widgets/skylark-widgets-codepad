@@ -1,9 +1,12 @@
 define([
     'skylark-langx/langx',
-    "../../_addon",
+    "skylark-domx-noder",
+    "skylark-domx-eventer",
+    "skylark-domx-query",
+    "../../addon",
     '../../util',
-    "../../code_ground"
-], function (langx,Addon,util,CodeGround) {
+    "../../codeground"
+], function (langx,noder,eventer,$,Addon,util,CodeGround) {
     class AddonPlay  extends Addon{
         //constructor(coder, options) 
 
@@ -38,17 +41,23 @@ define([
                     }
                 };
             }
-            var $button = document.createElement('button');
-            $button.className = 'codeg-button codeg-button-play';
-            $button.innerHTML = 'Run';
-            coder.$container.appendChild($button);
-            $button.addEventListener('click', this.run.bind(this));
-            coder.on('change', this.change.bind(this), priority);
+            var $button = $('<button/>').prop({
+                className : 'codeg-button codeg-button-play',
+                innerHTML : 'Run'
+            });
+
+            coder.$().append($button);
+
+            this.listenTo($button,"click",this.run);
+
+            this.listenTo(coder,"changed",this.update);
+            
             this.cache = cache;
             this.code = code;
             this.coder = coder;
         }
-        change(e) {
+
+        update(e) {
             var params = e.data;
             this.code[params.type] = langx.clone(params);
             if (typeof this.cache[params.type] !== 'undefined') {
@@ -59,11 +68,9 @@ define([
                 //callback(null, params);
             }
         }
+
         run() {
-            for (let type in this.code) {
-                this.cache[type] = langx.mixin({ forceRender: true },this.code[type]);
-                this.coder.emit('change', this.cache[type]);
-            }
+            this.coder.emit('reseted');
         }
 
         static get categoryName() {

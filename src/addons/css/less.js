@@ -1,8 +1,8 @@
 define([
     'skylark-langx/langx',
-    "../../_addon",
+    "../../addon",
     '../../util',
-    "../../code_ground"
+    "../../codeground"
 ], function (langx,Addon,util,CodeGround) {
     'use strict';
     class AddonLess extends Addon{
@@ -18,8 +18,9 @@ define([
             if (typeof window.less === 'undefined') {
                 return;
             }
-            coder.$container.querySelector('a[data-codeg-type="css"]').innerHTML = 'Less';
-            coder.on('change', this.change.bind(this), priority);
+            coder.$('a[data-codeg-type="css"]').html('Less');
+
+            this.listenTo(coder,"changed",this.update);
         }
 
         isLess(params) {
@@ -28,7 +29,8 @@ define([
             }
             return params.file.indexOf('.less') !== -1 || params.file === '';
         }
-        change(e) {
+
+        update(e) {
             var params = e.data;
             if (this.isLess(params)) {
                 window.less.render(params.content, this.options, (err, res) => {

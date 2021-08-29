@@ -213,7 +213,7 @@ define('skylark-widgets-codeground/template',[],function () {
         return `codeg-pane-active-${ type }`;
     }
     function containerClass() {
-        return 'coder';
+        return 'codeg';
     }
     function hasFileClass(type) {
         return `codeg-has-${ type }`;
@@ -221,9 +221,9 @@ define('skylark-widgets-codeground/template',[],function () {
     function editorClass(type) {
         return `codeg-editor codeg-editor-${ type }`;
     }
-    function editorContent(type, fileUrl = '') {
+    function editorContent(type) {
         return `
-    <textarea data-codeg-type="${ type }" data-codeg-file="${ fileUrl }"></textarea>
+    <textarea data-codeg-type="${ type }" ></textarea>
     <div class="codeg-status"></div>
   `;
     }
@@ -285,24 +285,26 @@ define('skylark-widgets-codeground/addons',[],function(){
 	    }	
 	};
 });
-define('skylark-widgets-codeground/code_ground',[
+define('skylark-widgets-codeground/codeground',[
     'skylark-langx/skylark',
     'skylark-langx/langx',
-    'skylark-widgets-base/Widget',
+    'skylark-widgets-base/widget',
     "skylark-domx-styler",
     "skylark-domx-data",
+    "skylark-domx-noder",
     './util',
     './template',
     "./addons"
-], function (skylark,langx,Widget, styler,datax,util, template,addons) {
+], function (skylark,langx,Widget, styler,datax,noder,util, template,addons) {
     'use strict';
-    class CodeGround extends Widget{
+
+    class Codeground extends Widget{
         get klassName() {
-          return "CodeGround";
+          return "Codeground";
         } 
 
         get pluginName(){
-          return "lark.CodeGround";
+          return "lark.Codeground";
         } 
 
         //default options
@@ -319,67 +321,51 @@ define('skylark-widgets-codeground/code_ground',[
             }
         }
 
-        _init ($CodeGroundContainer, opts) {
-            //if (!$CodeGroundContainer) {
-            //    throw new Error("Can't find CodeGround container.");
-            // }
-
+        _init () {
+  
             var options = this.options;
             if (options.runScripts === false) {
                 options.addons.gerneral.push('scriptless');
             }
 
             super._init();
-            //Widget.prototype._init.call(this);
 
-            var _private = {};
-            this._get = function (key) {
-                return _private[key];
-            };
-            this._set = function (key, value) {
-                _private[key] = value;
-                return _private[key];
-            };
-
-
-            this._set('cachedContent', {
+            this._cached =  {
                 html: null,
                 css: null,
                 js: null
-            });
+            };
 
             var $container = this.$container = this._elm;
 
-            var paneActive = this._set('paneActive', options.pane);
+            var paneActive = this._paneActive = options.pane;
 
             var velm = this._velm;
             velm.html(template.container())
                 .addClass(template.containerClass())
                 .addClass(template.paneActiveClass(paneActive))
-                .on('keyup', langx.debounce(this.change.bind(this), options.debounce))
+                ///.on('keyup', langx.debounce(this.change.bind(this), options.debounce))
                 .on('change', langx.debounce(this.change.bind(this), options.debounce))
                 .on('click', this.pane.bind(this));
 
-            this._set('$status', {});
+            this._$status =  {};
+
             for (let type of [
                     'html',
                     'css',
                     'js'
                 ]) {
-                this.markup(type);
+                if (this.options.codes[type]) {
+                    this._markup(type);
+                }
             }
+            this._setCodes(this.options.codes);
         }
 
         _startup() {
             var options = this.options;
-            this.paneActive = this._get('paneActive');
-            for (let type of [
-                    'html',
-                    'css',
-                    'js'
-                ]) {
-                this.load(type);
-            }
+            this.paneActive = this._paneActive;
+
             if (options.showBlank) {
                 for (let type of [
                         'html',
@@ -392,90 +378,90 @@ define('skylark-widgets-codeground/code_ground',[
 
         }
 
-        findFile(type) {
-            var file = {};
-            //var options = this._get('options');
-            var options = this.options;
-            for (let fileIndex in options.files) {
-                let file = options.files[fileIndex];
-                if (file.type === type) {
-                    return file;
-                }
-            }
-            return file;
-        }
-        markup(type) {
-            //var $container = this._get('$container');
+        _markup(type) {
             var $container = this._elm;
-            var $parent = $container.querySelector(`.codeg-pane-${ type }`);
-            var file = this.findFile(type);
-            var $editor = document.createElement('div');
-            $editor.innerHTML = template.editorContent(type, file.url);
-            $editor.className = template.editorClass(type);
-            $parent.appendChild($editor);
-            this._get('$status')[type] = $parent.querySelector('.codeg-status');
-            if (typeof file.url !== 'undefined' || typeof file.content !== 'undefined') {
-                styler.addClass($container, template.hasFileClass(type));
-            }
+            var $parent = this.$().find(`.codeg-pane-${ type }`);
+
+            $parent.append(noder.createElement("div",{
+                innerHTML : template.editorContent(type),
+                className : template.editorClass(type)
+            }));
+            this._$status[type] = $parent.find('.codeg-status');
+             styler.addClass($container, template.hasFileClass(type));
         }
-        load(type) {
-            var file = this.findFile(type);
-            //var $textarea = this._get('$container').querySelector(`.codeg-pane-${ type } textarea`);
-            var $textarea = this._elm.querySelector(`.codeg-pane-${ type } textarea`);
-            if (typeof file.content !== 'undefined') {
-                this.setValue($textarea, file.content);
-            } else if (typeof file.url !== 'undefined') {
-                this.status('loading', [template.statusLoading(file.url)], {
-                    type: type,
-                    file: file
-                });
-                util.fetch(file.url, (err, res) => {
-                    if (err) {
-                        this.status('error', [template.statusFetchError(err)], { type: type });
-                        return;
-                    }
-                    this.clearStatus('loading', { type: type });
-                    this.setValue($textarea, res);
-                });
+
+        _load(type) {
+            var cached = this._cached,
+                code = cached[type] || {},
+                content;
+
+            if (langx.isString(code)) {
+                content = code;
             } else {
-                this.setValue($textarea, '');
+                content = code.content || "";
             }
+            var $textarea = this.$(`.codeg-pane-${ type } textarea`);
+            $textarea.val(content);
         }
-        setValue($textarea, val) {
-            $textarea.value = val;
-            this.change({ target: $textarea });
-        }
+
+
         change(e) {
             var type = datax.data(e.target, 'codeg-type');
             if (!type) {
                 return;
             }
-            var cachedContent = this._get('cachedContent');
-            if (cachedContent[type] === e.target.value) {
+            var cached = this._cached;
+            if (cached[type] === e.target.value) {
                 return;
             }
-            cachedContent[type] = e.target.value;
-            this.emit('change', {
+            cached[type] = e.target.value;
+            this.emit('changed', {
                 type: type,
                 file: datax.data(e.target, 'codeg-file'),
-                content: cachedContent[type]
+                content: cached[type]
             });
         }
+
+        getCodes() {
+            return langx.clone(this._cached);
+        }
+
+        _setCodes(codes) {
+            var cached = this._cached;
+            cached.html = codes.html || null;
+            cached.css = codes.css || null;
+            cached.js = codes.js || null;
+
+            for (let type of [
+                    'html',
+                    'css',
+                    'js'
+                ]) {
+                this._load(type);
+            }
+        }
+
+        resetCodes(codes) {
+            this._setCodes(codes);
+            this.emit("reseted");
+            return this;
+        }
+
         errors(errs, params) {
             this.status('error', errs, params);
         }
+
         pane(e) {
             if (!datax.data(e.target, 'codeg-type')) {
                 return;
             }
-            //var $container = this._get('$container');
-            var $container = this._elm;
-            var paneActive = this._get('paneActive');
-            styler.removeClass($container, template.paneActiveClass(paneActive));
-            paneActive = this._set('paneActive', datax.data(e.target, 'codeg-type'));
-            styler.addClass($container, template.paneActiveClass(paneActive));
+           let oldPaneActive = this._paneActive,
+                paneActive = this._paneActive = datax.data(e.target, 'codeg-type');
+            this.elmx().removeClass(template.paneActiveClass(oldPaneActive))
+                       .addClass(template.paneActiveClass(paneActive));
             e.preventDefault();
         }
+
         status(statusType = 'error', messages = [], params = {}) {
             if (!messages.length) {
                 return this.clearStatus(statusType, params);
@@ -498,22 +484,22 @@ define('skylark-widgets-codeground/code_ground',[
             $status[params.type].innerHTML = '';
         }
     }
-    CodeGround.addons = addons;
+    Codeground.addons = addons;
 
-    return skylark.attach("widgets.CodeGround",CodeGround);
+    return skylark.attach("widgets.Codeground",Codeground);
 });
-define('skylark-widgets-base/Addon',[
-  "skylark-langx/langx",	
+define('skylark-widgets-base/addon',[
+  "skylark-langx-objects",	
   "skylark-langx/Evented",
 	"./base"
-],function(langx,Evented,base){
+],function(objects,Evented,base){
 
 	var Addon = Evented.inherit({
 
 		_construct : function(widget,options) {
 			this._widget = widget;
             Object.defineProperty(this,"options",{
-              value :langx.mixin({},this.options,options,true)
+              value :objects.mixin({},this.options,options,true)
             });
 			if (this._init) {
 				this._init();
@@ -536,9 +522,9 @@ define('skylark-widgets-base/Addon',[
 	return base.Addon = Addon;
 
 });
-define('skylark-widgets-codeground/_addon',[
+define('skylark-widgets-codeground/addon',[
 	"skylark-domx-styler",
-	"skylark-widgets-base/Addon"
+	"skylark-widgets-base/addon"
 ],function(styler,_Addon){
 	return class Addon extends _Addon {
 		_init() {
@@ -7518,11 +7504,12 @@ define('skylark-codemirror/addon/tern/tern',["../../CodeMirror"], function(CodeM
 
 define('skylark-widgets-codeground/addons/edit/codemirror',[
     'skylark-langx/langx',
-    'skylark-domx-data',
+    'skylark-domx-query',
+
     'skylark-codemirror/CodeMirror',
-    "../../_addon",
+    "../../addon",
     '../../util',
-    "../../code_ground",
+    "../../codeground",
     "skylark-codemirror/mode/xml/xml",
     "skylark-codemirror/mode/css/css",
     "skylark-codemirror/mode/javascript/javascript",
@@ -7562,7 +7549,7 @@ define('skylark-widgets-codeground/addons/edit/codemirror',[
     "skylark-codemirror/addon/lint/lint",
 
     "skylark-codemirror/addon/tern/tern"
-], function (langx,datax,CodeMirror,Addon,util,CodeGround) {
+], function (langx,$,CodeMirror,Addon,util,CodeGround) {
     'use strict';
     class AddonCodeMirror  extends Addon{
         //constructor(coder, options) 
@@ -7587,40 +7574,50 @@ define('skylark-widgets-codeground/addons/edit/codemirror',[
 
             var priority = 1;
             var i;
-            this.editor = {};
+            this.editors = {};
             //this.coder = coder;
             var modemap = { 'html': 'htmlmixed' };
             var options = this.options;
             //if (typeof window.CodeMirror === 'undefined') {
             //    return;
             //}
-            var $editors = coder.$container.querySelectorAll('.codeg-editor');
+            var $editors = coder.$('.codeg-editor');
             for (i = 0; i < $editors.length; i++) {
-                let $textarea = $editors[i].querySelector('textarea');
-                let type = datax.data($textarea, 'codeg-type');
-                let file = datax.data($textarea, 'codeg-file');
-                this.editor[type] = CodeMirror.fromTextArea($textarea, options);
-                this.editor[type].setOption('mode', util.getMode(type, file, modemap));
+                let $textarea = $($editors[i]).find('textarea');
+                let type = $textarea.data('codeg-type');
+                let editor = this.editors[type] = CodeMirror.fromTextArea($textarea[0], options);
+                editor.setOption('mode', util.getMode(type, '', modemap));
+                editor.$textarea = $textarea;
+                editor.on('change', this.editorChange({
+                    type
+                }));
+
             }
-            coder.on('change', this.change.bind(this), priority);
+            this.listenTo(coder,"reseted",this.update);
         }
+
         editorChange(params) {
             return () => {
-                var editor = this.editor[params.type];
-                params.content = editor.getValue();
-                this.coder.emit('change', params);
+                var editor = this.editors[params.type];
+                editor.$textarea.val(editor.getValue());
+                editor.$textarea.trigger("change");
             };
         }
-        change(e, callback) {
-            var params = e.data,
-                editor = this.editor[params.type];
-            if (!params.cmEditor) {
-                editor.setValue(params.content);
-                params.cmEditor = editor;
-                editor.on('change', this.editorChange(params));
+
+        update(e) {
+            var codes = this.coder.getCodes();
+            for (let type in this.editors) {
+                let editor = this.editors[type],
+                    code = codes[type],
+                    content;
+                if (langx.isString(code)) {
+                    content = code;
+                } else {
+                    content = code.content || "";
+                }
+                editor.setValue(content);
             }
-            //params.content = editor.getValue();
-            //callback(null, params);
+
         }
 
 
@@ -7641,9 +7638,9 @@ define('skylark-widgets-codeground/addons/edit/ace',[
     'skylark-langx/langx',
     'skylark-domx-data',
     'skylark-ace',
-    "../../_addon",
+    "../../addon",
     '../../util',
-    "../../code_ground"
+    "../../codeground"
 ], function (langx,datax,ace,Addon,util,CodeGround) {
     'use strict';
     class AddonAce extends Addon {
@@ -7663,7 +7660,7 @@ define('skylark-widgets-codeground/addons/edit/ace',[
             //    retur//n;
             // }
             var options = this.options;
-            var $editors = coder.$container.querySelectorAll('.codeg-editor');
+            var $editors = coder.$('.codeg-editor');
             for (i = 0; i < $editors.length; i++) {
                 let $textarea = $editors[i].querySelector('textarea');
                 let type = datax.data($textarea, 'codeg-type');
@@ -7677,8 +7674,9 @@ define('skylark-widgets-codeground/addons/edit/ace',[
                 editor.getSession().setOptions(editorOptions);
                 editor.$blockScrolling = Infinity;
             }
-            coder.on('change', this.change.bind(this), priority);
+            this.listenTo(coder,"reseted",this.update);
         }
+        
         editorChange(params) {
             return () => {
                 var editor = this.editor[params.type];
@@ -7686,16 +7684,10 @@ define('skylark-widgets-codeground/addons/edit/ace',[
                 this.coder.emit('change', params);
             };
         }
-        change(e, callback) {
+        update(e,) {
             var params = e.data,
                 editor = this.editor[params.type];
-            if (!params.aceEditor) {
-                editor.getSession().setValue(params.content);
-                params.aceEditor = editor;
-                editor.on('change', this.editorChange(params));
-            }
-            //params.content = editor.getValue();
-            //callback(null, params);
+            editor.getSession().setValue(params.content);
         }
 
 
@@ -7715,9 +7707,9 @@ define('skylark-widgets-codeground/addons/edit/ace',[
 define('skylark-widgets-codeground/addons/general/console',[
     'skylark-langx/langx',
     "skylark-domx-styler",
-    "../../_addon",
+    "../../addon",
     '../../util',
-    "../../code_ground"
+    "../../codeground"
 ], function (langx,styler,Addon,util,CodeGround) {
     'use strict';
     
@@ -7906,10 +7898,13 @@ define('skylark-widgets-codeground/addons/general/console',[
 });
 define('skylark-widgets-codeground/addons/general/play',[
     'skylark-langx/langx',
-    "../../_addon",
+    "skylark-domx-noder",
+    "skylark-domx-eventer",
+    "skylark-domx-query",
+    "../../addon",
     '../../util',
-    "../../code_ground"
-], function (langx,Addon,util,CodeGround) {
+    "../../codeground"
+], function (langx,noder,eventer,$,Addon,util,CodeGround) {
     class AddonPlay  extends Addon{
         //constructor(coder, options) 
 
@@ -7944,17 +7939,23 @@ define('skylark-widgets-codeground/addons/general/play',[
                     }
                 };
             }
-            var $button = document.createElement('button');
-            $button.className = 'codeg-button codeg-button-play';
-            $button.innerHTML = 'Run';
-            coder.$container.appendChild($button);
-            $button.addEventListener('click', this.run.bind(this));
-            coder.on('change', this.change.bind(this), priority);
+            var $button = $('<button/>').prop({
+                className : 'codeg-button codeg-button-play',
+                innerHTML : 'Run'
+            });
+
+            coder.$().append($button);
+
+            this.listenTo($button,"click",this.run);
+
+            this.listenTo(coder,"changed",this.update);
+            
             this.cache = cache;
             this.code = code;
             this.coder = coder;
         }
-        change(e) {
+
+        update(e) {
             var params = e.data;
             this.code[params.type] = langx.clone(params);
             if (typeof this.cache[params.type] !== 'undefined') {
@@ -7965,11 +7966,9 @@ define('skylark-widgets-codeground/addons/general/play',[
                 //callback(null, params);
             }
         }
+
         run() {
-            for (let type in this.code) {
-                this.cache[type] = langx.mixin({ forceRender: true },this.code[type]);
-                this.coder.emit('change', this.cache[type]);
-            }
+            this.coder.emit('reseted');
         }
 
         static get categoryName() {
@@ -7988,9 +7987,9 @@ define('skylark-widgets-codeground/addons/general/play',[
 });
 define('skylark-widgets-codeground/addons/general/pen',[
     'skylark-langx/langx',
-    "../../_addon",
+    "../../addon",
     '../../util',
-    "../../code_ground"
+    "../../codeground"
 ], function (langx,Addon,util,CodeGround) {
     'use strict';
     class AddonPen  extends Addon{
@@ -8104,10 +8103,11 @@ define('skylark-widgets-codeground/addons/general/pen',[
 });
 define('skylark-widgets-codeground/addons/general/render',[
     'skylark-langx/langx',
-    "../../_addon",
+    "skylark-domx-query",
+    "../../addon",
     '../../util',
-    "../../code_ground"
-], function (langx,Addon,util,CodeGround) {
+    "../../codeground"
+], function (langx,$,Addon,util,CodeGround) {
     'use strict';
     class AddonRender  extends Addon{
         //constructor(coder, options) 
@@ -8120,7 +8120,7 @@ define('skylark-widgets-codeground/addons/general/render',[
 
 
             var supportSrcdoc = !!('srcdoc' in document.createElement('iframe'));
-            var $resultFrame = coder.$container.querySelector('.codeg-pane-result iframe');
+            var $resultFrame = coder.$('.codeg-pane-result iframe');
             var frameContent = '';
             var content = {
                 html: '',
@@ -8128,7 +8128,9 @@ define('skylark-widgets-codeground/addons/general/render',[
                 js: ''
             };
             window.addEventListener('message', this.domready.bind(this));
-            coder.on('change', this.change.bind(this), 100);
+
+            this.listenTo(coder,"changed",this.update);
+
             this.supportSrcdoc = supportSrcdoc;
             this.content = content;
             this.frameContent = frameContent;
@@ -8137,6 +8139,7 @@ define('skylark-widgets-codeground/addons/general/render',[
             this.index = 0;
             this.lastCallback = () => {
             };
+            this.update();
         }
         template(style = '', body = '', script = '') {
             return `
@@ -8168,38 +8171,40 @@ define('skylark-widgets-codeground/addons/general/render',[
       </html>
     `;
         }
-        change(e) {
-            var params = e.data;
-            this.content[params.type] = params.content;
+        update(e) {
+            //var params = e.data;
+            //this.content[params.type] = params.content;
             var oldFrameContent = this.frameContent;
-            this.frameContent = this.template(this.content['css'], this.content['html'], this.content['js']);
+            let codes = this.coder.getCodes();
+
+            this.frameContent = this.template(codes['css'], codes['html'], codes['js']);
             this.lastCallback = () => {
                 this.lastCallback = () => {
                 };
                 //callback(null, params);
             };
-            if (params.forceRender !== true && this.frameContent === oldFrameContent) {
+            if (this.frameContent === oldFrameContent) {
                 //callback(null, params);
                 return;
             }
             if (this.supportSrcdoc) {
                 var $newResultFrame = document.createElement('iframe');
-                this.$resultFrame.parentNode.replaceChild($newResultFrame, this.$resultFrame);
-                this.$resultFrame = $newResultFrame;
-                this.$resultFrame.contentWindow.document.open();
-                this.$resultFrame.contentWindow.document.write(this.frameContent);
-                this.$resultFrame.contentWindow.document.close();
+                this.$resultFrame.replaceWith($newResultFrame);
+                this.$resultFrame = $($newResultFrame);
+                $newResultFrame.contentWindow.document.open();
+                $newResultFrame.contentWindow.document.write(this.frameContent);
+                $newResultFrame.contentWindow.document.close();
             } else {
-                this.$resultFrame.setAttribute('data-srcdoc', this.frameContent);
+                this.$resultFrame.attr('data-srcdoc', this.frameContent);
                 var jsUrl = 'javascript:window.frameElement.getAttribute("data-srcdoc");';
-                this.$resultFrame.setAttribute('src', jsUrl);
-                if (this.$resultFrame.contentWindow) {
-                    this.$resultFrame.contentWindow.location = jsUrl;
+                this.$resultFrame.attr('src', jsUrl);
+                if (this.$resultFrame[0].contentWindow) {
+                    this.$resultFrame[0].contentWindow.location = jsUrl;
                 }
             }
         }
         domready(e) {
-            if (e.source !== this.$resultFrame.contentWindow) {
+            if (e.source !== this.$resultFrame[0].contentWindow) {
                 return;
             }
             var data = {};
@@ -8227,7 +8232,7 @@ define('skylark-widgets-codeground/addons/general/render',[
     return AddonRender;
 });
 define('skylark-widgets-codeground/main',[
-	"./code_ground",
+	"./codeground",
 	"./addons/edit/codemirror",
 	"./addons/edit/ace",
 	"./addons/general/console",

@@ -1,5 +1,5 @@
 define([
-	"./code_ground",
+	"./codeground",
 	"./addons/edit/codemirror",
 	"./addons/edit/ace",
 	"./addons/general/console",

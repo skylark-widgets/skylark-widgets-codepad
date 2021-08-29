@@ -1,8 +1,8 @@
 define([
     'skylark-langx/langx',
-    "../../_addon",
+    "../../addon",
     '../../util',
-    "../../code_ground"
+    "../../codeground"
 ], function (langx,Addon,util,CodeGround) {
     'use strict';
     
@@ -20,10 +20,12 @@ define([
                 return;
             }
             window.marked.setOptions(options);
-            coder.$container.querySelector('a[data-codeg-type="html"]').innerHTML = 'Markdown';
-            coder.on('change', this.change.bind(this), priority);
+
+            coder.$('a[data-codeg-type="html"]').html('Markdown');
+
+            this.listenTo(coder,"changed",this.update);
         }
-        change(e) {
+        update(e) {
             var params = e.data;
             if (params.type === 'html') {
                 try {

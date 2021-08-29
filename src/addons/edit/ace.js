@@ -2,9 +2,9 @@ define([
     'skylark-langx/langx',
     'skylark-domx-data',
     'skylark-ace',
-    "../../_addon",
+    "../../addon",
     '../../util',
-    "../../code_ground"
+    "../../codeground"
 ], function (langx,datax,ace,Addon,util,CodeGround) {
     'use strict';
     class AddonAce extends Addon {
@@ -24,7 +24,7 @@ define([
             //    retur//n;
             // }
             var options = this.options;
-            var $editors = coder.$container.querySelectorAll('.codeg-editor');
+            var $editors = coder.$('.codeg-editor');
             for (i = 0; i < $editors.length; i++) {
                 let $textarea = $editors[i].querySelector('textarea');
                 let type = datax.data($textarea, 'codeg-type');
@@ -38,8 +38,9 @@ define([
                 editor.getSession().setOptions(editorOptions);
                 editor.$blockScrolling = Infinity;
             }
-            coder.on('change', this.change.bind(this), priority);
+            this.listenTo(coder,"reseted",this.update);
         }
+        
         editorChange(params) {
             return () => {
                 var editor = this.editor[params.type];
@@ -47,16 +48,10 @@ define([
                 this.coder.emit('change', params);
             };
         }
-        change(e, callback) {
+        update(e,) {
             var params = e.data,
                 editor = this.editor[params.type];
-            if (!params.aceEditor) {
-                editor.getSession().setValue(params.content);
-                params.aceEditor = editor;
-                editor.on('change', this.editorChange(params));
-            }
-            //params.content = editor.getValue();
-            //callback(null, params);
+            editor.getSession().setValue(params.content);
         }
 
 

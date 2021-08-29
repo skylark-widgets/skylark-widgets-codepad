@@ -1,10 +1,11 @@
 define([
     'skylark-langx/langx',
-    'skylark-domx-data',
+    'skylark-domx-query',
+
     'skylark-codemirror/CodeMirror',
-    "../../_addon",
+    "../../addon",
     '../../util',
-    "../../code_ground",
+    "../../codeground",
     "skylark-codemirror/mode/xml/xml",
     "skylark-codemirror/mode/css/css",
     "skylark-codemirror/mode/javascript/javascript",
@@ -44,7 +45,7 @@ define([
     "skylark-codemirror/addon/lint/lint",
 
     "skylark-codemirror/addon/tern/tern"
-], function (langx,datax,CodeMirror,Addon,util,CodeGround) {
+], function (langx,$,CodeMirror,Addon,util,CodeGround) {
     'use strict';
     class AddonCodeMirror  extends Addon{
         //constructor(coder, options) 
@@ -69,40 +70,50 @@ define([
 
             var priority = 1;
             var i;
-            this.editor = {};
+            this.editors = {};
             //this.coder = coder;
             var modemap = { 'html': 'htmlmixed' };
             var options = this.options;
             //if (typeof window.CodeMirror === 'undefined') {
             //    return;
             //}
-            var $editors = coder.$container.querySelectorAll('.codeg-editor');
+            var $editors = coder.$('.codeg-editor');
             for (i = 0; i < $editors.length; i++) {
-                let $textarea = $editors[i].querySelector('textarea');
-                let type = datax.data($textarea, 'codeg-type');
-                let file = datax.data($textarea, 'codeg-file');
-                this.editor[type] = CodeMirror.fromTextArea($textarea, options);
-                this.editor[type].setOption('mode', util.getMode(type, file, modemap));
+                let $textarea = $($editors[i]).find('textarea');
+                let type = $textarea.data('codeg-type');
+                let editor = this.editors[type] = CodeMirror.fromTextArea($textarea[0], options);
+                editor.setOption('mode', util.getMode(type, '', modemap));
+                editor.$textarea = $textarea;
+                editor.on('change', this.editorChange({
+                    type
+                }));
+
             }
-            coder.on('change', this.change.bind(this), priority);
+            this.listenTo(coder,"reseted",this.update);
         }
+
         editorChange(params) {
             return () => {
-                var editor = this.editor[params.type];
-                params.content = editor.getValue();
-                this.coder.emit('change', params);
+                var editor = this.editors[params.type];
+                editor.$textarea.val(editor.getValue());
+                editor.$textarea.trigger("change");
             };
         }
-        change(e, callback) {
-            var params = e.data,
-                editor = this.editor[params.type];
-            if (!params.cmEditor) {
-                editor.setValue(params.content);
-                params.cmEditor = editor;
-                editor.on('change', this.editorChange(params));
+
+        update(e) {
+            var codes = this.coder.getCodes();
+            for (let type in this.editors) {
+                let editor = this.editors[type],
+                    code = codes[type],
+                    content;
+                if (langx.isString(code)) {
+                    content = code;
+                } else {
+                    content = code.content || "";
+                }
+                editor.setValue(content);
             }
-            //params.content = editor.getValue();
-            //callback(null, params);
+
         }
 
 

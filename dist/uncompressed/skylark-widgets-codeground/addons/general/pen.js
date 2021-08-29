@@ -1,8 +1,8 @@
 define([
     'skylark-langx/langx',
-    "../../_addon",
+    "../../addon",
     '../../util',
-    "../../code_ground"
+    "../../codeground"
 ], function (langx,Addon,util,CodeGround) {
     'use strict';
     class AddonPen  extends Addon{

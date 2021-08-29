@@ -1,9 +1,10 @@
 define([
     'skylark-langx/langx',
-    "../../_addon",
+    "skylark-domx-query",
+    "../../addon",
     '../../util',
-    "../../code_ground"
-], function (langx,Addon,util,CodeGround) {
+    "../../codeground"
+], function (langx,$,Addon,util,CodeGround) {
     'use strict';
     class AddonRender  extends Addon{
         //constructor(coder, options) 
@@ -16,7 +17,7 @@ define([
 
 
             var supportSrcdoc = !!('srcdoc' in document.createElement('iframe'));
-            var $resultFrame = coder.$container.querySelector('.codeg-pane-result iframe');
+            var $resultFrame = coder.$('.codeg-pane-result iframe');
             var frameContent = '';
             var content = {
                 html: '',
@@ -24,7 +25,9 @@ define([
                 js: ''
             };
             window.addEventListener('message', this.domready.bind(this));
-            coder.on('change', this.change.bind(this), 100);
+
+            this.listenTo(coder,"changed",this.update);
+
             this.supportSrcdoc = supportSrcdoc;
             this.content = content;
             this.frameContent = frameContent;
@@ -33,6 +36,7 @@ define([
             this.index = 0;
             this.lastCallback = () => {
             };
+            this.update();
         }
         template(style = '', body = '', script = '') {
             return `
@@ -64,38 +68,40 @@ define([
       </html>
     `;
         }
-        change(e) {
-            var params = e.data;
-            this.content[params.type] = params.content;
+        update(e) {
+            //var params = e.data;
+            //this.content[params.type] = params.content;
             var oldFrameContent = this.frameContent;
-            this.frameContent = this.template(this.content['css'], this.content['html'], this.content['js']);
+            let codes = this.coder.getCodes();
+
+            this.frameContent = this.template(codes['css'], codes['html'], codes['js']);
             this.lastCallback = () => {
                 this.lastCallback = () => {
                 };
                 //callback(null, params);
             };
-            if (params.forceRender !== true && this.frameContent === oldFrameContent) {
+            if (this.frameContent === oldFrameContent) {
                 //callback(null, params);
                 return;
             }
             if (this.supportSrcdoc) {
                 var $newResultFrame = document.createElement('iframe');
-                this.$resultFrame.parentNode.replaceChild($newResultFrame, this.$resultFrame);
-                this.$resultFrame = $newResultFrame;
-                this.$resultFrame.contentWindow.document.open();
-                this.$resultFrame.contentWindow.document.write(this.frameContent);
-                this.$resultFrame.contentWindow.document.close();
+                this.$resultFrame.replaceWith($newResultFrame);
+                this.$resultFrame = $($newResultFrame);
+                $newResultFrame.contentWindow.document.open();
+                $newResultFrame.contentWindow.document.write(this.frameContent);
+                $newResultFrame.contentWindow.document.close();
             } else {
-                this.$resultFrame.setAttribute('data-srcdoc', this.frameContent);
+                this.$resultFrame.attr('data-srcdoc', this.frameContent);
                 var jsUrl = 'javascript:window.frameElement.getAttribute("data-srcdoc");';
-                this.$resultFrame.setAttribute('src', jsUrl);
-                if (this.$resultFrame.contentWindow) {
-                    this.$resultFrame.contentWindow.location = jsUrl;
+                this.$resultFrame.attr('src', jsUrl);
+                if (this.$resultFrame[0].contentWindow) {
+                    this.$resultFrame[0].contentWindow.location = jsUrl;
                 }
             }
         }
         domready(e) {
-            if (e.source !== this.$resultFrame.contentWindow) {
+            if (e.source !== this.$resultFrame[0].contentWindow) {
                 return;
             }
             var data = {};

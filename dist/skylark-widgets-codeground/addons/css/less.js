@@ -5,5 +5,5 @@
  * @link https://github.com/skylark-widgets/skylark-widgets-codeground/
  * @license MIT
  */
-define(["skylark-langx/langx","../../_addon","../../util","../../code_ground"],function(e,s,t,n){"use strict";class i extends s{_init(){super._init();var e=this.coder;this.options;void 0!==window.less&&(e.$container.querySelector('a[data-codeg-type="css"]').innerHTML="Less",e.on("change",this.change.bind(this),20))}isLess(e){return"css"===e.type&&(-1!==e.file.indexOf(".less")||""===e.file)}change(e){var s=e.data;this.isLess(s)&&window.less.render(s.content,this.options,(e,t)=>{if(e)return callback(e,s);s.content=t.css})}static get categoryName(){return"css"}static get addonName(){return"less"}}return i.register(n),i});
+define(["skylark-langx/langx","../../addon","../../util","../../codeground"],function(s,e,t,i){"use strict";class n extends e{_init(){super._init();var s=this.coder;this.options;void 0!==window.less&&(s.$('a[data-codeg-type="css"]').html("Less"),this.listenTo(s,"changed",this.update))}isLess(s){return"css"===s.type&&(-1!==s.file.indexOf(".less")||""===s.file)}update(s){var e=s.data;this.isLess(e)&&window.less.render(e.content,this.options,(s,t)=>{if(s)return callback(s,e);e.content=t.css})}static get categoryName(){return"css"}static get addonName(){return"less"}}return n.register(i),n});
 //# sourceMappingURL=../../sourcemaps/addons/css/less.js.map

@@ -66,6 +66,9 @@ function initPage(langx,$,CoderGround) {
     if ($jdemo) {
       // ace demo
       new CoderGround($jdemo, {
+        codes : {
+          html : he.decode(document.querySelector('.demo-content code').innerHTML)
+        },
         files: [
           {
             type: 'html',

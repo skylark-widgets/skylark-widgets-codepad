@@ -1,8 +1,8 @@
 define([
     'skylark-langx/langx',
-    "../../_addon",
+    "../../addon",
     '../../util',
-    "../../code_ground"
+    "../../codeground"
 ], function (langx,Addon,util,CodeGround) {
 
     'use strict';
@@ -19,8 +19,8 @@ define([
             if (typeof window.stylus === 'undefined') {
                 return;
             }
-            coder.$container.querySelector('a[data-codeg-type="css"]').innerHTML = 'Stylus';
-            coder.on('change', this.change.bind(this), priority);
+            coder.$('a[data-codeg-type="css"]').html('Stylus');
+            this.listenTo(coder,"changed",this.update);
         }
         isStylus(params) {
             if (params.type !== 'css') {
@@ -28,7 +28,8 @@ define([
             }
             return params.file.indexOf('.styl') !== -1 || params.file === '';
         }
-        change(e) {
+
+        update(e) {
             var params = e.data;
             if (this.isStylus(params)) {
                 window.stylus(params.content, this.options).render((err, res) => {

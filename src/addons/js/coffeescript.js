@@ -1,8 +1,8 @@
 define([
     'skylark-langx/langx',
-    "../../_addon",
+    "../../addon",
     '../../util',
-    "../../code_ground"
+    "../../codeground"
 ], function (langx,Addon,util,CodeGround) {
     'use strict';
     class AddonCoffeeScript  extends Addon{
@@ -17,8 +17,8 @@ define([
             if (typeof window.CoffeeScript === 'undefined') {
                 return;
             }
-            coder.$container.querySelector('a[data-codeg-type="js"]').innerHTML = 'CoffeeScript';
-            coder.on('change', this.change.bind(this), priority);
+            coder.$('a[data-codeg-type="js"]').html('CoffeeScript');
+            this.listenTo(coder,"changed",this.update);
         }
         isCoffee(params) {
             if (params.type !== 'js') {
@@ -26,7 +26,7 @@ define([
             }
             return params.file.indexOf('.coffee') !== -1 || params.file === '';
         }
-        change(e) {
+        update(e) {
             var params = e.data;
             if (this.isCoffee(params)) {
                 try {

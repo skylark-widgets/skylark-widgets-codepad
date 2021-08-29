@@ -1,8 +1,8 @@
 define([
     'skylark-langx/langx',
-    "../../_addon",
+    "../../addon",
     '../../util',
-    "../../code_ground"
+    "../../codeground"
 ], function (langx,Addon,util,CodeGround) {
     'use strict';
 
@@ -33,10 +33,11 @@ define([
                 'text/x-ecmascript',
                 'text/x-javascript'
             ];
-            coder.on('change', this.change.bind(this));
+            this.listenTo(coder,"changed",this.update);
             this.runScriptTypes = runScriptTypes;
         }
-        change(e) {
+
+        update(e) {
             var params = e.data;
             if (params.type !== 'html') {
                 return //callback(null, params);

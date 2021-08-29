@@ -5,5 +5,5 @@
  * @link https://github.com/skylark-widgets/skylark-widgets-codeground/
  * @license MIT
  */
-define(["./code_ground","./addons/edit/codemirror","./addons/edit/ace","./addons/general/console","./addons/general/play","./addons/general/pen","./addons/general/render"],function(e){return e});
+define(["./codeground","./addons/edit/codemirror","./addons/edit/ace","./addons/general/console","./addons/general/play","./addons/general/pen","./addons/general/render"],function(e){return e});
 //# sourceMappingURL=sourcemaps/main.js.map
