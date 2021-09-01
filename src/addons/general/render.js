@@ -9,6 +9,50 @@ define([
     class AddonRender  extends Addon{
         //constructor(coder, options) 
 
+        //default options
+        get options () {
+            return  {
+                html : {
+                    template : function (codes) {
+                        let style = codes.style || "",
+                            body = codes.html || "", 
+                            script = codes.js || "";
+                        return   `
+                          <!doctype html>
+                          <html>
+                            <head>
+                              <script>
+                                (function () {
+                                  window.addEventListener('DOMContentLoaded', function () {
+                                    window.parent.postMessage(JSON.stringify({
+                                      type: 'codeg-dom-ready'
+                                    }), '*')
+                                  })
+                                }())
+                              </script>
+
+                              <style>${ style }</style>
+                            </head>
+                            <body>
+                              ${ body }
+
+                              <!--
+                                CodeGround:
+                                Empty script tag prevents malformed HTML from breaking the next script.
+                              -->
+                              <script></script>
+                              <script>${ script }</script>
+                            </body>
+                          </html>
+                        `;
+                    }                    
+                }
+
+
+            }
+
+        }
+
         _init() {
             super._init();
 
@@ -38,43 +82,27 @@ define([
             };
             this.update();
         }
-        template(style = '', body = '', script = '') {
-            return `
-      <!doctype html>
-      <html>
-        <head>
-          <script>
-            (function () {
-              window.addEventListener('DOMContentLoaded', function () {
-                window.parent.postMessage(JSON.stringify({
-                  type: 'codeg-dom-ready'
-                }), '*')
-              })
-            }())
-          </script>
 
-          <style>${ style }</style>
-        </head>
-        <body>
-          ${ body }
+        _render(codes){
+          if (!this._renderHtml) {
+            let htmlTpl = this.options.html.template;
+            if (langx.isString(htmlTpl)) {
+              this._renderHtml = langx.template(htmlTpl);
+            } else if (langx.isFunction(htmlTpl)) {
+              this._renderHtml = htmlTpl;
+            }
+          }
 
-          <!--
-            CodeGround:
-            Empty script tag prevents malformed HTML from breaking the next script.
-          -->
-          <script></script>
-          <script>${ script }</script>
-        </body>
-      </html>
-    `;
+          return this._renderHtml(codes);
         }
+
         update(e) {
             //var params = e.data;
             //this.content[params.type] = params.content;
             var oldFrameContent = this.frameContent;
             let codes = this.coder.getCodes();
 
-            this.frameContent = this.template(codes['css'], codes['html'], codes['js']);
+            this.frameContent = this._render(codes);
             this.lastCallback = () => {
                 this.lastCallback = () => {
                 };
