@@ -1,5 +1,5 @@
     function renderHtml(codes) {
-      let style = codes.style || "",
+      let style = codes.css || "",
           body = codes.html || "", 
           script = codes.js || "";
           return `

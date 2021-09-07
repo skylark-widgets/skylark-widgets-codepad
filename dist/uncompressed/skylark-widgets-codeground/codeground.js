@@ -68,7 +68,7 @@ define([
                     'css',
                     'js'
                 ]) {
-                if (this.options.codes[type]) {
+                if (this.options.codes[type] !== false) {
                     this._markup(type);
                 }
             }

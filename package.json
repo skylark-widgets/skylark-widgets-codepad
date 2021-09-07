@@ -18,6 +18,10 @@
   "bugs": {
     "url": "https://github.com/skylark-widgets/skylark-widgets-codeground/issues"
   },
+  "files": [
+    "dist/",
+    "skins/"
+  ],
   "license": "MIT",
   "dependencies": {
     "skylark-ace": "git+https://github.com/skylark-integration/skylark-ace.git",

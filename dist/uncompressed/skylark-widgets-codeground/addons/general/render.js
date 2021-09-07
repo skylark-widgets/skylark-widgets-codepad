@@ -14,7 +14,7 @@ define([
             return  {
                 html : {
                     template : function (codes) {
-                        let style = codes.style || "",
+                        let style = codes.css || "",
                             body = codes.html || "", 
                             script = codes.js || "";
                         return   `

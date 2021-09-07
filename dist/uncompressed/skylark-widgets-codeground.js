@@ -355,7 +355,7 @@ define('skylark-widgets-codeground/codeground',[
                     'css',
                     'js'
                 ]) {
-                if (this.options.codes[type]) {
+                if (this.options.codes[type] !== false) {
                     this._markup(type);
                 }
             }
@@ -8117,7 +8117,7 @@ define('skylark-widgets-codeground/addons/general/render',[
             return  {
                 html : {
                     template : function (codes) {
-                        let style = codes.style || "",
+                        let style = codes.css || "",
                             body = codes.html || "", 
                             script = codes.js || "";
                         return   `
