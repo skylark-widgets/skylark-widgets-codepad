@@ -149,12 +149,11 @@
 function initPage(langx,$,CoderGround) {
 
   new CoderGround(document.querySelector(&#39;#codeg-demo-ace&#39;), {
-    files: [
-      {
-        type: &#39;html&#39;,
-        content: &#39;&lt;html&gt;\n&lt;body&gt;\n&lt;h1&gt;Using CodeMirror&lt;/h1&gt;\n&lt;/body&gt;\n&lt;/html&gt;&#39;
-      }
-    ],
+    codes: {
+      html : &#39;&lt;html&gt;\n&lt;body&gt;\n&lt;h1&gt;Using CodeMirror&lt;/h1&gt;\n&lt;/body&gt;\n&lt;/html&gt;&#39,
+      css : &#39;body {\n  background: yellow;\n}&#39;,
+      js : true
+    },
     pane: &#39;html&#39;,
     addons: {
       general : [

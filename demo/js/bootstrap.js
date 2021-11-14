@@ -1,14 +1,14 @@
 require.config({
-  baseUrl: "./"
-  ,map: {
+    baseUrl: "./",
+    map: {
         '*': {
           'ace': 'skylark-ace'
         }
-      }
-  , 
-  shim: {
-  }
-  ,packages : [
+    }  , 
+    waitSeconds: 1500,
+    shim: {
+    }
+    ,packages : [
     {name : "skylark-langx-arrays", location : "../node_modules/skylark-langx-arrays/dist/uncompressed/skylark-langx-arrays"},
     {name : "skylark-langx-aspect",location : "../node_modules/skylark-langx-aspect/dist/uncompressed/skylark-langx-aspect"},
     {name : "skylark-langx-async",location : "../node_modules/skylark-langx-async/dist/uncompressed/skylark-langx-async"},

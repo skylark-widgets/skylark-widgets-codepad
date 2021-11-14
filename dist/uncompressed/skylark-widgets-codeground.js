@@ -7653,13 +7653,14 @@ define('skylark-widgets-codeground/addons/edit/ace',[
 
             var priority = 1;
             var i;
-            this.editor = {};
+            this.editors = {};
             //this.coder = coder;
             //options = langx.clone(options);
             //if (typeof //window.ace === 'undefined') {
             //    retur//n;
             // }
             var options = this.options;
+
             var $editors = coder.$('.codeg-editor');
             for (i = 0; i < $editors.length; i++) {
                 let $textarea = $editors[i].querySelector('textarea');
@@ -7667,27 +7668,51 @@ define('skylark-widgets-codeground/addons/edit/ace',[
                 let file = datax.data($textarea, 'codeg-file');
                 let $aceContainer = document.createElement('div');
                 $editors[i].appendChild($aceContainer);
-                this.editor[type] = ace.edit($aceContainer);
-                let editor = this.editor[type];
+                let editor = this.editors[type] = ace.edit($aceContainer);
                 let editorOptions = langx.clone(options);
                 editor.getSession().setMode('ace/mode/' + util.getMode(type, file));
                 editor.getSession().setOptions(editorOptions);
                 editor.$blockScrolling = Infinity;
+
+                editor.$textarea = $textarea;
+                editor.on('change', this.editorChange({
+                    type
+                }));
             }
             this.listenTo(coder,"reseted",this.update);
+            this.update();
         }
         
         editorChange(params) {
             return () => {
-                var editor = this.editor[params.type];
-                params.content = editor.getValue();
-                this.coder.emit('change', params);
+                var editor = this.editors[params.type];
+                editor.$textarea.val(editor.getValue());
+                editor.$textarea.trigger("change");
             };
+
+            ///return () => {
+            ///    var editor = this.editor[params.type];
+            ///    params.content = editor.getValue();
+            ///    this.coder.emit('change', params);
+            ///};
         }
-        update(e,) {
-            var params = e.data,
-                editor = this.editor[params.type];
-            editor.getSession().setValue(params.content);
+        update(e) {
+            var codes = this.coder.getCodes();
+            for (let type in this.editors) {
+                let editor = this.editors[type],
+                    code = codes[type],
+                    content;
+                if (langx.isString(code)) {
+                    content = code;
+                } else {
+                    content = code.content || "";
+                }
+                editor.getSession().setValue(content);
+            }
+
+            ///var params = e.data,
+            ///    editor = this.editor[params.type];
+            ///editor.getSession().setValue(params.content);
         }
 
 
