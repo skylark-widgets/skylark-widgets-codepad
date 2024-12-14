@@ -1,4 +1,4 @@
-/* codeg
+/* codepad
  * demos
  */
 
@@ -94,43 +94,43 @@
 /* demo skin
  */
 
-.codeg-demo {
+.codepad-demo {
   overflow: hidden;
   height: 100%;
 }
 
-.codeg-demo .codeg-nav {
+.codepad-demo .codepad-nav {
   background: #ddd;
   border: 0;
 }
 
-.codeg-demo .codeg-nav-item-result,
-.codeg-demo .codeg-nav-item-html {
+.codepad-demo .codepad-nav-item-result,
+.codepad-demo .codepad-nav-item-html {
   background: #fff;
   border: 0;
 }
 
-.codeg-demo .codeg-nav-item-result {
+.codepad-demo .codepad-nav-item-result {
   float: right;
 }
 
-.codeg-demo .codeg-nav-item-html {
+.codepad-demo .codepad-nav-item-html {
   float: left;
 }
 
-.codeg-demo .codeg-pane {
+.codepad-demo .codepad-pane {
   float: right;
 /*  position: relative; */
   visibility: visible;
   width: 50%;
 }
 
-.codeg-demo .codeg-pane-html {
+.codepad-demo .codepad-pane-html {
   border-right: 1px solid #efefef;
 }
 
-.codeg-demo .codeg-pane-css,
-.codeg-demo .codeg-pane-js {
+.codepad-demo .codepad-pane-css,
+.codepad-demo .codepad-pane-js {
   display: none;
 }
 

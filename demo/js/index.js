@@ -45,23 +45,23 @@ require.config({
     { name: "skylark-utils-dom", location: "../node_modules/skylark-utils-dom/dist/uncompressed/skylark-utils-dom"},
     { name: "skylark-ace", location: "../node_modules/skylark-/dist/uncompressed/skylark-ace"},
     { name: "skylark-codemirror", location: "../node_modules/skylark-codemirror/dist/uncompressed/skylark-codemirror"},
-    { name: "skylark-widgets-codeg", location: "../src" }
+    { name: "skylark-widgets-codepad", location: "../src" }
   ],
 });
  
 var form = {};
 
 require([
-//  "../dist/uncompressed/skylark-widgets-codeg-all.js"
+//  "../dist/uncompressed/skylark-widgets-codepad-all.js"
 ], function() {
   require([
-    "skylark-widgets-codeg"
-  ], function (CoderGround) {
+    "skylark-widgets-codepad"
+  ], function (Codepad) {
 
     var $demoHeader = document.getElementById('j-header')
     if ($demoHeader) {
       // header demo
-      new CoderGround($demoHeader, {
+      new Codepad($demoHeader, {
         files: [{
           type: 'html',
           url: 'snippets/ripple/ripple.html'

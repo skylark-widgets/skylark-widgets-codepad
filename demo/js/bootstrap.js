@@ -13,6 +13,7 @@ require.config({
     {name : "skylark-langx-aspect",location : "../node_modules/skylark-langx-aspect/dist/uncompressed/skylark-langx-aspect"},
     {name : "skylark-langx-async",location : "../node_modules/skylark-langx-async/dist/uncompressed/skylark-langx-async"},
     {name : "skylark-langx-binary",location : "../node_modules/skylark-langx-binary/dist/uncompressed/skylark-langx-binary"},
+    {name : "skylark-langx-chars",location : "../node_modules/skylark-langx-chars/dist/uncompressed/skylark-langx-chars"},
     {name : "skylark-langx-constructs",location : "../node_modules/skylark-langx-constructs/dist/uncompressed/skylark-langx-constructs"},
     {name : "skylark-langx-datetimes",location : "../node_modules/skylark-langx-datetimes/dist/uncompressed/skylark-langx-datetimes"},
     {name : "skylark-langx-emitter",location : "../node_modules/skylark-langx-emitter/dist/uncompressed/skylark-langx-emitter"},
@@ -25,6 +26,7 @@ require.config({
     {name : "skylark-langx-ns",location : "../node_modules/skylark-langx-ns/dist/uncompressed/skylark-langx-ns"},
     {name : "skylark-langx-numerics",location : "../node_modules/skylark-langx-numerics/dist/uncompressed/skylark-langx-numerics"},
     {name : "skylark-langx-objects",location : "../node_modules/skylark-langx-objects/dist/uncompressed/skylark-langx-objects"},
+    {name : "skylark-langx-paths",location : "../node_modules/skylark-langx-paths/dist/uncompressed/skylark-langx-paths"},
     {name : "skylark-langx-strings",location : "../node_modules/skylark-langx-strings/dist/uncompressed/skylark-langx-strings"},
     {name : "skylark-langx-topic",location : "../node_modules/skylark-langx-topic/dist/uncompressed/skylark-langx-topic"},
     {name : "skylark-langx-types",location : "../node_modules/skylark-langx-types/dist/uncompressed/skylark-langx-types"},
@@ -40,6 +42,9 @@ require.config({
     {name : "skylark-domx-fx",location : "../node_modules/skylark-domx-fx/dist/uncompressed/skylark-domx-fx"},
     {name : "skylark-domx-geom",location : "../node_modules/skylark-domx-geom/dist/uncompressed/skylark-domx-geom"},
     {name : "skylark-domx-images",location : "../node_modules/skylark-domx-images/dist/uncompressed/skylark-domx-images"},
+    {name : "skylark-domx-iframes",location : "../node_modules/skylark-domx-iframes/dist/uncompressed/skylark-domx-iframes"},
+    {name : "skylark-domx-lists",location : "../node_modules/skylark-domx-lists/dist/uncompressed/skylark-domx-lists"},
+    {name : "skylark-domx-medias",location : "../node_modules/skylark-domx-medias/dist/uncompressed/skylark-domx-medias"},
     {name : "skylark-domx-noder",location : "../node_modules/skylark-domx-noder/dist/uncompressed/skylark-domx-noder"},
     {name : "skylark-domx-plugins-base",location : "../node_modules/skylark-domx-plugins-base/dist/uncompressed/skylark-domx-plugins-base"},
     {name : "skylark-domx-query",location : "../node_modules/skylark-domx-query/dist/uncompressed/skylark-domx-query"},
@@ -49,7 +54,7 @@ require.config({
     {name : "skylark-domx-transforms",location : "../node_modules/skylark-domx-transforms/dist/uncompressed/skylark-domx-transforms"},
     {name : "skylark-domx-transits",location : "../node_modules/skylark-domx-transits/dist/uncompressed/skylark-domx-transits"},
     {name : "skylark-domx-velm",location : "../node_modules/skylark-domx-velm/dist/uncompressed/skylark-domx-velm"},
-    {name : "skylark-data-collection" ,location : "../node_modules/skylark-data-collection/dist/uncompressed/skylark-data-collection"},
+    {name : "skylark-data-collections" ,location : "../node_modules/skylark-data-collections/dist/uncompressed/skylark-data-collections"},
     {name : "skylark-io-diskfs" ,location : "../node_modules/skylark-io-diskfs/dist/uncompressed/skylark-io-diskfs"},
     { name: "skylark-langx", location: "../node_modules/skylark-langx/dist/uncompressed/skylark-langx" },
     { name: "skylark-domx", location: "../node_modules/skylark-domx/dist/uncompressed/skylark-domx"},
@@ -57,16 +62,16 @@ require.config({
     { name: "skylark-ace", location: "../node_modules/skylark-ace/dist/uncompressed/skylark-ace"},
     { name: "skylark-codemirror-base", location: "../node_modules/skylark-codemirror-base/dist/uncompressed/skylark-codemirror-base"},
     { name: "skylark-codemirror", location: "../node_modules/skylark-codemirror/dist/uncompressed/skylark-codemirror"},
-    { name: "skylark-widgets-codeground", location: "../src" }
+    { name: "skylark-widgets-codepad", location: "../src" }
   ],
 
 });
  
 
  require(["skylark-langx","skylark-domx/query"], function (langx,$) {
-    require(["skylark-widgets-codeground"], function (CodeGround) {
+    require(["skylark-widgets-codepad"], function (Codepad) {
         if (window.initPage) {
-            window.initPage(langx,$,CodeGround);
+            window.initPage(langx,$,Codepad);
         }
     });
 });

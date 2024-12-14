@@ -1,6 +1,6 @@
 var form = {};
 
-function initPage(langx,$,CoderGround) {
+function initPage(langx,$,Codepad) {
 
   var addEventListener = (function() {
 
@@ -62,10 +62,10 @@ function initPage(langx,$,CoderGround) {
   var init = function() {
     addEventListener.call(document.body, 'click', toggleDropdown);
 
-    var $jdemo = document.querySelector('.codeg-demo')
+    var $jdemo = document.querySelector('.codepad-demo')
     if ($jdemo) {
       // ace demo
-      new CoderGround($jdemo, {
+      new Codepad($jdemo, {
         codes : {
           html : he.decode(document.querySelector('.demo-content code').innerHTML)
         },

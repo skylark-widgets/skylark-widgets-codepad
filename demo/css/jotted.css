@@ -1,6 +1,6 @@
-/* codeg
+/* codepad
  */
-.codeg {
+.codepad {
   position: relative;
   height: 12em;
   overflow: hidden;
@@ -11,7 +11,7 @@
 }
 /* nav
  */
-.codeg-nav {
+.codepad-nav {
   position: absolute;
   z-index: 2;
   display: block;
@@ -24,7 +24,7 @@
   background: rgba(51,51,51,0.08);
   border-bottom: 1px solid rgba(51,51,51,0.2);
 }
-.codeg-nav-item {
+.codepad-nav-item {
   display: none;
   float: left;
   border-width: 0 1px;
@@ -32,47 +32,47 @@
   border-color: transparent;
   color: #555;
 }
-.codeg-nav-item:first-child {
+.codepad-nav-item:first-child {
   border-width: 0 1px 0 0;
 }
-.codeg-nav-item:hover,
-.codeg-nav-item:focus {
+.codepad-nav-item:hover,
+.codepad-nav-item:focus {
   background: rgba(51,51,51,0.04);
 }
-.codeg-nav-item:active {
+.codepad-nav-item:active {
   background: rgba(51,51,51,0.12);
 }
-.codeg-nav-item a {
+.codepad-nav-item a {
   display: block;
   padding: 0 0.8em;
   color: inherit;
   line-height: 2.4em;
   text-decoration: none;
 }
-.codeg-pane-active-result .codeg-nav-item-result,
-.codeg-pane-active-html .codeg-nav-item-html,
-.codeg-pane-active-css .codeg-nav-item-css,
-.codeg-pane-active-js .codeg-nav-item-js {
+.codepad-pane-active-result .codepad-nav-item-result,
+.codepad-pane-active-html .codepad-nav-item-html,
+.codepad-pane-active-css .codepad-nav-item-css,
+.codepad-pane-active-js .codepad-nav-item-js {
   background: #fff;
   border-color: rgba(51,51,51,0.3);
   color: #222;
 }
 /* always show the result tab nav
  */
-codeg-nav-item,
-.codeg-nav-item-result {
+codepad-nav-item,
+.codepad-nav-item-result {
   display: block;
 }
 /* show tabs if we have content for them
  */
-.codeg-has-html .codeg-nav-item-html,
-.codeg-has-css .codeg-nav-item-css,
-.codeg-has-js .codeg-nav-item-js {
+.codepad-has-html .codepad-nav-item-html,
+.codepad-has-css .codepad-nav-item-css,
+.codepad-has-js .codepad-nav-item-js {
   display: block;
 }
 /* pane
  */
-.codeg-pane {
+.codepad-pane {
   position: absolute;
   z-index: 1;
   visibility: hidden;
@@ -82,20 +82,20 @@ codeg-nav-item,
   box-sizing: border-box;
   background: #fff;
 }
-.codeg-pane-active-result .codeg-pane-result,
-.codeg-pane-active-html .codeg-pane-html,
-.codeg-pane-active-css .codeg-pane-css,
-.codeg-pane-active-js .codeg-pane-js {
+.codepad-pane-active-result .codepad-pane-result,
+.codepad-pane-active-html .codepad-pane-html,
+.codepad-pane-active-css .codepad-pane-css,
+.codepad-pane-active-js .codepad-pane-js {
   position: relative;
   visibility: visible;
 }
 /* editor
  */
-.codeg-editor {
+.codepad-editor {
   height: 100%;
 }
-.codeg-pane-result iframe,
-.codeg-editor textarea {
+.codepad-pane-result iframe,
+.codepad-editor textarea {
   display: block;
   width: 100%;
   height: 100%;
@@ -103,18 +103,18 @@ codeg-nav-item,
   border: 0;
   box-sizing: border-box;
 }
-.codeg-editor textarea {
+.codepad-editor textarea {
   padding: 1em;
   background: #fff;
 }
 /* status
  */
-.codeg-status-active-html .codeg-pane-html,
-.codeg-status-active-css .codeg-pane-css,
-.codeg-status-active-js .codeg-pane-js {
+.codepad-status-active-html .codepad-pane-html,
+.codepad-status-active-css .codepad-pane-css,
+.codepad-status-active-js .codepad-pane-js {
   padding-bottom: 1.5em;
 }
-.codeg-status {
+.codepad-status {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -122,13 +122,13 @@ codeg-nav-item,
   width: 100%;
   padding: 0 0.6em;
 }
-.codeg-status p {
+.codepad-status p {
   margin: 0;
   color: #333;
   font-size: 0.8em;
   line-height: 1.8em;
 }
-.codeg-status p:before {
+.codepad-status p:before {
   content: '';
   position: relative;
   display: inline-block;
@@ -145,22 +145,22 @@ codeg-nav-item,
   text-align: center;
   vertical-align: middle;
 }
-.codeg-status-loading {
+.codepad-status-loading {
   background: #fff6d5;
 }
-.codeg-status-loading p:before {
+.codepad-status-loading p:before {
   background: #fd5;
 }
-.codeg-status-error {
+.codepad-status-error {
   background: #ffccbc;
 }
-.codeg-status-error p:before {
+.codepad-status-error p:before {
   background: #c0392b;
 }
 /* buttons
  * used by plugins
  */
-.codeg-button {
+.codepad-button {
   padding: 0 1em;
   border: 1px solid #ccc;
   background: rgba(236,236,236,0.92);
@@ -169,65 +169,65 @@ codeg-nav-item,
   cursor: pointer;
   line-height: 1.6em;
 }
-.codeg-button:hover {
+.codepad-button:hover {
   background: #f9f9f9;
 }
 /* plugins
  */
-.codeg-plugin-ace .codeg-editor > textarea {
+.codepad-plugin-ace .codepad-editor > textarea {
   display: none;
 }
-.codeg-plugin-ace .ace_editor {
+.codepad-plugin-ace .ace_editor {
   width: 100%;
   height: 100%;
 }
-.codeg-plugin-codemirror .CodeMirror {
+.codepad-plugin-codemirror .CodeMirror {
   height: 100%;
 }
-.codeg-nav-item-console {
+.codepad-nav-item-console {
   display: block;
 }
-.codeg-pane-console {
+.codepad-pane-console {
   background: #fff;
 }
-.codeg-pane-active-console .codeg-pane-console {
+.codepad-pane-active-console .codepad-pane-console {
   position: relative;
   visibility: visible;
 }
-.codeg-pane-active-console .codeg-nav-item-console {
+.codepad-pane-active-console .codepad-nav-item-console {
   background: #fff;
   border-color: rgba(51,51,51,0.3);
   color: #222;
 }
-.codeg-console-container {
+.codepad-console-container {
   height: 100%;
   overflow: auto;
   font-family: monospace;
 }
-.codeg-console-output {
+.codepad-console-output {
   margin: 0;
   padding: 0;
   list-style-type: none;
   line-height: 2.8em;
 }
-.codeg-console-log {
+.codepad-console-log {
   padding: 0 1em;
 }
-.codeg-console-log-history {
+.codepad-console-log-history {
   border-width: 1px 0;
   border-style: solid;
   border-color: rgba(51,51,51,0.08);
   background: rgba(51,51,51,0.04);
 }
-.codeg-console-log-error {
+.codepad-console-log-error {
   background: #ffccbc;
   color: #500;
 }
-.codeg-console-input {
+.codepad-console-input {
   position: relative;
   background: rgba(51,51,51,0.12);
 }
-.codeg-console-input:before {
+.codepad-console-input:before {
   content: '>';
   position: absolute;
   left: 0;
@@ -239,7 +239,7 @@ codeg-nav-item,
   font-weight: bold;
   line-height: 2.4em;
 }
-.codeg-console-input input {
+.codepad-console-input input {
   box-sizing: border-box;
   display: block;
   width: 100%;
@@ -250,30 +250,30 @@ codeg-nav-item,
   line-height: 2.4em;
   font-family: inherit;
 }
-.codeg-console-clear {
+.codepad-console-clear {
   position: absolute;
   top: 3.3em;
   right: 1.4em;
 }
-.codeg-plugin-pen {
+.codepad-plugin-pen {
   display: flex;
   flex-flow: row wrap;
   user-select: none;
 }
-.codeg-plugin-pen .codeg-pane-result {
+.codepad-plugin-pen .codepad-pane-result {
   flex: 1 100%;
 }
-.codeg-plugin-pen .codeg-editor .CodeMirror {
+.codepad-plugin-pen .codepad-editor .CodeMirror {
   height: calc(100% - 39px);
 }
-.codeg-plugin-pen .codeg-nav {
+.codepad-plugin-pen .codepad-nav {
   display: none;
 }
-.codeg-plugin-pen .codeg-pane {
+.codepad-plugin-pen .codepad-pane {
   padding-top: 0;
   height: 50%;
 }
-.codeg-plugin-pen .codeg-pane-title {
+.codepad-plugin-pen .codepad-pane-title {
   display: block;
   background: rgba(51,51,51,0.08);
   border-bottom: 1px solid rgba(51,51,51,0.2);
@@ -281,55 +281,55 @@ codeg-nav-item,
   line-height: 2.4em;
   font-family: sans-serif;
 }
-.codeg-plugin-pen .codeg-pane-title-result {
+.codepad-plugin-pen .codepad-pane-title-result {
   display: none;
 }
-.codeg-plugin-pen .codeg-pane-result,
-.codeg-plugin-pen.codeg-has-html .codeg-pane-html,
-.codeg-plugin-pen.codeg-has-css .codeg-pane-css,
-.codeg-plugin-pen.codeg-has-js .codeg-pane-js,
-.codeg-plugin-pen.codeg-plugin-console .codeg-pane-console {
+.codepad-plugin-pen .codepad-pane-result,
+.codepad-plugin-pen.codepad-has-html .codepad-pane-html,
+.codepad-plugin-pen.codepad-has-css .codepad-pane-css,
+.codepad-plugin-pen.codepad-has-js .codepad-pane-js,
+.codepad-plugin-pen.codepad-plugin-console .codepad-pane-console {
   position: relative;
   visibility: visible;
 }
-.codeg-plugin-pen.codeg-has-html .codeg-pane,
-.codeg-plugin-pen.codeg-has-css .codeg-pane,
-.codeg-plugin-pen.codeg-has-js .codeg-pane {
+.codepad-plugin-pen.codepad-has-html .codepad-pane,
+.codepad-plugin-pen.codepad-has-css .codepad-pane,
+.codepad-plugin-pen.codepad-has-js .codepad-pane {
   max-width: 100%;
   width: 100%;
 }
-.codeg-plugin-pen.codeg-has-html.codeg-has-css .codeg-pane-html,
-.codeg-plugin-pen.codeg-has-html.codeg-has-css .codeg-pane-css,
-.codeg-plugin-pen.codeg-has-html.codeg-has-js .codeg-pane-html,
-.codeg-plugin-pen.codeg-has-html.codeg-has-js .codeg-pane-js,
-.codeg-plugin-pen.codeg-has-css.codeg-has-js .codeg-pane-css,
-.codeg-plugin-pen.codeg-has-css.codeg-has-js .codeg-pane-js {
+.codepad-plugin-pen.codepad-has-html.codepad-has-css .codepad-pane-html,
+.codepad-plugin-pen.codepad-has-html.codepad-has-css .codepad-pane-css,
+.codepad-plugin-pen.codepad-has-html.codepad-has-js .codepad-pane-html,
+.codepad-plugin-pen.codepad-has-html.codepad-has-js .codepad-pane-js,
+.codepad-plugin-pen.codepad-has-css.codepad-has-js .codepad-pane-css,
+.codepad-plugin-pen.codepad-has-css.codepad-has-js .codepad-pane-js {
   max-width: 50%;
   width: 50%;
 }
-.codeg-plugin-pen.codeg-has-html.codeg-has-css.codeg-has-js .codeg-pane-html,
-.codeg-plugin-pen.codeg-has-html.codeg-has-css.codeg-has-js .codeg-pane-js,
-.codeg-plugin-pen.codeg-has-html.codeg-has-css.codeg-has-js .codeg-pane-css {
+.codepad-plugin-pen.codepad-has-html.codepad-has-css.codepad-has-js .codepad-pane-html,
+.codepad-plugin-pen.codepad-has-html.codepad-has-css.codepad-has-js .codepad-pane-js,
+.codepad-plugin-pen.codepad-has-html.codepad-has-css.codepad-has-js .codepad-pane-css {
   max-width: 33.3333%;
   width: 33.3333%;
 }
-.codeg-plugin-pen.codeg-plugin-console .codeg-console-clear {
+.codepad-plugin-pen.codepad-plugin-console .codepad-console-clear {
   top: 4.3em;
 }
-.codeg-plugin-console.codeg-plugin-pen.codeg-has-html .codeg-pane,
-.codeg-plugin-console.codeg-plugin-pen.codeg-has-css .codeg-pane,
-.codeg-plugin-console.codeg-plugin-pen.codeg-has-js .codeg-pane {
+.codepad-plugin-console.codepad-plugin-pen.codepad-has-html .codepad-pane,
+.codepad-plugin-console.codepad-plugin-pen.codepad-has-css .codepad-pane,
+.codepad-plugin-console.codepad-plugin-pen.codepad-has-js .codepad-pane {
   width: 50%;
 }
-.codeg-plugin-console.codeg-plugin-pen.codeg-has-html.codeg-has-css .codeg-pane,
-.codeg-plugin-console.codeg-plugin-pen.codeg-has-html.codeg-has-js .codeg-pane,
-.codeg-plugin-console.codeg-plugin-pen.codeg-has-css.codeg-has-js .codeg-pane {
+.codepad-plugin-console.codepad-plugin-pen.codepad-has-html.codepad-has-css .codepad-pane,
+.codepad-plugin-console.codepad-plugin-pen.codepad-has-html.codepad-has-js .codepad-pane,
+.codepad-plugin-console.codepad-plugin-pen.codepad-has-css.codepad-has-js .codepad-pane {
   width: 33.33%;
 }
-.codeg-plugin-console.codeg-plugin-pen.codeg-has-html.codeg-has-css.codeg-has-js .codeg-pane {
+.codepad-plugin-console.codepad-plugin-pen.codepad-has-html.codepad-has-css.codepad-has-js .codepad-pane {
   width: 25%;
 }
-.codeg-plugin-pen-expander {
+.codepad-plugin-pen-expander {
   position: absolute;
   height: 100%;
   width: 3px;
@@ -337,7 +337,7 @@ codeg-nav-item,
   cursor: col-resize;
   border-left: 1px solid #ddd;
 }
-.codeg-button-play {
+.codepad-button-play {
   position: absolute;
   top: 0.52em;
   right: 0.52em;
@@ -345,84 +345,84 @@ codeg-nav-item,
 }
 /* themes
  */
-.codeg-nav-item,
-.codeg-pane {
+.codepad-nav-item,
+.codepad-pane {
   box-sizing: border-box;
 }
-.codeg-theme-bin {
+.codepad-theme-bin {
   overflow: hidden;
 }
-.codeg-theme-bin .codeg-nav {
+.codepad-theme-bin .codepad-nav {
   clear: both;
 }
-.codeg-theme-bin .codeg-nav-item {
+.codepad-theme-bin .codepad-nav-item {
   background: transparent;
   pointer-events: none;
   text-align: center;
 }
-.codeg-theme-bin .codeg-nav-item,
-.codeg-theme-bin .codeg-pane {
+.codepad-theme-bin .codepad-nav-item,
+.codepad-theme-bin .codepad-pane {
   border-width: 0 1px 0 0;
   border-style: solid;
   border-color: #ddd;
 }
-.codeg-theme-bin .codeg-pane:last-child {
+.codepad-theme-bin .codepad-pane:last-child {
   border: 0;
 }
-.codeg-theme-bin .codeg-pane-result,
-.codeg-theme-bin.codeg-has-html .codeg-pane-html,
-.codeg-theme-bin.codeg-has-css .codeg-pane-css,
-.codeg-theme-bin.codeg-has-js .codeg-pane-js {
+.codepad-theme-bin .codepad-pane-result,
+.codepad-theme-bin.codepad-has-html .codepad-pane-html,
+.codepad-theme-bin.codepad-has-css .codepad-pane-css,
+.codepad-theme-bin.codepad-has-js .codepad-pane-js {
   position: relative;
   float: left;
   visibility: visible;
 }
-.codeg-theme-bin .codeg-pane-result,
-.codeg-theme-bin .codeg-nav-item {
+.codepad-theme-bin .codepad-pane-result,
+.codepad-theme-bin .codepad-nav-item {
   width: 100%;
 }
-.codeg-theme-bin.codeg-has-html .codeg-nav-item,
-.codeg-theme-bin.codeg-has-css .codeg-nav-item,
-.codeg-theme-bin.codeg-has-js .codeg-nav-item,
-.codeg-theme-bin.codeg-has-html .codeg-pane,
-.codeg-theme-bin.codeg-has-css .codeg-pane,
-.codeg-theme-bin.codeg-has-js .codeg-pane {
+.codepad-theme-bin.codepad-has-html .codepad-nav-item,
+.codepad-theme-bin.codepad-has-css .codepad-nav-item,
+.codepad-theme-bin.codepad-has-js .codepad-nav-item,
+.codepad-theme-bin.codepad-has-html .codepad-pane,
+.codepad-theme-bin.codepad-has-css .codepad-pane,
+.codepad-theme-bin.codepad-has-js .codepad-pane {
   width: 50%;
 }
-.codeg-theme-bin.codeg-has-html.codeg-has-css .codeg-nav-item,
-.codeg-theme-bin.codeg-has-html.codeg-has-js .codeg-nav-item,
-.codeg-theme-bin.codeg-has-css.codeg-has-js .codeg-nav-item,
-.codeg-theme-bin.codeg-has-html.codeg-has-css .codeg-pane,
-.codeg-theme-bin.codeg-has-html.codeg-has-js .codeg-pane,
-.codeg-theme-bin.codeg-has-css.codeg-has-js .codeg-pane {
+.codepad-theme-bin.codepad-has-html.codepad-has-css .codepad-nav-item,
+.codepad-theme-bin.codepad-has-html.codepad-has-js .codepad-nav-item,
+.codepad-theme-bin.codepad-has-css.codepad-has-js .codepad-nav-item,
+.codepad-theme-bin.codepad-has-html.codepad-has-css .codepad-pane,
+.codepad-theme-bin.codepad-has-html.codepad-has-js .codepad-pane,
+.codepad-theme-bin.codepad-has-css.codepad-has-js .codepad-pane {
   width: 33.33%;
 }
-.codeg-theme-bin.codeg-has-html.codeg-has-css.codeg-has-js .codeg-nav-item,
-.codeg-theme-bin.codeg-has-html.codeg-has-css.codeg-has-js .codeg-pane {
+.codepad-theme-bin.codepad-has-html.codepad-has-css.codepad-has-js .codepad-nav-item,
+.codepad-theme-bin.codepad-has-html.codepad-has-css.codepad-has-js .codepad-pane {
   width: 25%;
 }
-.codeg-theme-bin .codeg-pane-console {
+.codepad-theme-bin .codepad-pane-console {
   position: relative;
   float: left;
   visibility: visible;
 }
-.codeg-plugin-console.codeg-theme-bin.codeg-has-html .codeg-nav-item,
-.codeg-plugin-console.codeg-theme-bin.codeg-has-css .codeg-nav-item,
-.codeg-plugin-console.codeg-theme-bin.codeg-has-js .codeg-nav-item,
-.codeg-plugin-console.codeg-theme-bin.codeg-has-html .codeg-pane,
-.codeg-plugin-console.codeg-theme-bin.codeg-has-css .codeg-pane,
-.codeg-plugin-console.codeg-theme-bin.codeg-has-js .codeg-pane {
+.codepad-plugin-console.codepad-theme-bin.codepad-has-html .codepad-nav-item,
+.codepad-plugin-console.codepad-theme-bin.codepad-has-css .codepad-nav-item,
+.codepad-plugin-console.codepad-theme-bin.codepad-has-js .codepad-nav-item,
+.codepad-plugin-console.codepad-theme-bin.codepad-has-html .codepad-pane,
+.codepad-plugin-console.codepad-theme-bin.codepad-has-css .codepad-pane,
+.codepad-plugin-console.codepad-theme-bin.codepad-has-js .codepad-pane {
   width: 33.33%;
 }
-.codeg-plugin-console.codeg-theme-bin.codeg-has-html.codeg-has-css .codeg-nav-item,
-.codeg-plugin-console.codeg-theme-bin.codeg-has-html.codeg-has-js .codeg-nav-item,
-.codeg-plugin-console.codeg-theme-bin.codeg-has-css.codeg-has-js .codeg-nav-item,
-.codeg-plugin-console.codeg-theme-bin.codeg-has-html.codeg-has-css .codeg-pane,
-.codeg-plugin-console.codeg-theme-bin.codeg-has-html.codeg-has-js .codeg-pane,
-.codeg-plugin-console.codeg-theme-bin.codeg-has-css.codeg-has-js .codeg-pane {
+.codepad-plugin-console.codepad-theme-bin.codepad-has-html.codepad-has-css .codepad-nav-item,
+.codepad-plugin-console.codepad-theme-bin.codepad-has-html.codepad-has-js .codepad-nav-item,
+.codepad-plugin-console.codepad-theme-bin.codepad-has-css.codepad-has-js .codepad-nav-item,
+.codepad-plugin-console.codepad-theme-bin.codepad-has-html.codepad-has-css .codepad-pane,
+.codepad-plugin-console.codepad-theme-bin.codepad-has-html.codepad-has-js .codepad-pane,
+.codepad-plugin-console.codepad-theme-bin.codepad-has-css.codepad-has-js .codepad-pane {
   width: 25%;
 }
-.codeg-plugin-console.codeg-theme-bin.codeg-has-html.codeg-has-css.codeg-has-js .codeg-nav-item,
-.codeg-plugin-console.codeg-theme-bin.codeg-has-html.codeg-has-css.codeg-has-js .codeg-pane {
+.codepad-plugin-console.codepad-theme-bin.codepad-has-html.codepad-has-css.codepad-has-js .codepad-nav-item,
+.codepad-plugin-console.codepad-theme-bin.codepad-has-html.codepad-has-css.codepad-has-js .codepad-pane {
   width: 20%;
 }

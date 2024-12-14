@@ -5,14 +5,14 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>
-      CodeMirror &#8212; CoderGround
+      CodeMirror &#8212; Codepad
   </title>
   <meta name="description" content="Environment for showcasing HTML, CSS and JavaScript, with editable source. Like JSFiddle or JS Bin for self-hosted demos.">
-  <meta name="keywords" content="jot,codeg,html,css,javascript,editor,client-side,self-hosted,demo,jsfiddle,jsbin,codepen,cssdeck,fiddle">
+  <meta name="keywords" content="jot,codepad,html,css,javascript,editor,client-side,self-hosted,demo,jsfiddle,jsbin,codepen,cssdeck,fiddle">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link href="https://fonts.googleapis.com/css?family=Oxygen:400,300,700" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="../skins/default/codeg.css">
+  <link rel="stylesheet" href="../skins/default/codepad.css">
 
   <link rel="stylesheet" href="./css/site.css">
   <link rel="stylesheet" href="./css/gridlayout.css">
@@ -34,7 +34,7 @@
         </a>
 
         <h1>
-          CoderGround
+          Codepad
         </h1>
 
       </div>
@@ -120,14 +120,14 @@
 
   <div class="gl-cell gl-fill">
 
-    <div id="codeg-demo"></div>
+    <div id="codepad-demo"></div>
 
 </div>
 
 <link rel="stylesheet" href="../node_modules/skylark-codemirror/skins/default/codemirror.css">
 <link rel="stylesheet" href="./css/demos.css">
 <style>
-  #codeg-demo {
+  #codepad-demo {
     height : 500px;
   }
 </style> 
@@ -136,8 +136,8 @@
   <script type="text/javascript" src="js/larkbin/render.js"></script>
   <script type="text/javascript">
 
-    function initPage(langx,$,CodeGround) {
-        let ground = new CodeGround(document.querySelector('#codeg-demo'), {
+    function initPage(langx,$,Codepad) {
+        let ground = new Codepad(document.querySelector('#codepad-demo'), {
           codes : {
             html : `
     <div id="container"></div>

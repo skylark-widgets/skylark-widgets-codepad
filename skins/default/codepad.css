@@ -1,0 +1,471 @@
+/* code ground
+ */
+.codepad {
+  position: relative;
+  height: 12em;
+  overflow: hidden;
+  border: 1px solid rgba(51,51,51,0.24);
+  border-radius: 2px;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+/* nav
+ */
+.codepad-nav {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 2.4em;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  background: rgba(51,51,51,0.08);
+  border-bottom: 1px solid rgba(51,51,51,0.2);
+}
+.codepad-nav-item {
+  display: none;
+  float: left;
+  border-width: 0 1px;
+  border-style: solid;
+  border-color: transparent;
+  color: #555;
+}
+.codepad-nav-item:first-child {
+  border-width: 0 1px 0 0;
+}
+.codepad-nav-item:hover,
+.codepad-nav-item:focus {
+  background: rgba(51,51,51,0.04);
+}
+.codepad-nav-item:active {
+  background: rgba(51,51,51,0.12);
+}
+.codepad-nav-item a {
+  display: block;
+  padding: 0 0.8em;
+  color: inherit;
+  line-height: 2.4em;
+  text-decoration: none;
+}
+.codepad-pane-active-result .codepad-nav-item-result,
+.codepad-pane-active-html .codepad-nav-item-html,
+.codepad-pane-active-css .codepad-nav-item-css,
+.codepad-pane-active-js .codepad-nav-item-js {
+  background: #fff;
+  border-color: rgba(51,51,51,0.3);
+  color: #222;
+}
+/* always show the result tab nav
+ */
+codepad-nav-item,
+.codepad-nav-item-result {
+  display: block;
+}
+/* show tabs if we have content for them
+ */
+.codepad-has-html .codepad-nav-item-html,
+.codepad-has-css .codepad-nav-item-css,
+.codepad-has-js .codepad-nav-item-js {
+  display: block;
+}
+/* pane
+ */
+.codepad-pane {
+  position: absolute;
+  z-index: 1;
+  visibility: hidden;
+  height: 100%;
+  width: 100%;
+  padding-top: 2.4em;
+  box-sizing: border-box;
+  background: #fff;
+}
+.codepad-pane-active-result .codepad-pane-result,
+.codepad-pane-active-html .codepad-pane-html,
+.codepad-pane-active-css .codepad-pane-css,
+.codepad-pane-active-js .codepad-pane-js {
+  position: relative;
+  visibility: visible;
+}
+/* editor
+ */
+.codepad-editor {
+  height: 100%;
+}
+.codepad-pane-result iframe,
+.codepad-editor textarea {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+.codepad-editor textarea {
+  padding: 1em;
+  background: #fff;
+}
+/* status
+ */
+.codepad-status-active-html .codepad-pane-html,
+.codepad-status-active-css .codepad-pane-css,
+.codepad-status-active-js .codepad-pane-js {
+  padding-bottom: 1.5em;
+}
+.codepad-status {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  width: 100%;
+  padding: 0 0.6em;
+}
+.codepad-status p {
+  margin: 0;
+  color: #333;
+  font-size: 0.8em;
+  line-height: 1.8em;
+}
+.codepad-status p:before {
+  content: '';
+  position: relative;
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  margin-right: 0.8em;
+  margin-bottom: 0.28em;
+  border-radius: 100%;
+  color: #fff;
+  font-size: 0.8em;
+  font-family: monospace;
+  font-weight: bold;
+  line-height: 1.2em;
+  text-align: center;
+  vertical-align: middle;
+}
+.codepad-status-loading {
+  background: #fff6d5;
+}
+.codepad-status-loading p:before {
+  background: #fd5;
+}
+.codepad-status-error {
+  background: #ffccbc;
+}
+.codepad-status-error p:before {
+  background: #c0392b;
+}
+/* buttons
+ * used by plugins
+ */
+.codepad-button {
+  padding: 0 1em;
+  border: 1px solid #ccc;
+  background: rgba(236,236,236,0.92);
+  background: linear-gradient(rgba(249,249,249,0.92), rgba(236,236,236,0.92));
+  border-radius: 2px;
+  cursor: pointer;
+  line-height: 1.6em;
+}
+.codepad-button:hover {
+  background: #f9f9f9;
+}
+/* plugins
+ */
+.codepad-plugin-ace .codepad-editor > textarea {
+  display: none;
+}
+.codepad-plugin-ace .ace_editor {
+  width: 100%;
+  height: 100%;
+}
+.codepad-plugin-codemirror .CodeMirror {
+  height: 100%;
+}
+.codepad-nav-item-console {
+  display: block;
+}
+.codepad-pane-console {
+  background: #fff;
+}
+.codepad-pane-active-console .codepad-pane-console {
+  position: relative;
+  visibility: visible;
+}
+.codepad-pane-active-console .codepad-nav-item-console {
+  background: #fff;
+  border-color: rgba(51,51,51,0.3);
+  color: #222;
+}
+.codepad-console-container {
+  height: 100%;
+  overflow: auto;
+  font-family: monospace;
+}
+.codepad-console-output {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  line-height: 2.8em;
+}
+.codepad-console-log {
+  padding: 0 1em;
+}
+.codepad-console-log-history {
+  border-width: 1px 0;
+  border-style: solid;
+  border-color: rgba(51,51,51,0.08);
+  background: rgba(51,51,51,0.04);
+}
+.codepad-console-log-error {
+  background: #ffccbc;
+  color: #500;
+}
+.codepad-console-input {
+  position: relative;
+  background: rgba(51,51,51,0.12);
+}
+.codepad-console-input:before {
+  content: '>';
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  padding: 0 1em;
+  pointer-events: none;
+  font-family: inherit;
+  font-weight: bold;
+  line-height: 2.4em;
+}
+.codepad-console-input input {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  height: 2.4em;
+  border: 0;
+  padding: 0 1em 0 2.4em;
+  background: transparent;
+  line-height: 2.4em;
+  font-family: inherit;
+}
+.codepad-console-clear {
+  position: absolute;
+  top: 3.3em;
+  right: 1.4em;
+}
+.codepad-plugin-pen {
+  display: flex;
+  flex-flow: row wrap;
+  user-select: none;
+}
+.codepad-plugin-pen .codepad-pane-result {
+  flex: 1 100%;
+}
+.codepad-plugin-pen .codepad-editor .CodeMirror {
+  height: calc(100% - 39px);
+}
+.codepad-plugin-pen .codepad-nav {
+  display: none;
+}
+.codepad-plugin-pen .codepad-pane {
+  padding-top: 0;
+  height: 50%;
+}
+.codepad-plugin-pen .codepad-pane-title {
+  display: block;
+  background: rgba(51,51,51,0.08);
+  border-bottom: 1px solid rgba(51,51,51,0.2);
+  padding: 0 0.8em;
+  line-height: 2.4em;
+  font-family: sans-serif;
+}
+.codepad-plugin-pen .codepad-pane-title-result {
+  display: none;
+}
+.codepad-plugin-pen .codepad-pane-result,
+.codepad-plugin-pen.codepad-has-html .codepad-pane-html,
+.codepad-plugin-pen.codepad-has-css .codepad-pane-css,
+.codepad-plugin-pen.codepad-has-js .codepad-pane-js,
+.codepad-plugin-pen.codepad-plugin-console .codepad-pane-console {
+  position: relative;
+  visibility: visible;
+}
+.codepad-plugin-pen.codepad-has-html .codepad-pane,
+.codepad-plugin-pen.codepad-has-css .codepad-pane,
+.codepad-plugin-pen.codepad-has-js .codepad-pane {
+  max-width: 100%;
+  width: 100%;
+}
+.codepad-plugin-pen.codepad-has-html.codepad-has-css .codepad-pane-html,
+.codepad-plugin-pen.codepad-has-html.codepad-has-css .codepad-pane-css,
+.codepad-plugin-pen.codepad-has-html.codepad-has-js .codepad-pane-html,
+.codepad-plugin-pen.codepad-has-html.codepad-has-js .codepad-pane-js,
+.codepad-plugin-pen.codepad-has-css.codepad-has-js .codepad-pane-css,
+.codepad-plugin-pen.codepad-has-css.codepad-has-js .codepad-pane-js {
+  max-width: 50%;
+  width: 50%;
+}
+.codepad-plugin-pen.codepad-has-html.codepad-has-css.codepad-has-js .codepad-pane-html,
+.codepad-plugin-pen.codepad-has-html.codepad-has-css.codepad-has-js .codepad-pane-js,
+.codepad-plugin-pen.codepad-has-html.codepad-has-css.codepad-has-js .codepad-pane-css {
+  max-width: 33.3333%;
+  width: 33.3333%;
+}
+.codepad-plugin-pen.codepad-plugin-console .codepad-console-clear {
+  top: 4.3em;
+}
+.codepad-plugin-console.codepad-plugin-pen.codepad-has-html .codepad-pane,
+.codepad-plugin-console.codepad-plugin-pen.codepad-has-css .codepad-pane,
+.codepad-plugin-console.codepad-plugin-pen.codepad-has-js .codepad-pane {
+  width: 50%;
+}
+.codepad-plugin-console.codepad-plugin-pen.codepad-has-html.codepad-has-css .codepad-pane,
+.codepad-plugin-console.codepad-plugin-pen.codepad-has-html.codepad-has-js .codepad-pane,
+.codepad-plugin-console.codepad-plugin-pen.codepad-has-css.codepad-has-js .codepad-pane {
+  width: 33.33%;
+}
+.codepad-plugin-console.codepad-plugin-pen.codepad-has-html.codepad-has-css.codepad-has-js .codepad-pane {
+  width: 25%;
+}
+.codepad-plugin-pen-expander {
+  position: absolute;
+  height: 100%;
+  width: 3px;
+  z-index: 5;
+  cursor: col-resize;
+  border-left: 1px solid #ddd;
+}
+.codepad-button-play {
+  position: absolute;
+  top: 0.52em;
+  right: 0.52em;
+  z-index: 3;
+}
+/* themes
+ */
+.codepad-nav-item,
+.codepad-pane {
+  box-sizing: border-box;
+}
+.codepad-theme-bin {
+  overflow: hidden;
+}
+.codepad-theme-bin .codepad-nav {
+  clear: both;
+}
+.codepad-theme-bin .codepad-nav-item {
+  background: transparent;
+  pointer-events: none;
+  text-align: center;
+}
+.codepad-theme-bin .codepad-nav-item,
+.codepad-theme-bin .codepad-pane {
+  border-width: 0 1px 0 0;
+  border-style: solid;
+  border-color: #ddd;
+}
+.codepad-theme-bin .codepad-pane:last-child {
+  border: 0;
+}
+.codepad-theme-bin .codepad-pane-result,
+.codepad-theme-bin.codepad-has-html .codepad-pane-html,
+.codepad-theme-bin.codepad-has-css .codepad-pane-css,
+.codepad-theme-bin.codepad-has-js .codepad-pane-js {
+  position: relative;
+  float: left;
+  visibility: visible;
+}
+.codepad-theme-bin .codepad-pane-result,
+.codepad-theme-bin .codepad-nav-item {
+  width: 100%;
+}
+.codepad-theme-bin.codepad-has-html .codepad-nav-item,
+.codepad-theme-bin.codepad-has-css .codepad-nav-item,
+.codepad-theme-bin.codepad-has-js .codepad-nav-item,
+.codepad-theme-bin.codepad-has-html .codepad-pane,
+.codepad-theme-bin.codepad-has-css .codepad-pane,
+.codepad-theme-bin.codepad-has-js .codepad-pane {
+  width: 50%;
+}
+.codepad-theme-bin.codepad-has-html.codepad-has-css .codepad-nav-item,
+.codepad-theme-bin.codepad-has-html.codepad-has-js .codepad-nav-item,
+.codepad-theme-bin.codepad-has-css.codepad-has-js .codepad-nav-item,
+.codepad-theme-bin.codepad-has-html.codepad-has-css .codepad-pane,
+.codepad-theme-bin.codepad-has-html.codepad-has-js .codepad-pane,
+.codepad-theme-bin.codepad-has-css.codepad-has-js .codepad-pane {
+  width: 33.33%;
+}
+.codepad-theme-bin.codepad-has-html.codepad-has-css.codepad-has-js .codepad-nav-item,
+.codepad-theme-bin.codepad-has-html.codepad-has-css.codepad-has-js .codepad-pane {
+  width: 25%;
+}
+.codepad-theme-bin .codepad-pane-console {
+  position: relative;
+  float: left;
+  visibility: visible;
+}
+.codepad-plugin-console.codepad-theme-bin.codepad-has-html .codepad-nav-item,
+.codepad-plugin-console.codepad-theme-bin.codepad-has-css .codepad-nav-item,
+.codepad-plugin-console.codepad-theme-bin.codepad-has-js .codepad-nav-item,
+.codepad-plugin-console.codepad-theme-bin.codepad-has-html .codepad-pane,
+.codepad-plugin-console.codepad-theme-bin.codepad-has-css .codepad-pane,
+.codepad-plugin-console.codepad-theme-bin.codepad-has-js .codepad-pane {
+  width: 33.33%;
+}
+.codepad-plugin-console.codepad-theme-bin.codepad-has-html.codepad-has-css .codepad-nav-item,
+.codepad-plugin-console.codepad-theme-bin.codepad-has-html.codepad-has-js .codepad-nav-item,
+.codepad-plugin-console.codepad-theme-bin.codepad-has-css.codepad-has-js .codepad-nav-item,
+.codepad-plugin-console.codepad-theme-bin.codepad-has-html.codepad-has-css .codepad-pane,
+.codepad-plugin-console.codepad-theme-bin.codepad-has-html.codepad-has-js .codepad-pane,
+.codepad-plugin-console.codepad-theme-bin.codepad-has-css.codepad-has-js .codepad-pane {
+  width: 25%;
+}
+.codepad-plugin-console.codepad-theme-bin.codepad-has-html.codepad-has-css.codepad-has-js .codepad-nav-item,
+.codepad-plugin-console.codepad-theme-bin.codepad-has-html.codepad-has-css.codepad-has-js .codepad-pane {
+  width: 20%;
+}
+
+
+/*
+
+#codepad-demo-codemirror.codepad .codepad-nav {
+  background: #ddd;
+  border: 0;
+}
+
+#codepad-demo-codemirror.codepad .codepad-nav-item-result,
+#codepad-demo-codemirror.codepad .codepad-nav-item-html {
+  background: #fff;
+  border: 0;
+}
+
+#codepad-demo-codemirror.codepad .codepad-nav-item-result {
+  float: right;
+}
+
+#codepad-demo-codemirror.codepad .codepad-nav-item-html #codepad-demo-codemirror.codepad ..codepad-nav-item-css, #codepad-demo-codemirror.codepad .codepad-nav-item-js {
+  float: left;
+}
+
+#codepad-demo-codemirror.codepad .codepad-pane-html,#codepad-demo-codemirror.codepad .codepad-pane-css,#codepad-demo-codemirror.codepad .codepad-pane-js {
+  float: left;
+  position: relative;
+  visibility: visible;
+  width: 50%;
+}
+
+
+#codepad-demo-codemirror.codepad .codepad-pane-reult {
+  float: right;
+  position: relative;
+  visibility: visible;
+  width: 50%;
+}
+
+#codepad-demo-codemirror.codepad .codepad-pane-html {
+  border-right: 1px solid #efefef;
+}
+
+*/

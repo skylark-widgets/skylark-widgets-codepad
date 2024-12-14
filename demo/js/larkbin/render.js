@@ -16,7 +16,7 @@
                                 (function () {
                                   window.addEventListener('DOMContentLoaded', function () {
                                     window.parent.postMessage(JSON.stringify({
-                                      type: 'codeg-dom-ready'
+                                      type: 'codepad-dom-ready'
                                     }), '*')
                                   })
                                 }())
@@ -28,7 +28,7 @@
                               ${ body }
 
                               <!--
-                                CodeGround:
+                                Codepad:
                                 Empty script tag prevents malformed HTML from breaking the next script.
                               -->
                               <script></script>

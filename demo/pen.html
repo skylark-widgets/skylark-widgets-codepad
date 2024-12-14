@@ -5,14 +5,14 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>
-      CodeMirror &#8212; CoderGround
+      CodeMirror &#8212; Codepad
   </title>
   <meta name="description" content="Environment for showcasing HTML, CSS and JavaScript, with editable source. Like JSFiddle or JS Bin for self-hosted demos.">
-  <meta name="keywords" content="jot,codeg,html,css,javascript,editor,client-side,self-hosted,demo,jsfiddle,jsbin,codepen,cssdeck,fiddle">
+  <meta name="keywords" content="jot,codepad,html,css,javascript,editor,client-side,self-hosted,demo,jsfiddle,jsbin,codepen,cssdeck,fiddle">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link href="https://fonts.googleapis.com/css?family=Oxygen:400,300,700" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="../skins/default/codeg.css">
+  <link rel="stylesheet" href="../skins/default/codepad.css">
 
   <link rel="stylesheet" href="./css/site.css">
   <link rel="stylesheet" href="./css/gridlayout.css">
@@ -34,7 +34,7 @@
         </a>
 
         <h1>
-          CoderGround
+          Codepad
         </h1>
 
       </div>
@@ -120,12 +120,12 @@
 
   <div class="gl-cell gl-fill">
 
-    <div class="codeg-demo"></div>
+    <div class="codepad-demo"></div>
 
     <div class="demo-content">
 <pre><code>
 &lt;h2&gt;
-  CoderGround demo using CoderGround
+  Codepad demo using Codepad
 &lt;/h2&gt;
 
 &lt;p&gt;
@@ -136,19 +136,19 @@
   You can get it from &lt;a href=&quot;https://github.com/ajaxorg/ace-builds/&quot; target=&quot;_blank&quot;&gt;ace-builds&lt;/a&gt;.
 &lt;/p&gt;
 
-&lt;div id=&quot;codeg-demo-ace&quot; style=&quot;height: 28em&quot;&gt; &lt;/div&gt;
+&lt;div id=&quot;codepad-demo-ace&quot; style=&quot;height: 28em&quot;&gt; &lt;/div&gt;
 
 &lt;link rel=&quot;stylesheet&quot; href=&quot;../node_modules/skylark-codemirror/skins/default/codemirror.css&quot;&gt;
 
 
-&lt;link href=&quot;../skins/default/codeg.css&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;link href=&quot;../skins/default/codepad.css&quot; rel=&quot;stylesheet&quot;&gt;
 &lt;script data-main=&quot;./js/bootstrap.js&quot;  src=&quot;./js/require.js&quot;&gt;&lt;/script&gt;
 
 &lt;script&gt;
 
-function initPage(langx,$,CoderGround) {
+function initPage(langx,$,Codepad) {
 
-  new CoderGround(document.querySelector(&#39;#codeg-demo-ace&#39;), {
+  new Codepad(document.querySelector(&#39;#codepad-demo-ace&#39;), {
     codes : {
       html : &#39;&lt;h1&gt;\n  Pen Plugin\n&lt;/h1&gt;&#39,
       js :   &#39;console.log(&quot;Hello World&quot;)&#39,

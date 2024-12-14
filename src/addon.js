@@ -6,7 +6,7 @@ define([
 		_init() {
             this.coder = this._widget;
 
-            this.options.pluginCssClass = this.options.pluginClass || ("codeg-plugin-" + this.constructor.addonName);
+            this.options.pluginCssClass = this.options.pluginClass || ("codepad-plugin-" + this.constructor.addonName);
 
 			if (this.options.pluginCssClass) {
 	            styler.addClass(this._widget._elm, this.options.pluginCssClass);			
